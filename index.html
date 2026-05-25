@@ -1,36 +1,544 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Home - Updraft Network</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="favicon.ico">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Updraft Network</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #050505;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(0, 170, 255, 0.12), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(140, 0, 255, 0.12), transparent 30%),
+        #050505;
+      z-index: -2;
+    }
+
+    .background-grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 42px 42px;
+      z-index: -1;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 20px 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(14px);
+      background: rgba(8, 8, 8, 0.7);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      z-index: 999;
+      transition: 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(0,0,0,0.92);
+      padding: 15px 70px;
+      box-shadow: 0 0 30px rgba(0,170,255,0.08);
+    }
+
+    .logo {
+      font-size: 1.9rem;
+      font-weight: 900;
+      background: linear-gradient(90deg, #00aaff, #9f5cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #d0d0d0;
+      text-decoration: none;
+      font-weight: 600;
+      position: relative;
+      transition: 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: white;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -7px;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #00aaff, #9f5cff);
+      transition: 0.3s ease;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .discord-btn {
+      padding: 13px 22px;
+      border-radius: 15px;
+      text-decoration: none;
+      color: white;
+      font-weight: 700;
+      background: linear-gradient(135deg, #5865F2, #7b8cff);
+      box-shadow: 0 0 20px rgba(88,101,242,0.3);
+      transition: 0.3s ease;
+    }
+
+    .discord-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 35px rgba(88,101,242,0.45);
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 150px 10% 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero {
+      text-align: center;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 5.5rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(90deg, #00aaff, #9f5cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      max-width: 900px;
+      color: #bdbdbd;
+      line-height: 1.8;
+      font-size: 1.15rem;
+      margin-bottom: 40px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      padding: 16px 30px;
+      border-radius: 18px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: 0.3s ease;
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, #00aaff, #9f5cff);
+      color: white;
+      box-shadow: 0 0 30px rgba(0,170,255,0.2);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-5px);
+    }
+
+    .secondary-btn {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: white;
+      backdrop-filter: blur(10px);
+    }
+
+    .secondary-btn:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .status-grid,
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+      margin-top: 70px;
+      width: 100%;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 26px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: 0.35s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,170,255,0.08), rgba(159,92,255,0.08));
+      opacity: 0;
+      transition: 0.35s ease;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(0,170,255,0.35);
+      box-shadow: 0 0 35px rgba(0,170,255,0.08);
+    }
+
+    .card h2,
+    .card h3 {
+      position: relative;
+      z-index: 2;
+      margin-bottom: 12px;
+    }
+
+    .card h2 {
+      color: #00aaff;
+      font-size: 2rem;
+    }
+
+    .card p {
+      position: relative;
+      z-index: 2;
+      color: #c0c0c0;
+      line-height: 1.7;
+    }
+
+    .section-title {
+      font-size: 3.2rem;
+      font-weight: 900;
+      margin-bottom: 20px;
+    }
+
+    .section-description {
+      color: #b5b5b5;
+      line-height: 1.8;
+      max-width: 850px;
+      margin-bottom: 20px;
+    }
+
+    .development-box {
+      margin-top: 50px;
+      padding: 35px;
+      border-radius: 26px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+    }
+
+    .development-box h3 {
+      font-size: 2rem;
+      margin-bottom: 14px;
+      background: linear-gradient(90deg, #00aaff, #9f5cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .development-box p {
+      color: #c0c0c0;
+      line-height: 1.8;
+    }
+
+    .server-box {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 26px;
+    }
+
+    code {
+      color: #00aaff;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .copy-btn {
+      border: none;
+      padding: 14px 24px;
+      border-radius: 16px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #00aaff, #9f5cff);
+      color: white;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .copy-btn:hover {
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      padding: 50px 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: #8f8f8f;
+      background: rgba(255,255,255,0.02);
+      line-height: 1.8;
+    }
+
+    @media(max-width: 900px) {
+      nav {
+        padding: 18px 25px;
+      }
+
+      nav.scrolled {
+        padding: 15px 25px;
+      }
+
+      .hero h1 {
+        font-size: 3.8rem;
+      }
+    }
+
+    @media(max-width: 700px) {
+      nav {
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .nav-links {
+        gap: 16px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero h1 {
+        font-size: 2.9rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="bg-blur-overlay" id="bgOverlay"></div>
-    <audio id="ariaMath" loop><source src="ariamath.mp3" type="audio/mpeg"></audio>
 
-    <a href="https://discord.gg/xs7XPceNvu" target="_blank" class="discord-fixed">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord">
-    </a>
+<div class="background-grid"></div>
 
-    <nav class="navbar">
-        <a href="index.html" class="active">Home</a>
-        <a href="store.html">Store</a>
-        <a href="rules.html">Rules</a>
-        <a href="support.html">Support</a>
-        <a href="newimplements.html">Server Progress</a>
-    </nav>
+<nav id="navbar">
+  <div class="logo">Updraft Network</div>
 
-    <div class="page-wrapper">
-        <h1>Updraft Network</h1>
-        <div class="content-container">
-            <h1>Welcome!</h1>
-            <p>The ultimate Minecraft community experience on <b>1.21.4</b>.</p>
-        </div>
+  <div class="nav-links">
+    <a href="#home" class="active">Home</a>
+    <a href="#features">Features</a>
+    <a href="#development">Development</a>
+    <a href="#join">Join</a>
+  </div>
+
+  <a href="https://discord.gg/yourdiscord" target="_blank" class="discord-btn">Join Discord</a>
+</nav>
+
+<section class="hero" id="home">
+  <h1>The Future of <span>Updraft Network</span></h1>
+
+  <p>
+    Updraft Network is a modern Minecraft network currently under development.
+    Built on Purpur for maximum performance and smooth gameplay, the network is
+    designed to deliver an immersive experience with polished systems, sleek visuals,
+    competitive gameplay, and a strong community.
+  </p>
+
+  <div class="hero-buttons">
+    <a href="#development" class="primary-btn">Development Status</a>
+    <a href="#join" class="secondary-btn">Join Community</a>
+  </div>
+
+  <div class="status-grid">
+    <div class="card">
+      <h2>Purpur</h2>
+      <p>Powered by optimized Purpur software for smooth and stable performance.</p>
     </div>
 
-    <div class="footer">Website by defnotsrilankan23. © 2026 Updraft Network.</div>
-    <script src="script.js"></script>
+    <div class="card">
+      <h2>Modern</h2>
+      <p>Designed with sleek systems, polished gameplay, and modern features.</p>
+    </div>
+
+    <div class="card">
+      <h2>Secure</h2>
+      <p>Protected infrastructure with secure backend systems and anti-cheat.</p>
+    </div>
+
+    <div class="card">
+      <h2>In Progress</h2>
+      <p>The network is actively being developed with new features added regularly.</p>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <h2 class="section-title">What Updraft Network Will Offer</h2>
+
+  <p class="section-description">
+    Updraft Network is being built from the ground up with performance,
+    community, and gameplay quality in mind.
+  </p>
+
+  <div class="feature-grid">
+    <div class="card">
+      <h3>⚡ High Performance</h3>
+      <p>Optimized gameplay with smooth TPS, low latency, and efficient systems.</p>
+    </div>
+
+    <div class="card">
+      <h3>🎮 Custom Experiences</h3>
+      <p>Unique gamemodes, polished mechanics, and custom features built for players.</p>
+    </div>
+
+    <div class="card">
+      <h3>🌎 Community Focused</h3>
+      <p>An active and welcoming environment with events and community interaction.</p>
+    </div>
+
+    <div class="card">
+      <h3>🛡 Reliable Security</h3>
+      <p>Advanced protection systems to ensure fair and secure gameplay.</p>
+    </div>
+  </div>
+</section>
+
+<section id="development">
+  <h2 class="section-title">Development Status</h2>
+
+  <p class="section-description">
+    Updraft Network is currently under active development.
+    Features, systems, gameplay balancing, and infrastructure are being worked on.
+  </p>
+
+  <div class="development-box">
+    <h3>🚧 Under Development</h3>
+
+    <p>
+      The server is not publicly released yet. The development team is currently
+      building the network, testing gameplay systems, optimizing performance,
+      and preparing for future launches.
+      More updates will be announced through the community Discord server.
+    </p>
+  </div>
+</section>
+
+<section id="join">
+  <h2 class="section-title">Stay Updated</h2>
+
+  <p class="section-description">
+    Join the Updraft Network community and follow the progress of the server.
+    More announcements, sneak peeks, and development updates will be shared soon.
+  </p>
+
+  <div class="server-box">
+    <div>
+      <p style="color:#a5a5a5; margin-bottom:8px;">Server Software</p>
+      <code>Purpur</code>
+    </div>
+
+    <button class="copy-btn" onclick="copyText()">Copy Name</button>
+  </div>
+</section>
+
+<footer>
+  Founded by nikepog.<br>
+  Website made by MrFrenchGuy23
+</footer>
+
+<script>
+  const navbar = document.getElementById('navbar');
+
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 180;
+
+      if(scrollY >= sectionTop) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+
+      if(link.getAttribute('href').includes(current)) {
+        link.classList.add('active');
+      }
+    });
+  });
+
+  function copyText() {
+    navigator.clipboard.writeText('Updraft Network');
+
+    const btn = document.querySelector('.copy-btn');
+    btn.innerText = 'Copied!';
+
+    setTimeout(() => {
+      btn.innerText = 'Copy Name';
+    }, 2000);
+  }
+</script>
+
 </body>
 </html>
