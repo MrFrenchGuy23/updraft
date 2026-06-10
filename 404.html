@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Updraft Network</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #050505;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 50% 40% at 30% 30%, rgba(0, 212, 255, 0.06), transparent),
+        radial-gradient(ellipse 50% 40% at 70% 70%, rgba(159, 92, 255, 0.06), transparent),
+        #050505;
+      z-index: -1;
+    }
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 48px 48px;
+      z-index: -1;
+    }
+    .code {
+      font-size: 8rem;
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, #00d4ff, #22dd88, #9f5cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+      letter-spacing: -4px;
+    }
+    .glow {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 16px;
+    }
+    p {
+      color: rgba(255,255,255,0.3);
+      font-size: 0.95rem;
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+    a {
+      display: inline-block;
+      padding: 14px 32px;
+      border-radius: 16px;
+      text-decoration: none;
+      font-weight: 700;
+      background: linear-gradient(135deg, #00aaff, #9f5cff);
+      color: white;
+      transition: 0.3s ease;
+      box-shadow: 0 4px 30px rgba(0, 170, 255, 0.15);
+    }
+    a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 40px rgba(0, 170, 255, 0.25);
+    }
+    .particle {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    @media(max-width: 500px) {
+      .code { font-size: 5rem; }
+      .glow { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="bg-grid"></div>
+
+<div class="code">404</div>
+<div class="glow">Lost in the void</div>
+<p>The page you're looking for doesn't exist.<br>Maybe it never did.</p>
+<a href="/">Go Home</a>
+
+<script>
+  for (let i = 0; i < 20; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'particle';
+    const size = Math.random() * 2 + 1;
+    dot.style.cssText = `width:${size}px;height:${size}px;background:rgba(0,212,255,${Math.random()*0.3+0.05});top:${Math.random()*100}%;left:${Math.random()*100}%;animation:float${Math.random()*6+3}s ease-in-out infinite alternate`;
+    document.body.appendChild(dot);
+  }
+  const style = document.createElement('style');
+  style.textContent = `.particle{animation:float 5s ease-in-out infinite alternate}@keyframes float{0%{transform:translateY(0)}100%{transform:translateY(-20px)}}`;
+  document.head.appendChild(style);
+</script>
+</body>
+</html>
