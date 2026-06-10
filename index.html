@@ -917,6 +917,69 @@
       font-size: 0.85rem;
       font-weight: 700;
       color: white;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .user-menu .user-name:hover { color: var(--cyan); }
+
+    /* === PROFILE POPUP === */
+    .popup-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+    }
+
+    .popup-card {
+      position: fixed;
+      top: 80px;
+      right: 70px;
+      z-index: 10000;
+      background: rgba(10, 10, 15, 0.95);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 28px 32px;
+      min-width: 220px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      animation: popIn 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: translateY(-10px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .popup-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid rgba(0, 212, 255, 0.2);
+      margin-bottom: 12px;
+    }
+
+    .popup-name {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: white;
+    }
+
+    .popup-tag {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.4);
+      margin-top: 2px;
+    }
+
+    .popup-id {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.2);
+      margin-top: 8px;
+      font-family: monospace;
+    }
+
+    @media(max-width: 800px) {
+      .popup-card { right: 20px; top: 70px; min-width: 180px; padding: 22px 24px; }
     }
 
     .user-menu .logout-btn {
@@ -1380,6 +1443,8 @@
   }, { passive: true });
 
   // === DISCORD AUTH STATE ===
+  let currentUser = null;
+
   (async function checkAuth() {
     const loginBtn = document.getElementById('loginBtn');
     const userMenu = document.getElementById('userMenu');
@@ -1391,11 +1456,12 @@
       const res = await fetch('/auth/me');
       const data = await res.json();
       if (data.user) {
+        currentUser = data.user;
         loginBtn.style.display = 'none';
         userMenu.classList.add('visible');
-        userAvatar.src = data.user.avatar_url;
-        userAvatar.alt = data.user.username;
-        userName.textContent = data.user.global_name || data.user.username;
+        userAvatar.src = currentUser.avatar_url;
+        userAvatar.alt = currentUser.username;
+        userName.textContent = currentUser.global_name || currentUser.username;
       }
     } catch {}
 
@@ -1403,6 +1469,35 @@
       window.location.href = '/auth/logout';
     });
   })();
+
+  // === PROFILE POPUP ===
+  document.addEventListener('click', (e) => {
+    const popup = document.getElementById('profilePopup');
+    const name = document.getElementById('userName');
+    if (name && name.contains(e.target) && currentUser) {
+      if (popup) {
+        popup.remove();
+        return;
+      }
+      const div = document.createElement('div');
+      div.id = 'profilePopup';
+      div.innerHTML = `
+        <div class="popup-backdrop"></div>
+        <div class="popup-card">
+          <img src="${currentUser.avatar_url}" alt="" class="popup-avatar">
+          <div class="popup-name">${currentUser.global_name || currentUser.username}</div>
+          <div class="popup-tag">@${currentUser.username}</div>
+          <div class="popup-id">ID: ${currentUser.id}</div>
+        </div>
+      `;
+      document.body.appendChild(div);
+      div.querySelector('.popup-backdrop').addEventListener('click', () => div.remove());
+    } else if (popup) {
+      if (!popup.contains(e.target) && !name.contains(e.target)) {
+        popup.remove();
+      }
+    }
+  });
 
   // === HAMBURGER MENU ===
   const hamburger = document.getElementById('hamburger');
