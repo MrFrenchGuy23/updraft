@@ -12,6 +12,7 @@
     :root {
       --cyan: #00d4ff;
       --purple: #9f5cff;
+      --green: #22dd88;
       --accent-1: #00aaff;
       --glass: rgba(255,255,255,0.04);
       --glass-border: rgba(255,255,255,0.08);
@@ -33,7 +34,7 @@
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #0a0a0a; }
     ::-webkit-scrollbar-thumb {
-      background: linear-gradient(var(--cyan), var(--purple));
+      background: linear-gradient(var(--cyan), var(--green), var(--purple));
       border-radius: 999px;
     }
 
@@ -60,8 +61,9 @@
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(ellipse 60% 50% at 20% 20%, rgba(0, 170, 255, 0.10), transparent 60%),
-        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(159, 92, 255, 0.10), transparent 60%),
+        radial-gradient(ellipse 60% 50% at 15% 20%, rgba(0, 170, 255, 0.10), transparent 60%),
+        radial-gradient(ellipse 60% 50% at 50% 80%, rgba(34, 221, 136, 0.08), transparent 60%),
+        radial-gradient(ellipse 60% 50% at 85% 20%, rgba(159, 92, 255, 0.10), transparent 60%),
         radial-gradient(ellipse 40% 40% at 50% 50%, rgba(0, 212, 255, 0.04), transparent 50%),
         #050505;
       z-index: -2;
@@ -130,7 +132,7 @@
       font-size: 1.8rem;
       font-weight: 900;
       letter-spacing: -0.5px;
-      background: linear-gradient(135deg, var(--cyan), var(--accent-1), var(--purple));
+      background: linear-gradient(135deg, var(--cyan), var(--green), var(--purple));
       background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -162,7 +164,7 @@
       width: 0;
       height: 2.5px;
       border-radius: 999px;
-      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      background: linear-gradient(90deg, var(--cyan), var(--green), var(--purple));
       transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
       box-shadow: 0 0 12px rgba(0, 212, 255, 0.3);
     }
@@ -224,7 +226,7 @@
     }
 
     .hero h1 span {
-      background: linear-gradient(135deg, var(--cyan), var(--accent-1), var(--purple));
+      background: linear-gradient(135deg, var(--cyan), var(--green), var(--purple));
       background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -333,7 +335,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(0, 212, 255, 0.06), rgba(159, 92, 255, 0.06));
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.06), rgba(34, 221, 136, 0.06), rgba(159, 92, 255, 0.06));
       opacity: 0;
       transition: 0.4s ease;
     }
@@ -371,7 +373,7 @@
       font-size: 1.8rem;
       font-weight: 800;
       margin-bottom: 14px;
-      background: linear-gradient(135deg, var(--cyan), var(--accent-1));
+      background: linear-gradient(135deg, var(--cyan), var(--green), var(--accent-1));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -392,7 +394,7 @@
       width: 44px;
       height: 44px;
       border-radius: 14px;
-      background: linear-gradient(135deg, rgba(0, 212, 255, 0.12), rgba(159, 92, 255, 0.12));
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.12), rgba(34, 221, 136, 0.12), rgba(159, 92, 255, 0.12));
       border: 1px solid rgba(0, 212, 255, 0.08);
       display: flex;
       align-items: center;
@@ -435,7 +437,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(159, 92, 255, 0.05));
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(34, 221, 136, 0.05), rgba(159, 92, 255, 0.05));
       opacity: 0;
       transition: 0.4s ease;
     }
@@ -457,7 +459,7 @@
       line-height: 1;
       margin-bottom: 8px;
       font-family: 'Space Grotesk', monospace;
-      background: linear-gradient(135deg, var(--cyan), var(--accent-1), var(--purple));
+      background: linear-gradient(135deg, var(--cyan), var(--green), var(--purple));
       background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -480,7 +482,7 @@
     .stat-divider {
       width: 32px;
       height: 2px;
-      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      background: linear-gradient(90deg, var(--cyan), var(--green), var(--purple));
       border-radius: 999px;
       margin: 14px auto 10px;
       opacity: 0.5;
@@ -526,7 +528,7 @@
       inset: 0;
       border-radius: var(--radius);
       padding: 1px;
-      background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), transparent 40%, transparent 60%, rgba(159, 92, 255, 0.15));
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), transparent 30%, rgba(34, 221, 136, 0.10), transparent 60%, rgba(159, 92, 255, 0.15));
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
@@ -537,7 +539,7 @@
       font-size: 2rem;
       font-weight: 800;
       margin-bottom: 16px;
-      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      background: linear-gradient(135deg, var(--cyan), var(--green), var(--purple));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -715,6 +717,263 @@
     }
 
     /* === RESPONSIVE === */
+    /* === SCROLL PROGRESS BAR === */
+    #progressBar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--cyan), var(--green), var(--purple));
+      z-index: 1001;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    /* === HAMBURGER MENU === */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: white;
+      border-radius: 999px;
+      transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* === BACK TO TOP === */
+    #backToTop {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      z-index: 1000;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: white;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+      transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      text-decoration: none;
+    }
+
+    #backToTop.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    #backToTop:hover {
+      border-color: rgba(0, 212, 255, 0.3);
+      box-shadow: 0 0 25px rgba(0, 212, 255, 0.08);
+      transform: translateY(-3px);
+    }
+
+    #backToTop svg { width: 18px; height: 18px; stroke: rgba(255,255,255,0.6); }
+
+    /* === SECTION DIVIDERS === */
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.08), rgba(34, 221, 136, 0.08), rgba(159, 92, 255, 0.08), transparent);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* === FAQ ACCORDION === */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 40px;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .faq-item {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      transition: 0.3s ease;
+    }
+
+    .faq-item:hover {
+      border-color: rgba(0, 212, 255, 0.15);
+    }
+
+    .faq-question {
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.85);
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      transition: 0.3s ease;
+    }
+
+    .faq-question:hover { color: white; }
+
+    .faq-question svg {
+      width: 18px;
+      height: 18px;
+      stroke: rgba(255,255,255,0.4);
+      transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      flex-shrink: 0;
+    }
+
+    .faq-item.open .faq-question svg { transform: rotate(180deg); stroke: var(--cyan); }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1), padding 0.4s ease;
+      padding: 0 24px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 200px;
+      padding: 0 24px 20px;
+    }
+
+    /* === AUTH / USER MENU === */
+    .auth-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .auth-section .login-btn {
+      padding: 10px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: white;
+      font-weight: 700;
+      font-size: 0.85rem;
+      background: linear-gradient(135deg, #5865F2, #4752C4);
+      box-shadow: 0 4px 20px rgba(88,101,242,0.2);
+      transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .auth-section .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(88,101,242,0.35);
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid rgba(0,212,255,0.2);
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+
+    .user-avatar:hover { border-color: rgba(0,212,255,0.5); }
+
+    .user-menu {
+      position: relative;
+      display: none;
+    }
+
+    .user-menu.visible { display: flex; align-items: center; gap: 10px; }
+
+    .user-menu .user-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .user-menu .user-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: white;
+      line-height: 1.2;
+    }
+
+    .user-menu .logout-btn {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+      transition: 0.3s ease;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1.2;
+    }
+
+    .user-menu .logout-btn:hover { color: rgba(255,255,255,0.7); }
+
+    @media(max-width: 800px) {
+      .auth-section .login-btn { font-size: 0.8rem; padding: 8px 14px; }
+      .user-menu .user-name { display: none; }
+    }
+
+    /* === SOCIAL FOOTER === */
+    .social-links {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 16px;
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+    }
+
+    .social-links a:hover {
+      border-color: rgba(0, 212, 255, 0.25);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .social-links a svg { width: 18px; height: 18px; fill: currentColor; }
+
     @media(max-width: 1100px) {
       nav { padding: 18px 35px; }
       nav.scrolled { padding: 14px 35px; }
@@ -724,22 +983,55 @@
 
     @media(max-width: 800px) {
       nav {
-        flex-direction: column;
-        gap: 14px;
-        padding: 16px 20px;
+        padding: 14px 20px;
       }
-      nav.scrolled { padding: 14px 20px; }
-      .nav-links { gap: 18px; flex-wrap: wrap; justify-content: center; }
+      nav.scrolled { padding: 12px 20px; }
+      .hamburger { display: flex; }
+      .nav-links {
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 0;
+        background: rgba(8, 8, 8, 0.97);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        padding: 12px 0;
+        opacity: 0;
+        transform: translateY(-10px);
+        pointer-events: none;
+        transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .nav-links.open {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+      .nav-links a {
+        padding: 14px 24px;
+        width: 100%;
+        text-align: center;
+      }
+      .nav-links a::after { display: none; }
       .hero h1 { font-size: 3.2rem; }
       .section-title { font-size: 2.2rem; }
-      section { padding: 140px 5% 60px; }
+      section { padding: 130px 5% 60px; }
       .discord-btn { display: none; }
+      .auth-section .login-btn { display: none; }
+      .user-menu.visible { gap: 6px; }
       .discord-float { display: flex !important; }
+      #backToTop { bottom: 20px; left: 20px; width: 40px; height: 40px; }
+      .faq-question { font-size: 0.95rem; padding: 16px 18px; }
+      .faq-answer { font-size: 0.9rem; }
+      .faq-item.open .faq-answer { padding: 0 18px 16px; }
     }
 
     @media(max-width: 500px) {
       .hero h1 { font-size: 2.4rem; }
       .card { padding: 26px 22px; }
+      .stats-grid { grid-template-columns: 1fr; gap: 16px; }
+      .stat-number { font-size: 2.4rem; }
     }
 
     @media(min-width: 801px) {
@@ -748,6 +1040,8 @@
   </style>
 </head>
 <body>
+
+<div id="progressBar"></div>
 
 <canvas id="particles"></canvas>
 <div class="noise-overlay"></div>
@@ -758,6 +1052,12 @@
 <nav id="navbar">
   <div class="logo">Updraft Network</div>
 
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
   <div class="nav-links">
     <a href="#home" class="active">Home</a>
     <a href="#features">Features</a>
@@ -765,7 +1065,22 @@
     <a href="#join">Join</a>
   </div>
 
-  <a href="https://discord.gg/kTuJgssUMb" target="_blank" class="discord-btn">Join the Discord</a>
+  <div class="auth-section">
+    <a href="https://discord.gg/B4u9ap3VRb" target="_blank" class="discord-btn"><svg width="18" height="18" viewBox="0 0 127.14 96.36" style="vertical-align:middle;margin-right:8px;"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,56.6,122.8,32.65,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z" fill="white"/></svg>Discord</a>
+
+    <div class="user-menu" id="userMenu">
+      <img class="user-avatar" id="userAvatar" src="" alt="Avatar">
+      <div class="user-info">
+        <span class="user-name" id="userName"></span>
+        <button class="logout-btn" id="logoutBtn">Logout</button>
+      </div>
+    </div>
+
+    <a href="/auth/discord" class="login-btn" id="loginBtn">
+      <svg width="16" height="16" viewBox="0 0 127.14 96.36" fill="white"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,56.6,122.8,32.65,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg>
+      Login
+    </a>
+  </div>
 </nav>
 
 <section class="hero" id="home">
@@ -778,11 +1093,6 @@
       designed to deliver an immersive experience with polished systems, sleek visuals,
       competitive gameplay, and a strong community.
     </p>
-
-    <div class="hero-buttons">
-      <a href="#development" class="primary-btn">Development Status</a>
-      <a href="https://discord.gg/kTuJgssUMb" class="secondary-btn">Join Community</a>
-    </div>
   </div>
 
   <div class="status-grid">
@@ -812,6 +1122,8 @@
   </div>
 </section>
 
+<div class="section-divider"></div>
+
 <section class="stats-section" id="stats">
   <div class="stats-grid">
     <div class="stat-card reveal reveal-delay-1">
@@ -833,6 +1145,8 @@
     </div>
   </div>
 </section>
+
+<div class="section-divider"></div>
 
 <section id="features">
   <h2 class="section-title reveal">What Updraft Network Will Offer</h2>
@@ -869,6 +1183,8 @@
   </div>
 </section>
 
+<div class="section-divider"></div>
+
 <section id="development">
   <h2 class="section-title reveal">Development Status</h2>
 
@@ -900,9 +1216,9 @@
   <div class="server-box reveal reveal-delay-2">
     <div>
       <div class="server-label">Server IP</div>
-      <code>updraft.xyz</code>
+      <code>Unreleased — Stay Tuned!</code>
     </div>
-    <button class="copy-btn" id="copyIpBtn">Copy IP</button>
+    <button class="copy-btn" id="copyIpBtn" style="opacity:0.5; cursor:default; pointer-events:none;">N/A</button>
   </div>
 
   <div class="server-box reveal reveal-delay-3" style="margin-top: 20px;">
@@ -910,19 +1226,68 @@
       <div class="server-label">Discord</div>
       <code style="color: #9f5cff;">discord.gg/updraft</code>
     </div>
-    <a href="https://discord.gg/kTuJgssUMb" target="_blank" class="copy-btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #5865F2, #4752C4);">
+    <a href="https://discord.gg/B4u9ap3VRb" target="_blank" class="copy-btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #5865F2, #4752C4);">
       Join
     </a>
   </div>
 </section>
 
-<a href="https://discord.gg/kTuJgssUMb" target="_blank" class="discord-float" aria-label="Discord">
+<div class="section-divider"></div>
+
+<section id="faq">
+  <h2 class="section-title reveal">Frequently Asked Questions</h2>
+
+  <div class="faq-list">
+    <div class="faq-item reveal reveal-delay-1">
+      <button class="faq-question">
+        What is Updraft Network?
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-answer">Updraft Network is a modern Minecraft network built on Purpur, currently under development. It will feature custom gamemodes, high performance, and a strong community.</div>
+    </div>
+
+    <div class="faq-item reveal reveal-delay-2">
+      <button class="faq-question">
+        When will the server be released?
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-answer">No release date has been announced yet. Development is actively ongoing and updates will be shared through our Discord server.</div>
+    </div>
+
+    <div class="faq-item reveal reveal-delay-3">
+      <button class="faq-question">
+        What Minecraft version will the server use?
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-answer">The server will support Minecraft 1.21.4, optimized through Purpur for the best performance and gameplay experience.</div>
+    </div>
+
+    <div class="faq-item reveal reveal-delay-4">
+      <button class="faq-question">
+        How can I stay updated?
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-answer">Join our Discord server and follow the announcements channel. All major updates, sneak peeks, and release information will be posted there first.</div>
+    </div>
+  </div>
+</section>
+
+<a href="https://discord.gg/B4u9ap3VRb" target="_blank" class="discord-float" aria-label="Discord">
   <svg viewBox="0 0 127.14 96.36"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,56.6,122.8,32.65,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg>
 </a>
 
+<a href="#" id="backToTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+</a>
+
 <footer>
-  Founded by nikepog.<br>
-  Website made by MrFrenchGuy23
+  <div class="social-links">
+    <a href="https://discord.gg/B4u9ap3VRb" target="_blank" aria-label="Discord">
+      <svg viewBox="0 0 127.14 96.36"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,56.6,122.8,32.65,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg>
+    </a>
+
+  </div>
+  Founded by nikepog. &middot; Website made by MrFrenchGuy23
 </footer>
 
 <script>
@@ -997,15 +1362,77 @@
   initParticles();
   animateParticles();
 
-  // === NAVBAR SCROLL ===
+  // === NAVBAR SCROLL / PROGRESS BAR / BACK TO TOP ===
   const navbar = document.getElementById('navbar');
-  let lastScroll = 0;
+  const progressBar = document.getElementById('progressBar');
+  const backToTop = document.getElementById('backToTop');
 
   window.addEventListener('scroll', () => {
     const currentScroll = window.scrollY;
     navbar.classList.toggle('scrolled', currentScroll > 50);
-    lastScroll = currentScroll;
+
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.width = docHeight > 0 ? (currentScroll / docHeight * 100) + '%' : '0%';
+
+    backToTop.classList.toggle('visible', currentScroll > 400);
   }, { passive: true });
+
+  // === DISCORD AUTH STATE ===
+  (async function checkAuth() {
+    const loginBtn = document.getElementById('loginBtn');
+    const userMenu = document.getElementById('userMenu');
+    const userAvatar = document.getElementById('userAvatar');
+    const userName = document.getElementById('userName');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    try {
+      const res = await fetch('/auth/me');
+      const data = await res.json();
+      if (data.user) {
+        loginBtn.style.display = 'none';
+        userMenu.classList.add('visible');
+        const avatarUrl = `https://cdn.discordapp.com/avatars/${data.user.id}/${data.user.avatar}.png?size=64`;
+        userAvatar.src = avatarUrl;
+        userName.textContent = data.user.global_name || data.user.username;
+      }
+    } catch {}
+
+    logoutBtn.addEventListener('click', () => {
+      window.location.href = '/auth/logout';
+    });
+  })();
+
+  // === HAMBURGER MENU ===
+  const hamburger = document.getElementById('hamburger');
+  const navMenu = document.querySelector('.nav-links');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('open');
+  });
+
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('open');
+    });
+  });
+
+  // === FAQ ACCORDION ===
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // === BACK TO TOP CLICK ===
+  backToTop.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
   // === ACTIVE NAV LINK ===
   const sections = document.querySelectorAll('section');
@@ -1042,34 +1469,10 @@
 
   revealElements.forEach(el => observer.observe(el));
 
-  // === COPY IP BUTTON ===
+  // === COPY IP BUTTON (disabled — no IP yet)
   const copyBtn = document.getElementById('copyIpBtn');
   if (copyBtn) {
-    copyBtn.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText('updraft.xyz');
-        copyBtn.textContent = 'Copied!';
-        copyBtn.classList.add('copied');
-        setTimeout(() => {
-          copyBtn.textContent = 'Copy IP';
-          copyBtn.classList.remove('copied');
-        }, 2000);
-      } catch {
-        // fallback
-        const ta = document.createElement('textarea');
-        ta.value = 'updraft.xyz';
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        ta.remove();
-        copyBtn.textContent = 'Copied!';
-        copyBtn.classList.add('copied');
-        setTimeout(() => {
-          copyBtn.textContent = 'Copy IP';
-          copyBtn.classList.remove('copied');
-        }, 2000);
-      }
-    });
+    copyBtn.addEventListener('click', (e) => e.preventDefault());
   }
 
   // === COUNTING ANIMATION ===

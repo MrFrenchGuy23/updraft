@@ -1,6 +1,7 @@
 :root {
   --cyan: #00d4ff;
   --purple: #9f5cff;
+  --green: #22dd88;
   --accent-1: #00aaff;
   --glass: rgba(255,255,255,0.04);
   --glass-border: rgba(255,255,255,0.08);
@@ -27,8 +28,9 @@ body::before {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse 60% 50% at 20% 20%, rgba(0, 170, 255, 0.08), transparent 60%),
-    radial-gradient(ellipse 60% 50% at 80% 80%, rgba(159, 92, 255, 0.08), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 15% 20%, rgba(0, 170, 255, 0.08), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 50% 80%, rgba(34, 221, 136, 0.06), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 85% 20%, rgba(159, 92, 255, 0.08), transparent 60%),
     radial-gradient(ellipse 40% 40% at 50% 50%, rgba(0, 212, 255, 0.03), transparent 50%),
     #050505;
   z-index: -2;
@@ -46,7 +48,7 @@ body::before {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #0a0a0a; }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(var(--cyan), var(--purple));
+  background: linear-gradient(var(--cyan), var(--green), var(--purple));
   border-radius: 999px;
 }
 
@@ -132,7 +134,7 @@ h1 {
   font-size: 2.8rem;
   font-weight: 900;
   letter-spacing: -1px;
-  background: linear-gradient(135deg, var(--cyan), var(--accent-1), var(--purple));
+  background: linear-gradient(135deg, var(--cyan), var(--green), var(--purple));
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
