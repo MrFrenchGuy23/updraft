@@ -107,12 +107,17 @@ export default {
       const user = await fetchUser(tokens.access_token);
       if (!user) return htmlResponse('Failed to fetch user info.', 400);
 
+      const avatarHash = user.avatar;
+      const avatarUrl = avatarHash
+        ? `https://cdn.discordapp.com/avatars/${user.id}/${avatarHash}.png?size=64`
+        : `https://cdn.discordapp.com/embed/avatars/${user.discriminator % 5}.png`;
+
       const session = await encrypt({
         id: user.id,
         username: user.username,
-        discriminator: user.discriminator,
-        avatar: user.avatar,
+        avatar: avatarHash,
         global_name: user.global_name,
+        avatar_url: avatarUrl,
       }, SESSION_SECRET);
 
       return new Response(null, {
@@ -132,6 +137,30 @@ export default {
 
       const user = await decrypt(match[1], SESSION_SECRET);
       return jsonResponse({ user });
+    }
+
+    // --- Avatar proxy (avoids Discord CDN blocking) ---
+    if (path === '/auth/avatar') {
+      const cookie = request.headers.get('Cookie') || '';
+      const match = cookie.match(/(?:^|;\s*)session=([^;]*)/);
+      if (!match) return new Response(null, { status: 401 });
+
+      const user = await decrypt(match[1], SESSION_SECRET);
+      if (!user || !user.avatar) {
+        const defaultNum = user ? parseInt(user.id) % 5 : 0;
+        const url = `https://cdn.discordapp.com/embed/avatars/${defaultNum}.png`;
+        const res = await fetch(url);
+        return new Response(res.body, { headers: { 'Content-Type': 'image/png', 'Cache-Control': 'public,max-age=86400' } });
+      }
+
+      const url = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=64`;
+      const res = await fetch(url);
+      return new Response(res.body, {
+        headers: {
+          'Content-Type': res.headers.get('Content-Type') || 'image/png',
+          'Cache-Control': 'public,max-age=86400',
+        },
+      });
     }
 
     // --- Logout ---

@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Updraft Network</title>
+  <meta name="description" content="Updraft Network — a modern Minecraft network built on Purpur. Coming soon.">
+  <meta property="og:title" content="Updraft Network">
+  <meta property="og:description" content="A modern Minecraft network built on Purpur. Coming soon.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://updraft-9rv.pages.dev">
+  <meta name="theme-color" content="#00d4ff">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -719,6 +725,36 @@
     }
 
     /* === RESPONSIVE === */
+    /* === PRELOADER === */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: #050505;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s ease;
+    }
+
+    #preloader.loaded {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .preloader-ring {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.05);
+      border-top-color: var(--cyan);
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
     /* === SCROLL PROGRESS BAR === */
     #progressBar {
       position: fixed;
@@ -1108,6 +1144,10 @@
 
 <div id="progressBar"></div>
 
+<div id="preloader">
+  <div class="preloader-ring"></div>
+</div>
+
 <canvas id="particles"></canvas>
 <div class="noise-overlay"></div>
 <div class="background-grid"></div>
@@ -1291,9 +1331,12 @@
       <div class="server-label">Discord</div>
       <code style="color: #9f5cff;">discord.gg/updraft</code>
     </div>
-    <a href="https://discord.gg/B4u9ap3VRb" target="_blank" class="copy-btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #5865F2, #4752C4);">
-      Join
-    </a>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <a href="https://discord.gg/B4u9ap3VRb" target="_blank" class="copy-btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #5865F2, #4752C4);">
+        Join
+      </a>
+      <button class="copy-btn" id="copyDiscordBtn" style="background:var(--glass);border:1px solid var(--glass-border);color:white;backdrop-filter:blur(12px);">Copy</button>
+    </div>
   </div>
 </section>
 
@@ -1459,7 +1502,7 @@
         currentUser = data.user;
         loginBtn.style.display = 'none';
         userMenu.classList.add('visible');
-        userAvatar.src = currentUser.avatar_url;
+        userAvatar.src = '/auth/avatar';
         userAvatar.alt = currentUser.username;
         userName.textContent = currentUser.global_name || currentUser.username;
       }
@@ -1484,7 +1527,7 @@
       div.innerHTML = `
         <div class="popup-backdrop"></div>
         <div class="popup-card">
-          <img src="${currentUser.avatar_url}" alt="" class="popup-avatar">
+          <img src="/auth/avatar" alt="" class="popup-avatar">
           <div class="popup-name">${currentUser.global_name || currentUser.username}</div>
           <div class="popup-tag">@${currentUser.username}</div>
           <div class="popup-id">ID: ${currentUser.id}</div>
@@ -1565,6 +1608,35 @@
   });
 
   revealElements.forEach(el => observer.observe(el));
+
+  // === PRELOADER ===
+  window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('preloader').classList.add('loaded'), 300);
+  });
+
+  // === COPY DISCORD INVITE ===
+  const discordCopy = document.getElementById('copyDiscordBtn');
+  if (discordCopy) {
+    discordCopy.addEventListener('click', async () => {
+      const text = 'https://discord.gg/B4u9ap3VRb';
+      try {
+        await navigator.clipboard.writeText(text);
+        discordCopy.textContent = 'Copied!';
+        discordCopy.classList.add('copied');
+        setTimeout(() => { discordCopy.textContent = 'Copy'; discordCopy.classList.remove('copied'); }, 2000);
+      } catch {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+        discordCopy.textContent = 'Copied!';
+        discordCopy.classList.add('copied');
+        setTimeout(() => { discordCopy.textContent = 'Copy'; discordCopy.classList.remove('copied'); }, 2000);
+      }
+    });
+  }
 
   // === COPY IP BUTTON (disabled — no IP yet)
   const copyBtn = document.getElementById('copyIpBtn');
