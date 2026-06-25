@@ -41,7 +41,7 @@ function htmlResponse(body, status = 200) {
 }
 
 function jsonResponse(data, status = 200) {
-  return new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } });
+  return new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
 }
 
 function redirect(url) {
@@ -187,7 +187,8 @@ export default {
       });
 
       if (!res.ok) {
-        return jsonResponse({ error: 'Failed to fetch messages' }, 502);
+        const err = await res.text();
+        return jsonResponse({ error: 'Failed to fetch messages', detail: err, status: res.status }, 502);
       }
 
       const messages = await res.json();
