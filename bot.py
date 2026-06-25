@@ -1,7 +1,10 @@
 import discord
 import os
 
-TOKEN = os.getenv("DISCORD_BOT_TOKEN", "YOUR_BOT_TOKEN_HERE")
+TOKEN = os.getenv("DISCORD_BOT_TOKEN")
+
+if not TOKEN:
+    TOKEN = "PASTE_YOUR_TOKEN_HERE"
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -25,7 +28,7 @@ async def on_message(message):
         await message.channel.send(f"Hey {message.author.mention}! I'm online.")
 
 if __name__ == "__main__":
-    if TOKEN == "YOUR_BOT_TOKEN_HERE":
-        print("ERROR: Set the DISCORD_BOT_TOKEN environment variable or edit the TOKEN variable.")
+    if TOKEN == "PASTE_YOUR_TOKEN_HERE":
+        print("ERROR: Set DISCORD_BOT_TOKEN env var or paste your token in bot.py")
     else:
         client.run(TOKEN)
