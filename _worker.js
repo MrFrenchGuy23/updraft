@@ -1,15 +1,19 @@
-// Cloudflare Worker — Discord OAuth for Updraft Network
+// Cloudflare Worker — Discord OAuth + Channel Sync for Updraft Network
 // Deploy this file as _worker.js in your Cloudflare Pages output directory
 // Set environment variables:
-//   DISCORD_CLIENT_ID     — from Discord Developer Portal
-//   DISCORD_CLIENT_SECRET — from Discord Developer Portal
-//   SESSION_SECRET        — random 32+ char string (run: openssl rand -hex 32)
-//   ORIGIN                — your site URL (e.g. https://updraft.pages.dev)
+//   DISCORD_CLIENT_ID      — from Discord Developer Portal
+//   DISCORD_CLIENT_SECRET  — from Discord Developer Portal
+//   DISCORD_BOT_TOKEN      — your Discord Bot token
+//   DISCORD_CHANNEL_ID     — the channel ID to sync with
+//   DISCORD_WEBHOOK_URL    — (optional) Discord Webhook URL for pretty messages with avatar/name
+//   SESSION_SECRET         — random 32+ char string (run: openssl rand -hex 32)
+//   ORIGIN                 — your site URL (e.g. https://updraft.pages.dev)
 
-const DISCORD_AUTH    = 'https://discord.com/api/oauth2/authorize';
-const DISCORD_TOKEN   = 'https://discord.com/api/oauth2/token';
-const DISCORD_ME      = 'https://discord.com/api/users/@me';
-const SCOPES          = 'identify';
+const API_BASE      = 'https://discord.com/api/v10';
+const DISCORD_AUTH  = 'https://discord.com/api/oauth2/authorize';
+const DISCORD_TOKEN = 'https://discord.com/api/oauth2/token';
+const DISCORD_ME    = 'https://discord.com/api/users/@me';
+const SCOPES        = 'identify';
 
 async function encrypt(data, secret) {
   const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret.padEnd(32).slice(0, 32)), { name: 'AES-CBC' }, false, ['encrypt']);
@@ -169,6 +173,99 @@ export default {
         status: 302,
         headers: { Location: '/', 'Set-Cookie': clearCookie('session') },
       });
+    }
+
+    // --- Get messages from Discord channel ---
+    if (path === '/api/channel/messages' && request.method === 'GET') {
+      const { DISCORD_BOT_TOKEN, DISCORD_CHANNEL_ID } = env;
+      if (!DISCORD_BOT_TOKEN || !DISCORD_CHANNEL_ID) {
+        return jsonResponse({ error: 'Bot not configured' }, 500);
+      }
+
+      const res = await fetch(`${API_BASE}/channels/${DISCORD_CHANNEL_ID}/messages?limit=50`, {
+        headers: { Authorization: `Bot ${DISCORD_BOT_TOKEN}` },
+      });
+
+      if (!res.ok) {
+        return jsonResponse({ error: 'Failed to fetch messages' }, 502);
+      }
+
+      const messages = await res.json();
+      const mapped = messages.map(m => ({
+        id: m.id,
+        content: m.content,
+        timestamp: m.timestamp,
+        author: {
+          id: m.author.id,
+          username: m.author.username,
+          global_name: m.author.global_name,
+          avatar_url: m.author.avatar
+            ? `https://cdn.discordapp.com/avatars/${m.author.id}/${m.author.avatar}.png?size=64`
+            : `https://cdn.discordapp.com/embed/avatars/${parseInt(m.author.discriminator) % 5}.png`,
+          bot: m.author.bot || false,
+        },
+      }));
+
+      return jsonResponse({ messages: mapped });
+    }
+
+    // --- Send message to Discord channel ---
+    if (path === '/api/channel/messages' && request.method === 'POST') {
+      const { DISCORD_BOT_TOKEN, DISCORD_CHANNEL_ID, DISCORD_WEBHOOK_URL } = env;
+      if (!DISCORD_BOT_TOKEN || !DISCORD_CHANNEL_ID) {
+        return jsonResponse({ error: 'Bot not configured' }, 500);
+      }
+
+      const cookie = request.headers.get('Cookie') || '';
+      const match = cookie.match(/(?:^|;\s*)session=([^;]*)/);
+      if (!match) return jsonResponse({ error: 'Not authenticated' }, 401);
+
+      const user = await decrypt(match[1], SESSION_SECRET);
+      if (!user) return jsonResponse({ error: 'Invalid session' }, 401);
+
+      const { content } = await request.json();
+      if (!content || typeof content !== 'string' || content.trim().length === 0) {
+        return jsonResponse({ error: 'Content is required' }, 400);
+      }
+
+      // Use webhook if available for proper Discord-side formatting (avatar + username)
+      if (DISCORD_WEBHOOK_URL) {
+        const res = await fetch(DISCORD_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            content,
+            username: user.global_name || user.username,
+            avatar_url: user.avatar_url,
+          }),
+        });
+
+        if (!res.ok) {
+          const errText = await res.text();
+          return jsonResponse({ error: 'Failed to send message via webhook', detail: errText }, 502);
+        }
+
+        return jsonResponse({ ok: true });
+      }
+
+      // Fallback: send as bot message with username prefix
+      const webhookContent = `**${user.global_name || user.username}** (${user.username}): ${content}`;
+
+      const res = await fetch(`${API_BASE}/channels/${DISCORD_CHANNEL_ID}/messages`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bot ${DISCORD_BOT_TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content: webhookContent }),
+      });
+
+      if (!res.ok) {
+        const errText = await res.text();
+        return jsonResponse({ error: 'Failed to send message', detail: errText }, 502);
+      }
+
+      return jsonResponse({ ok: true });
     }
 
     // --- Pass through for all other routes (Pages static assets) ---
