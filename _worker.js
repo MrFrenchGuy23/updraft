@@ -85,16 +85,14 @@ async function fetchUser(token) {
 
 export default {
   async fetch(request, env) {
-    const { DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, SESSION_SECRET, ORIGIN } = env;
-    if (!DISCORD_CLIENT_ID || !DISCORD_CLIENT_SECRET || !SESSION_SECRET || !ORIGIN) {
-      return htmlResponse('Missing environment variables. Set DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, SESSION_SECRET, and ORIGIN.', 500);
-    }
-
     const url = new URL(request.url);
     const path = url.pathname;
 
+    const { DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, SESSION_SECRET, ORIGIN } = env;
+
     // --- Initiate Discord login ---
     if (path === '/auth/discord') {
+      if (!DISCORD_CLIENT_ID || !ORIGIN) return htmlResponse('Missing DISCORD_CLIENT_ID or ORIGIN env vars.', 500);
       const state = crypto.randomUUID();
       const authUrl = `${DISCORD_AUTH}?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(ORIGIN + '/auth/callback')}&response_type=code&scope=${SCOPES}&state=${state}`;
       return redirect(authUrl);
@@ -102,6 +100,7 @@ export default {
 
     // --- OAuth callback ---
     if (path === '/auth/callback') {
+      if (!DISCORD_CLIENT_ID || !DISCORD_CLIENT_SECRET || !ORIGIN || !SESSION_SECRET) return htmlResponse('Missing OAuth env vars.', 500);
       const { code, state } = Object.fromEntries(url.searchParams);
       if (!code) return htmlResponse('Missing authorization code.', 400);
 
@@ -135,6 +134,7 @@ export default {
 
     // --- Get current user ---
     if (path === '/auth/me') {
+      if (!SESSION_SECRET) return jsonResponse({ user: null });
       const cookie = request.headers.get('Cookie') || '';
       const match = cookie.match(/(?:^|;\s*)session=([^;]*)/);
       if (!match) return jsonResponse({ user: null });
@@ -145,6 +145,7 @@ export default {
 
     // --- Avatar proxy (avoids Discord CDN blocking) ---
     if (path === '/auth/avatar') {
+      if (!SESSION_SECRET) return new Response(null, { status: 401 });
       const cookie = request.headers.get('Cookie') || '';
       const match = cookie.match(/(?:^|;\s*)session=([^;]*)/);
       if (!match) return new Response(null, { status: 401 });
