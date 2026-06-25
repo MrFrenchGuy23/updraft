@@ -85,6 +85,7 @@ async function fetchUser(token) {
 
 export default {
   async fetch(request, env) {
+    try {
     const url = new URL(request.url);
     const path = url.pathname;
 
@@ -113,7 +114,7 @@ export default {
       const avatarHash = user.avatar;
       const avatarUrl = avatarHash
         ? `https://cdn.discordapp.com/avatars/${user.id}/${avatarHash}.png?size=64`
-        : `https://cdn.discordapp.com/embed/avatars/${user.discriminator % 5}.png`;
+        : `https://cdn.discordapp.com/embed/avatars/${parseInt(user.discriminator || '0') % 5}.png`;
 
       const session = await encrypt({
         id: user.id,
@@ -203,7 +204,7 @@ export default {
           global_name: m.author.global_name,
           avatar_url: m.author.avatar
             ? `https://cdn.discordapp.com/avatars/${m.author.id}/${m.author.avatar}.png?size=64`
-            : `https://cdn.discordapp.com/embed/avatars/${parseInt(m.author.discriminator) % 5}.png`,
+            : `https://cdn.discordapp.com/embed/avatars/${parseInt(m.author.discriminator || '0') % 5}.png`,
           bot: m.author.bot || false,
         },
       }));
@@ -272,5 +273,8 @@ export default {
 
     // --- Pass through for all other routes (Pages static assets) ---
     return env.ASSETS.fetch(request);
+    } catch (e) {
+      return jsonResponse({ error: 'Worker error', detail: e.message, stack: e.stack }, 500);
+    }
   },
 };
