@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Updates - Updraft Network</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico">
+    <style>
+        .updates-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            text-align: left;
+            margin-top: 24px;
+        }
+        .update-card {
+            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 20px 24px;
+            transition: all 0.3s ease;
+        }
+        .update-card:hover {
+            border-color: rgba(0, 212, 255, 0.2);
+            background: rgba(30, 30, 30, 0.6);
+        }
+        .update-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .update-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .update-author {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #eee;
+        }
+        .update-time {
+            font-size: 0.75rem;
+            color: #888;
+            margin-left: auto;
+        }
+        .update-content {
+            font-size: 0.95rem;
+            color: #ccc;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+        .update-content strong { color: #fff; }
+        .update-content em { font-style: italic; }
+        .update-content u { text-decoration: underline; }
+        .update-content s { text-decoration: line-through; }
+        .update-content code {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 4px;
+            padding: 1px 4px;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            font-size: 0.85rem;
+            color: #b5bac1;
+        }
+        .update-content pre {
+            background: #1e1e24;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 6px 0;
+            overflow-x: auto;
+        }
+        .update-content pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 0.85rem;
+            color: #b5bac1;
+            white-space: pre;
+        }
+        .loading-updates {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-size: 0.95rem;
+        }
+        .error-updates {
+            text-align: center;
+            padding: 40px;
+            color: #ED4245;
+            font-size: 0.95rem;
+        }
+        .updates-pin {
+            background: #ED4245;
+            color: white;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-blur-overlay" id="bgOverlay"></div>
+    <audio id="ariaMath" loop><source src="ariamath.mp3" type="audio/mpeg"></audio>
+
+    <a href="https://discord.gg/xs7XPceNvu" target="_blank" class="discord-fixed">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord">
+    </a>
+
+    <nav class="navbar">
+        <a href="index.html">Home</a>
+        <a href="store.html">Store</a>
+        <a href="rules.html">Rules</a>
+        <a href="support.html">Support</a>
+        <a href="updates.html" class="active">Updates</a>
+        <a href="newimplements.html">Server Progress</a>
+    </nav>
+
+    <div class="page-wrapper">
+        <h1>Updates</h1>
+        <div class="content-container">
+            <p style="margin-bottom: 16px; color: #aaa;">Latest announcements from the Discord server.</p>
+            <div id="updates-feed" class="updates-list">
+                <div class="loading-updates">Loading updates...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">Website by defnotsrilankan23. &copy; 2026 Updraft Network.</div>
+    <script src="script.js"></script>
+    <script src="discord-chat.js"></script>
+    <script>
+    (function() {
+        const feed = document.getElementById('updates-feed');
+
+        function escapeHtml(text) {
+            const d = document.createElement('div');
+            d.textContent = text;
+            return d.innerHTML;
+        }
+
+        function formatDiscordMarkdown(text) {
+            let html = escapeHtml(text);
+            html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+            html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+            html = html.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>');
+            html = html.replace(/`(.+?)`/g, '<code>$1</code>');
+            html = html.replace(/~~(.+?)~~/g, '<s>$1</s>');
+            html = html.replace(/__([^_]+)__/g, '<u>$1</u>');
+            html = html.replace(/\n/g, '<br>');
+            return html;
+        }
+
+        function formatTimestamp(ts) {
+            const d = new Date(ts);
+            const now = new Date();
+            const diffMs = now - d;
+            const diffMin = Math.floor(diffMs / 60000);
+            const diffHr = Math.floor(diffMs / 3600000);
+            const diffDay = Math.floor(diffMs / 86400000);
+
+            if (diffMin < 1) return 'Just now';
+            if (diffMin < 60) return `${diffMin}m ago`;
+            if (diffHr < 24) return `${diffHr}h ago`;
+            if (diffDay < 7) return `${diffDay}d ago`;
+
+            return d.toLocaleDateString('en-US', {
+                month: 'short', day: 'numeric', year: 'numeric'
+            });
+        }
+
+        function getAvatar(msg) {
+            return msg.author.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
+        }
+
+        async function fetchUpdates() {
+            try {
+                const res = await fetch('/api/channel/messages');
+                const data = await res.json();
+                if (data.error) throw new Error(data.error);
+
+                const messages = data.messages || [];
+
+                if (messages.length === 0) {
+                    feed.innerHTML = '<div class="loading-updates" style="color:#888;">No updates yet.</div>';
+                    return;
+                }
+
+                let html = '';
+                for (const msg of messages) {
+                    const isPinned = msg.pinned;
+                    html += '<div class="update-card">';
+                    html += '<div class="update-header">';
+                    html += '<img class="update-avatar" src="' + escapeHtml(getAvatar(msg)) + '" alt="" loading="lazy" onerror="this.src=\'https://cdn.discordapp.com/embed/avatars/0.png\'">';
+                    html += '<span class="update-author">' + escapeHtml(msg.author.global_name || msg.author.username) + '</span>';
+                    if (isPinned) html += '<span class="updates-pin">Pinned</span>';
+                    html += '<span class="update-time">' + formatTimestamp(msg.timestamp) + '</span>';
+                    html += '</div>';
+                    html += '<div class="update-content">' + formatDiscordMarkdown(msg.content) + '</div>';
+                    html += '</div>';
+                }
+
+                feed.innerHTML = html;
+            } catch (e) {
+                feed.innerHTML = '<div class="error-updates">Failed to load updates. Make sure the Discord bot is configured.</div>';
+            }
+        }
+
+        fetchUpdates();
+        setInterval(fetchUpdates, 30000);
+    })();
+    </script>
+</body>
+</html>
