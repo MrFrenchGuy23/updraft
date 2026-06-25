@@ -1,6 +1,8 @@
 (function () {
   'use strict';
 
+  function bootChat() {
+
   const CHAT_STORAGE_KEY = 'updraft-chat-open';
 
   let chatOpen = localStorage.getItem(CHAT_STORAGE_KEY) === 'true';
@@ -299,9 +301,12 @@
     pollInterval = setInterval(fetchMessages, 5000);
   }
 
+  init();
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', bootChat);
   } else {
-    init();
+    bootChat();
   }
 })();
