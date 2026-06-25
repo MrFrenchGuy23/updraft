@@ -25,6 +25,7 @@
             rel="icon"
             href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='g' x1='0%25' y1='100%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%2310B981'/><stop offset='100%25' stop-color='%230EA5E9'/></linearGradient></defs><circle cx='256' cy='256' r='256' fill='%23040810'/><path d='M130 450 A126 30 0 0 1 382 450' stroke='url(%23g)' stroke-width='12' fill='none' stroke-linecap='round'/><path d='M170 385 A86 25 0 0 0 342 385' stroke='url(%23g)' stroke-width='10' fill='none' stroke-linecap='round'/><path d='M205 325 A51 18 0 0 1 307 325' stroke='url(%23g)' stroke-width='9' fill='none' stroke-linecap='round'/><path d='M228 275 A28 12 0 0 0 284 275' stroke='url(%23g)' stroke-width='7' fill='none' stroke-linecap='round'/></svg>"
         />
+        <script src="discord-chat.js"></script>
         <script src="https://cdn.tailwindcss.com"></script>
         <script>
             tailwind.config = {
@@ -399,7 +400,7 @@
             .cursor-blink {
                 animation: cursor-blink 1s step-end infinite;
             }
-            .timeline-line {
+                    .timeline-line {
                 background: linear-gradient(
                     to bottom,
                     #10b981,
@@ -407,6 +408,167 @@
                     #152535
                 );
             }
+            /* Discord Chat Widget */
+            #updraft-chat {
+                position: fixed;
+                bottom: 100px;
+                right: 30px;
+                z-index: 9999;
+                font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            }
+            #uc-toggle {
+                width: 56px; height: 56px;
+                background: linear-gradient(135deg, #5865F2, #4752C4);
+                border: none; border-radius: 50%;
+                display: flex; align-items: center; justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 4px 24px rgba(88,101,242,0.4);
+                transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
+                position: relative; margin-left: auto; color: white;
+            }
+            #uc-toggle:hover {
+                transform: scale(1.1);
+                box-shadow: 0 8px 40px rgba(88,101,242,0.55);
+            }
+            #uc-toggle.active {
+                background: linear-gradient(135deg, #5865F2, #3b45a0);
+            }
+            #uc-unread {
+                position: absolute; top: -4px; right: -4px;
+                min-width: 20px; height: 20px;
+                background: #ED4245; color: white;
+                font-size: 11px; font-weight: 700;
+                border-radius: 10px; padding: 0 5px;
+                display: flex; align-items: center; justify-content: center;
+                box-shadow: 0 2px 6px rgba(237,66,69,0.4);
+            }
+            #uc-panel {
+                position: absolute; bottom: 68px; right: 0;
+                width: 380px; height: 520px;
+                background: #0a0a0f;
+                border: 1px solid rgba(255,255,255,0.08);
+                border-radius: 16px;
+                display: none; flex-direction: column;
+                overflow: hidden;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+                backdrop-filter: blur(20px);
+            }
+            #uc-panel.open { display: flex; }
+            #uc-header {
+                display: flex; align-items: center; justify-content: space-between;
+                padding: 12px 16px;
+                border-bottom: 1px solid rgba(255,255,255,0.06);
+                background: rgba(0,0,0,0.3); flex-shrink: 0;
+            }
+            #uc-header-left {
+                display: flex; align-items: center; gap: 8px;
+                color: #ddd; font-size: 14px; font-weight: 600;
+            }
+            #uc-header-right { display: flex; align-items: center; gap: 8px; }
+            #uc-status-dot {
+                width: 8px; height: 8px; border-radius: 50%;
+                background: #3ba55c;
+            }
+            #uc-status-dot.disconnected { background: #ED4245; }
+            #uc-status-text {
+                font-size: 11px; color: #888;
+                text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;
+            }
+            #uc-close {
+                background: none; border: none; color: #888;
+                font-size: 20px; cursor: pointer; padding: 0 4px; line-height: 1;
+            }
+            #uc-close:hover { color: #fff; }
+            #uc-messages {
+                flex: 1; overflow-y: auto; padding: 8px 0;
+                scroll-behavior: smooth;
+            }
+            #uc-messages::-webkit-scrollbar { width: 4px; }
+            #uc-messages::-webkit-scrollbar-track { background: transparent; }
+            #uc-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+            #uc-loading, .uc-empty {
+                display: flex; align-items: center; justify-content: center;
+                height: 100%; color: #666; font-size: 13px;
+            }
+            .uc-msg {
+                display: flex; padding: 2px 16px; gap: 10px;
+                transition: background 0.15s;
+            }
+            .uc-msg:hover { background: rgba(255,255,255,0.02); }
+            .uc-msg.uc-grouped { padding-top: 0; padding-bottom: 0; }
+            .uc-avatar {
+                width: 36px; height: 36px; border-radius: 50%;
+                margin-top: 2px; flex-shrink: 0; object-fit: cover;
+            }
+            .uc-body { flex: 1; min-width: 0; }
+            .uc-continued { padding-left: 0; }
+            .uc-head {
+                display: flex; align-items: baseline; gap: 8px; margin-bottom: 2px;
+            }
+            .uc-name { font-size: 14px; font-weight: 600; cursor: pointer; }
+            .uc-name:hover { text-decoration: underline; }
+            .uc-bot-badge {
+                font-size: 10px; font-weight: 600; background: #5865F2;
+                color: white; padding: 0 4px; border-radius: 3px; line-height: 1.4;
+            }
+            .uc-time { font-size: 10px; color: #666; font-weight: 500; }
+            .uc-time-side {
+                font-size: 10px; color: #666; font-weight: 500;
+                float: right; margin-left: 8px; visibility: hidden;
+            }
+            .uc-msg:hover .uc-time-side { visibility: visible; }
+            .uc-content {
+                font-size: 14px; color: #dbdee1;
+                line-height: 1.4; word-wrap: break-word;
+            }
+            .uc-inline-code {
+                background: rgba(255,255,255,0.06);
+                border: 1px solid rgba(255,255,255,0.08);
+                border-radius: 4px; padding: 1px 4px;
+                font-family: 'JetBrains Mono', 'Consolas', monospace;
+                font-size: 13px; color: #b5bac1;
+            }
+            .uc-codeblock {
+                background: #1e1e24; border: 1px solid rgba(255,255,255,0.06);
+                border-radius: 8px; padding: 12px 16px; margin: 6px 0; overflow-x: auto;
+            }
+            .uc-codeblock code {
+                font-family: 'JetBrains Mono', 'Consolas', monospace;
+                font-size: 13px; color: #b5bac1; white-space: pre;
+            }
+            #uc-input-area {
+                padding: 8px 12px 12px;
+                border-top: 1px solid rgba(255,255,255,0.06); flex-shrink: 0;
+            }
+            #uc-auth-msg { text-align: center; color: #888; font-size: 13px; padding: 8px; }
+            #uc-input-wrap {
+                display: flex; align-items: flex-end; gap: 8px;
+                background: rgba(255,255,255,0.04);
+                border: 1px solid rgba(255,255,255,0.08);
+                border-radius: 10px; padding: 4px 6px;
+            }
+            #uc-input-wrap:focus-within { border-color: rgba(88,101,242,0.4); }
+            #uc-input {
+                flex: 1; background: none; border: none; color: #dbdee1;
+                font-size: 14px; font-family: inherit; resize: none;
+                outline: none; padding: 6px 4px; max-height: 120px; line-height: 1.3;
+            }
+            #uc-input::placeholder { color: #555; }
+            #uc-send {
+                background: #5865F2; border: none; border-radius: 8px;
+                width: 36px; height: 36px; display: flex;
+                align-items: center; justify-content: center;
+                cursor: pointer; color: white; transition: all 0.2s; flex-shrink: 0;
+            }
+            #uc-send:hover:not(:disabled) { background: #4752C4; }
+            #uc-send:disabled { opacity: 0.4; cursor: not-allowed; }
+            @media(max-width: 600px) {
+                #updraft-chat { right: 16px; bottom: 80px; }
+                #uc-panel { width: 340px; height: 460px; right: -10px; }
+                #uc-toggle { width: 48px; height: 48px; }
+            }
+            #updates-feed { min-height: 200px; }
+            .loading-updates { min-height: 200px; display: flex; align-items: center; justify-content: center; }
             #particles {
                 position: fixed;
                 inset: 0;
@@ -528,6 +690,13 @@
                     >
                         Practice
                     </button>
+                    <button
+                        onclick="navigate('updates')"
+                        class="nav-link px-3 py-2 text-xs font-medium tracking-wider uppercase text-muted hover:text-txt transition-colors"
+                        data-page="updates"
+                    >
+                        Updates
+                    </button>
                     <div class="w-px h-5 bg-border mx-1 hidden sm:block"></div>
                     <a
                         href="https://discord.gg/B4u9ap3VRb"
@@ -605,6 +774,12 @@
                 class="text-lg font-medium tracking-wider uppercase text-muted hover:text-txt transition-colors"
             >
                 Practice
+            </button>
+            <button
+                onclick="navigate('updates'); toggleMobileMenu()"
+                class="text-lg font-medium tracking-wider uppercase text-muted hover:text-txt transition-colors"
+            >
+                Updates
             </button>
             <a
                 href="https://discord.gg/B4u9ap3VRb"
@@ -2917,6 +3092,22 @@
             </section>
         </div>
 
+        <!-- ==================== UPDATES ==================== -->
+        <div id="page-updates" class="page">
+            <section class="min-h-screen flex flex-col items-center justify-center px-6 pt-24 relative overflow-hidden">
+                <div class="max-w-3xl mx-auto w-full relative z-10">
+                    <div class="text-center mb-12">
+                        <span class="inline-block text-[11px] font-bold tracking-[.2em] uppercase text-primary mb-4 reveal">Announcements</span>
+                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight reveal rd1">Latest <span class="text-gradient">Updates</span></h2>
+                        <p class="text-muted text-sm mt-3 reveal rd2">Live from our Discord server.</p>
+                    </div>
+                    <div id="updates-feed" class="space-y-4">
+                        <div class="text-center text-muted text-sm py-12 loading-updates">Loading updates...</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
         <!-- ==================== FOOTER ==================== -->
         <footer
             class="relative border-t border-border bg-bgdark/80 backdrop-blur-sm"
@@ -3239,7 +3430,7 @@
             }
             function handleHash() {
                 const h = window.location.hash.replace("#", "") || "home";
-                if (["home", "survival", "oneblock", "practice"].includes(h))
+                if (["home", "survival", "oneblock", "practice", "updates"].includes(h))
                     navigate(h);
             }
             window.addEventListener("hashchange", handleHash);
@@ -3358,6 +3549,62 @@
                 handleHash();
                 observeReveals();
             });
+
+            // Updates feed
+            const feed = document.getElementById('updates-feed');
+            async function fetchUpdates() {
+                try {
+                    const res = await fetch('/api/channel/messages');
+                    const data = await res.json();
+                    if (data.error) throw new Error(data.error);
+                    const msgs = data.messages || [];
+                    if (msgs.length === 0) {
+                        feed.innerHTML = '<div class="text-center text-muted text-sm py-12">No updates yet.</div>';
+                        return;
+                    }
+                    let html = '';
+                    for (const msg of msgs) {
+                        const name = msg.author.global_name || msg.author.username;
+                        const avatar = msg.author.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
+                        const time = formatTimestamp(msg.timestamp);
+                        html += '<div class="reveal p-5 bg-bgcard/60 border border-border rounded-2xl backdrop-blur-sm hover:border-primary/20 transition-all">';
+                        html += '<div class="flex items-center gap-3 mb-2">';
+                        html += '<img src="' + avatar + '" alt="" class="w-8 h-8 rounded-full object-cover" onerror="this.src=\'https://cdn.discordapp.com/embed/avatars/0.png\'">';
+                        html += '<span class="font-semibold text-sm text-txt">' + name + '</span>';
+                        html += '<span class="text-xs text-muted ml-auto">' + time + '</span>';
+                        html += '</div>';
+                        html += '<div class="text-sm text-muted leading-relaxed">' + formatDiscord(msg.content) + '</div>';
+                        html += '</div>';
+                    }
+                    feed.innerHTML = html;
+                    observeReveals();
+                } catch {
+                    feed.innerHTML = '<div class="text-center text-muted text-sm py-12">Could not load updates. Make sure the Discord bot/webhook is configured.</div>';
+                }
+            }
+            function formatTimestamp(ts) {
+                const d = new Date(ts), n = new Date();
+                const m = Math.floor((n - d) / 60000);
+                if (m < 1) return 'Just now';
+                if (m < 60) return m + 'm ago';
+                const h = Math.floor(m / 60);
+                if (h < 24) return h + 'h ago';
+                const dy = Math.floor(h / 24);
+                if (dy < 7) return dy + 'd ago';
+                return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            }
+            function formatDiscord(text) {
+                let h = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+                h = h.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+                h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+                h = h.replace(/\*(.+?)\*/g, '<em>$1</em>');
+                h = h.replace(/`(.+?)`/g, '<code class="px-1.5 py-0.5 bg-white/5 border border-white/10 rounded text-xs font-mono text-accent">$1</code>');
+                h = h.replace(/~~(.+?)~~/g, '<s>$1</s>');
+                h = h.replace(/\n/g, '<br>');
+                return h;
+            }
+            fetchUpdates();
+            setInterval(fetchUpdates, 30000);
         </script>
     </body>
 </html>
