@@ -180,8 +180,11 @@ export default {
     // --- Get messages from Discord channel ---
     if (path === '/api/channel/messages' && request.method === 'GET') {
       const { DISCORD_BOT_TOKEN, DISCORD_CHANNEL_ID } = env;
-      if (!DISCORD_BOT_TOKEN || !DISCORD_CHANNEL_ID) {
-        return jsonResponse({ error: 'Bot not configured' }, 500);
+      const missing = [];
+      if (!DISCORD_BOT_TOKEN) missing.push('DISCORD_BOT_TOKEN');
+      if (!DISCORD_CHANNEL_ID) missing.push('DISCORD_CHANNEL_ID');
+      if (missing.length) {
+        return jsonResponse({ error: 'Bot not configured', missing }, 500);
       }
 
       const res = await fetch(`${API_BASE}/channels/${DISCORD_CHANNEL_ID}/messages?limit=50`, {
