@@ -569,6 +569,47 @@
             }
             #updates-feed { min-height: 200px; }
             .loading-updates { min-height: 200px; display: flex; align-items: center; justify-content: center; }
+            .ucard {
+                background: #0a1520; border: 1px solid #152535;
+                border-radius: 16px; padding: 20px 24px;
+                transition: all 0.3s ease;
+            }
+            .ucard:hover { border-color: rgba(14,165,233,0.25); }
+            .ucard-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+            .ucard-avatar {
+                width: 36px; height: 36px; border-radius: 50%; object-fit: cover;
+                background: #152535; flex-shrink: 0;
+            }
+            .ucard-name { font-size: 14px; font-weight: 700; color: #f0fdfa; }
+            .ucard-date { font-size: 11px; color: #94a3b8; font-family: 'JetBrains Mono', monospace; }
+            .ucard-body { font-size: 15px; color: #cbd5e1; line-height: 1.6; word-wrap: break-word; }
+            .ucard-body strong { font-weight: 700; color: #f0fdfa; }
+            .ucard-body em { font-style: italic; }
+            .ucard-body u { text-decoration: underline; }
+            .ucard-body s { text-decoration: line-through; color: #64748b; }
+            .ucard-body code {
+                background: #152535; border: 1px solid #1e3a5f; border-radius: 4px;
+                padding: 2px 5px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #22d3ee;
+            }
+            .ucard-body pre {
+                background: #0a0f18; border: 1px solid #152535; border-radius: 8px;
+                padding: 12px 14px; overflow-x: auto; margin: 8px 0;
+            }
+            .ucard-body pre code { background: none; border: none; padding: 0; white-space: pre; color: #cbd5e1; }
+            .ucard-body blockquote {
+                border-left: 3px solid #152535; padding-left: 12px; margin: 8px 0; color: #64748b;
+            }
+            .ucard-body ul, .ucard-body ol { margin: 6px 0 6px 22px; }
+            .ucard-body li { margin-bottom: 4px; }
+            .ucard-body a { color: #0ea5e9; text-decoration: none; }
+            .ucard-body a:hover { text-decoration: underline; }
+            .ucard-body .spoiler {
+                background: #152535; color: transparent; border-radius: 4px;
+                padding: 0 4px; cursor: pointer; user-select: none;
+            }
+            .ucard-body .spoiler.revealed {
+                color: #cbd5e1; background: rgba(255,255,255,0.06); cursor: text; user-select: text;
+            }
             #particles {
                 position: fixed;
                 inset: 0;
@@ -3094,14 +3135,14 @@
 
         <!-- ==================== UPDATES ==================== -->
         <div id="page-updates" class="page">
-            <section class="min-h-screen flex flex-col items-center justify-center px-6 pt-24 relative overflow-hidden">
-                <div class="max-w-3xl mx-auto w-full relative z-10">
+            <section class="min-h-screen flex flex-col items-center px-6 pt-24 relative overflow-hidden">
+                <div class="max-w-3xl mx-auto w-full relative z-10 py-12">
                     <div class="text-center mb-12">
-                        <span class="inline-block text-[11px] font-bold tracking-[.2em] uppercase text-primary mb-4 reveal">Announcements</span>
-                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight reveal rd1">Latest <span class="text-gradient">Updates</span></h2>
-                        <p class="text-muted text-sm mt-3 reveal rd2">Live from our Discord server.</p>
+                        <span class="inline-block text-[11px] font-bold tracking-[.2em] uppercase text-primary mb-4 reveal">Updates</span>
+                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight reveal rd1">Latest <span class="text-gradient">News</span></h2>
+                        <p class="text-muted text-sm mt-3 reveal rd2">Synced live from our Discord server.</p>
                     </div>
-                    <div id="updates-feed" class="space-y-4">
+                    <div id="updates-feed" class="flex flex-col gap-4">
                         <div class="text-center text-muted text-sm py-12 loading-updates">Loading updates...</div>
                     </div>
                 </div>
@@ -3550,8 +3591,83 @@
                 observeReveals();
             });
 
-            // Updates feed
+            // Updates feed — Discord-style
             const feed = document.getElementById('updates-feed');
+
+            function esc(str) {
+                return String(str ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+            }
+            function fmtDate(ts) {
+                const d = new Date(ts);
+                const n = new Date();
+                const m = Math.floor((n - d) / 60000);
+                if (m < 1) return 'Just now';
+                if (m < 60) return m + 'm ago';
+                const h = Math.floor(m / 60);
+                if (h < 24) return h + 'h ago';
+                const dy = Math.floor(h / 24);
+                if (dy < 7) return dy + 'd ago';
+                return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+            }
+
+            function renderMarkdown(raw) {
+                if (!raw) return '';
+                let text = raw;
+
+                // fenced code blocks
+                const cbs = [];
+                text = text.replace(/```(?:\w+\n)?([\s\S]*?)```/g, (_, c) => { cbs.push(esc(c)); return '\x01' + (cbs.length-1) + '\x01'; });
+
+                // inline code
+                const ics = [];
+                text = text.replace(/`([^`\n]+)`/g, (_, c) => { ics.push(esc(c)); return '\x04' + (ics.length-1) + '\x04'; });
+
+                // links
+                const lks = [];
+                text = text.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (_, l, u) => { lks.push('<a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(l)+'</a>'); return '\x05' + (lks.length-1) + '\x05'; });
+                text = text.replace(/\bhttps?:\/\/[^\s<]+/g, u => { lks.push('<a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(u)+'</a>'); return '\x05' + (lks.length-1) + '\x05'; });
+
+                // escape remaining
+                let html = esc(text);
+
+                // inline formatting
+                html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+                html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+                html = html.replace(/__([^_]+)__/g, '<u>$1</u>');
+                html = html.replace(/~~(.+?)~~/g, '<s>$1</s>');
+                html = html.replace(/\|\|(.+?)\|\|/g, '<span class="spoiler" onclick="this.classList.toggle(\'revealed\')">$1</span>');
+                html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+                // block parsing
+                const lines = html.split('\n');
+                const out = [];
+                let lb = [], lt = null;
+                function flushList() {
+                    if (lb.length) { out.push('<'+lt+'>'+lb.map(l=>'<li>'+l+'</li>').join('')+'</'+lt+'>'); lb=[]; lt=null; }
+                }
+                for (const line of lines) {
+                    const h = line.match(/^(#{1,3})\s+(.*)$/);
+                    const q = line.match(/^&gt;\s?(.*)$/);
+                    const ul = line.match(/^[-*]\s+(.*)$/);
+                    const ol = line.match(/^\d+\.\s+(.*)$/);
+                    if (h) { flushList(); out.push('<div style="font-size:'+(h[1].length===1?'22':h[1].length===2?'18':'16')+'px;font-weight:800;margin:8px 0 4px;line-height:1.3">'+h[2]+'</div>'); }
+                    else if (q) { flushList(); out.push('<blockquote>'+q[1]+'</blockquote>'); }
+                    else if (ul) { flushList(); if(lt&&lt!=='ul')flushList(); lt='ul'; lb.push(ul[1]); }
+                    else if (ol) { flushList(); if(lt&&lt!=='ol')flushList(); lt='ol'; lb.push(ol[1]); }
+                    else if (line.trim()==='') { flushList(); out.push('<br>'); }
+                    else { flushList(); out.push(line+'<br>'); }
+                }
+                flushList();
+                html = out.join('');
+
+                // restore
+                html = html.replace(/\x05(\d+)\x05/g, (_, i) => lks[i]);
+                html = html.replace(/\x04(\d+)\x04/g, (_, i) => '<code>'+ics[i]+'</code>');
+                html = html.replace(/\x01(\d+)\x01/g, (_, i) => '<pre><code>'+cbs[i]+'</code></pre>');
+
+                return html;
+            }
+
             async function fetchUpdates() {
                 try {
                     const res = await fetch('/api/channel/messages');
@@ -3566,42 +3682,21 @@
                     for (const msg of msgs) {
                         const name = msg.author.global_name || msg.author.username;
                         const avatar = msg.author.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
-                        const time = formatTimestamp(msg.timestamp);
-                        html += '<div class="reveal p-5 bg-bgcard/60 border border-border rounded-2xl backdrop-blur-sm hover:border-primary/20 transition-all">';
-                        html += '<div class="flex items-center gap-3 mb-2">';
-                        html += '<img src="' + avatar + '" alt="" class="w-8 h-8 rounded-full object-cover" onerror="this.src=\'https://cdn.discordapp.com/embed/avatars/0.png\'">';
-                        html += '<span class="font-semibold text-sm text-txt">' + name + '</span>';
-                        html += '<span class="text-xs text-muted ml-auto">' + time + '</span>';
+                        const time = fmtDate(msg.timestamp);
+                        const initial = name.charAt(0).toUpperCase();
+                        html += '<div class="ucard reveal">';
+                        html += '<div class="ucard-head">';
+                        html += '<img class="ucard-avatar" src="'+esc(avatar)+'" alt="" onerror="this.style.display=\'none\'">';
+                        html += '<div><div class="ucard-name">'+esc(name)+'</div><div class="ucard-date">'+time+'</div></div>';
                         html += '</div>';
-                        html += '<div class="text-sm text-muted leading-relaxed">' + formatDiscord(msg.content) + '</div>';
+                        html += '<div class="ucard-body">'+renderMarkdown(msg.content)+'</div>';
                         html += '</div>';
                     }
                     feed.innerHTML = html;
                     observeReveals();
                 } catch {
-                    feed.innerHTML = '<div class="text-center text-muted text-sm py-12">Could not load updates. Make sure the Discord bot/webhook is configured.</div>';
+                    feed.innerHTML = '<div class="text-center text-muted text-sm py-12">Failed to load updates.</div>';
                 }
-            }
-            function formatTimestamp(ts) {
-                const d = new Date(ts), n = new Date();
-                const m = Math.floor((n - d) / 60000);
-                if (m < 1) return 'Just now';
-                if (m < 60) return m + 'm ago';
-                const h = Math.floor(m / 60);
-                if (h < 24) return h + 'h ago';
-                const dy = Math.floor(h / 24);
-                if (dy < 7) return dy + 'd ago';
-                return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-            }
-            function formatDiscord(text) {
-                let h = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-                h = h.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
-                h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-                h = h.replace(/\*(.+?)\*/g, '<em>$1</em>');
-                h = h.replace(/`(.+?)`/g, '<code class="px-1.5 py-0.5 bg-white/5 border border-white/10 rounded text-xs font-mono text-accent">$1</code>');
-                h = h.replace(/~~(.+?)~~/g, '<s>$1</s>');
-                h = h.replace(/\n/g, '<br>');
-                return h;
             }
             fetchUpdates();
             setInterval(fetchUpdates, 30000);
