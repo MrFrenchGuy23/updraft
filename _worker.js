@@ -15,6 +15,11 @@ const DISCORD_TOKEN = 'https://discord.com/api/oauth2/token';
 const DISCORD_ME    = 'https://discord.com/api/users/@me';
 const SCOPES        = 'identify';
 
+// Hardcoded fallbacks (env vars take priority if set)
+const HC_BOT_TOKEN   = "YOUR_BOT_TOKEN_HERE";
+const HC_CHANNEL_ID  = "1510985037523324928";
+const HC_WEBHOOK_URL = "https://discord.com/api/webhooks/1519710656276992203/h2pwjCxmZZC-NMmDRMb2mtREyEt8zTYG8VKpjTjRbQ_TuJipBymfHN1ggk8DWuOOmBNl";
+
 async function encrypt(data, secret) {
   const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret.padEnd(32).slice(0, 32)), { name: 'AES-CBC' }, false, ['encrypt']);
   const iv = crypto.getRandomValues(new Uint8Array(16));
@@ -179,13 +184,8 @@ export default {
 
     // --- Get messages from Discord channel ---
     if (path === '/api/channel/messages' && request.method === 'GET') {
-      const { DISCORD_BOT_TOKEN, DISCORD_CHANNEL_ID } = env;
-      const missing = [];
-      if (!DISCORD_BOT_TOKEN) missing.push('DISCORD_BOT_TOKEN');
-      if (!DISCORD_CHANNEL_ID) missing.push('DISCORD_CHANNEL_ID');
-      if (missing.length) {
-        return jsonResponse({ error: 'Bot not configured', missing }, 500);
-      }
+      const DISCORD_BOT_TOKEN = env.DISCORD_BOT_TOKEN || HC_BOT_TOKEN;
+      const DISCORD_CHANNEL_ID = env.DISCORD_CHANNEL_ID || HC_CHANNEL_ID;
 
       const res = await fetch(`${API_BASE}/channels/${DISCORD_CHANNEL_ID}/messages?limit=50`, {
         headers: { Authorization: `Bot ${DISCORD_BOT_TOKEN}` },
@@ -217,10 +217,9 @@ export default {
 
     // --- Send message to Discord channel ---
     if (path === '/api/channel/messages' && request.method === 'POST') {
-      const { DISCORD_BOT_TOKEN, DISCORD_CHANNEL_ID, DISCORD_WEBHOOK_URL } = env;
-      if (!DISCORD_BOT_TOKEN || !DISCORD_CHANNEL_ID) {
-        return jsonResponse({ error: 'Bot not configured' }, 500);
-      }
+      const DISCORD_BOT_TOKEN = env.DISCORD_BOT_TOKEN || HC_BOT_TOKEN;
+      const DISCORD_CHANNEL_ID = env.DISCORD_CHANNEL_ID || HC_CHANNEL_ID;
+      const DISCORD_WEBHOOK_URL = env.DISCORD_WEBHOOK_URL || HC_WEBHOOK_URL;
 
       const cookie = request.headers.get('Cookie') || '';
       const match = cookie.match(/(?:^|;\s*)session=([^;]*)/);
