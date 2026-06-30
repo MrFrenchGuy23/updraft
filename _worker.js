@@ -15,9 +15,7 @@ const DISCORD_TOKEN = 'https://discord.com/api/oauth2/token';
 const DISCORD_ME    = 'https://discord.com/api/users/@me';
 const SCOPES        = 'identify';
 
-// Hardcoded fallbacks (env vars take priority if set)
-const HC_BOT_TOKEN   = "YOUR_BOT_TOKEN_HERE";
-const HC_CHANNEL_ID  = "1510985037523324928";
+// Webhook URL for sending messages (optional, falls back to bot)
 const HC_WEBHOOK_URL = "https://discord.com/api/webhooks/1519710656276992203/h2pwjCxmZZC-NMmDRMb2mtREyEt8zTYG8VKpjTjRbQ_TuJipBymfHN1ggk8DWuOOmBNl";
 
 async function encrypt(data, secret) {
@@ -184,8 +182,11 @@ export default {
 
     // --- Get messages from Discord channel ---
     if (path === '/api/channel/messages' && request.method === 'GET') {
-      const DISCORD_BOT_TOKEN = env.DISCORD_BOT_TOKEN || HC_BOT_TOKEN;
-      const DISCORD_CHANNEL_ID = env.DISCORD_CHANNEL_ID || HC_CHANNEL_ID;
+      const DISCORD_BOT_TOKEN = env.DISCORD_BOT_TOKEN;
+      const DISCORD_CHANNEL_ID = env.DISCORD_CHANNEL_ID;
+      if (!DISCORD_BOT_TOKEN || !DISCORD_CHANNEL_ID) {
+        return jsonResponse({ error: 'Missing env vars', env: { has_bot: !!DISCORD_BOT_TOKEN, has_channel: !!DISCORD_CHANNEL_ID } }, 500);
+      }
 
       const res = await fetch(`${API_BASE}/channels/${DISCORD_CHANNEL_ID}/messages?limit=50`, {
         headers: { Authorization: `Bot ${DISCORD_BOT_TOKEN}` },
@@ -217,8 +218,11 @@ export default {
 
     // --- Send message to Discord channel ---
     if (path === '/api/channel/messages' && request.method === 'POST') {
-      const DISCORD_BOT_TOKEN = env.DISCORD_BOT_TOKEN || HC_BOT_TOKEN;
-      const DISCORD_CHANNEL_ID = env.DISCORD_CHANNEL_ID || HC_CHANNEL_ID;
+      const DISCORD_BOT_TOKEN = env.DISCORD_BOT_TOKEN;
+      const DISCORD_CHANNEL_ID = env.DISCORD_CHANNEL_ID;
+      if (!DISCORD_BOT_TOKEN || !DISCORD_CHANNEL_ID) {
+        return jsonResponse({ error: 'Missing env vars', env: { has_bot: !!DISCORD_BOT_TOKEN, has_channel: !!DISCORD_CHANNEL_ID } }, 500);
+      }
       const DISCORD_WEBHOOK_URL = env.DISCORD_WEBHOOK_URL || HC_WEBHOOK_URL;
 
       const cookie = request.headers.get('Cookie') || '';
