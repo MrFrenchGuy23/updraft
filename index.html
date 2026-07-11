@@ -328,9 +328,7 @@
             .text-gradient-glow {
                 animation: text-glow 3s ease-in-out infinite;
             }
-            #rotating-text {
-                transition: opacity 0.15s ease;
-            }
+
             .text-gradient-r {
                 background: linear-gradient(90deg, #0ea5e9, #10b981);
                 -webkit-background-clip: text;
@@ -850,94 +848,9 @@
                         >
                     </h1>
 
-                    <div
-                        class="h-8 mb-8 flex items-center justify-center"
-                    >
-                        <p class="text-lg sm:text-xl text-muted font-light">
-                            <span id="rotating-text"></span
-                            ><span class="cursor-blink text-primary">|</span>
-                        </p>
-                    </div>
-
-                    <div
-                        class="reveal rd4 flex flex-wrap items-center justify-center gap-3 mb-10"
-                    >
-                        <div
-                            class="platform-badge flex items-center gap-2 px-4 py-2 bg-bgcard/60 border border-border rounded-lg backdrop-blur-sm"
-                        >
-                            <svg
-                                class="w-4 h-4 text-primary"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <rect
-                                    x="2"
-                                    y="3"
-                                    width="20"
-                                    height="14"
-                                    rx="2"
-                                    ry="2"
-                                />
-                                <line x1="8" y1="21" x2="16" y2="21" />
-                                <line x1="12" y1="17" x2="12" y2="21" />
-                            </svg>
-                            <span class="text-xs font-semibold tracking-wide"
-                                >Java</span
-                            >
-                        </div>
-                        <div
-                            class="platform-badge flex items-center gap-2 px-4 py-2 bg-bgcard/60 border border-border rounded-lg backdrop-blur-sm"
-                        >
-                            <svg
-                                class="w-4 h-4 text-secondary"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <rect
-                                    x="5"
-                                    y="2"
-                                    width="14"
-                                    height="20"
-                                    rx="2"
-                                    ry="2"
-                                />
-                                <line x1="12" y1="18" x2="12.01" y2="18" />
-                            </svg>
-                            <span class="text-xs font-semibold tracking-wide"
-                                >Bedrock</span
-                            >
-                        </div>
-                        <div
-                            class="platform-badge flex items-center gap-2 px-4 py-2 bg-bgcard/60 border border-border rounded-lg backdrop-blur-sm"
-                        >
-                            <svg
-                                class="w-4 h-4 text-accent"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <circle cx="12" cy="12" r="10" />
-                                <path d="M2 12h20" />
-                                <path
-                                    d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
-                                />
-                            </svg>
-                            <span class="text-xs font-semibold tracking-wide"
-                                >Eaglercraft</span
-                            >
-                        </div>
-                    </div>
+                    <p class="text-lg sm:text-xl text-muted font-light mb-10">
+                        Join the <span class="font-minecraft">updraft</span>
+                    </p>
 
                     <div
                         class="reveal rd5 flex flex-col sm:flex-row items-center justify-center gap-4"
@@ -3489,43 +3402,7 @@
                 }
             }
 
-            const phrases = [
-                "A new adventure awaits...",
-                "Java, Bedrock & Eaglercraft.",
-                "Join the updraft.",
-                "Founded by Nikepogger.",
-            ];
-            let pi = 0,
-                ci = 0,
-                del = false,
-                td = 60;
-            const te = document.getElementById("rotating-text");
-            function renderText(txt) {
-                return txt.replace(/\bupdraft\b/gi, '<span class="font-minecraft">updraft</span>');
-            }
-            function typeLoop() {
-                const cur = phrases[pi];
-                if (!del) {
-                    te.innerHTML = renderText(cur.substring(0, ci + 1));
-                    ci++;
-                    if (ci === cur.length) {
-                        del = true;
-                        td = 2200;
-                    } else td = 50 + Math.random() * 40;
-                } else {
-                    const plain = te.textContent || cur;
-                    te.textContent = plain.substring(0, plain.length - 1);
-                    ci--;
-                    if (ci <= 0) {
-                        ci = 0;
-                        del = false;
-                        pi = (pi + 1) % phrases.length;
-                        td = 400;
-                    } else td = 25;
-                }
-                setTimeout(typeLoop, td);
-            }
-            typeLoop();
+
 
             let mo = false;
             function toggleMobileMenu() {
