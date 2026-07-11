@@ -321,6 +321,16 @@
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
             }
+            @keyframes text-glow {
+                0%, 100% { filter: drop-shadow(0 0 8px rgba(14,165,233,0.3)) drop-shadow(0 0 20px rgba(16,185,129,0.15)); }
+                50% { filter: drop-shadow(0 0 16px rgba(14,165,233,0.6)) drop-shadow(0 0 40px rgba(16,185,129,0.3)); }
+            }
+            .text-gradient-glow {
+                animation: text-glow 3s ease-in-out infinite;
+            }
+            #rotating-text {
+                transition: opacity 0.15s ease;
+            }
             .text-gradient-r {
                 background: linear-gradient(90deg, #0ea5e9, #10b981);
                 -webkit-background-clip: text;
@@ -834,26 +844,14 @@
                     <h1
                         class="reveal rd1 text-5xl sm:text-6xl lg:text-8xl font-black tracking-tighter leading-[1.02] mb-5"
                     >
-                        <span class="text-gradient">UPDRAFT</span><br /><span
+                        <span class="text-gradient text-gradient-glow">UPDRAFT</span><br /><span
                             class="text-txt"
                             >NETWORK</span
                         >
                     </h1>
 
                     <div
-                        class="reveal rd2 inline-flex items-center gap-2 px-4 py-1.5 bg-bgcard/80 border border-border rounded-full mb-6 backdrop-blur-sm"
-                    >
-                        <span
-                            class="w-2 h-2 rounded-full bg-secondary pulse-dot"
-                        ></span>
-                        <span
-                            class="text-xs font-semibold tracking-wider text-accent"
-                            >MINECRAFT 1.21.4</span
-                        >
-                    </div>
-
-                    <div
-                        class="reveal rd3 h-8 mb-8 flex items-center justify-center"
+                        class="h-8 mb-8 flex items-center justify-center"
                     >
                         <p class="text-lg sm:text-xl text-muted font-light">
                             <span id="rotating-text"></span
@@ -3494,7 +3492,6 @@
             const phrases = [
                 "A new adventure awaits...",
                 "Java, Bedrock & Eaglercraft.",
-                "Built for Minecraft 1.21.4",
                 "Join the updraft.",
                 "Founded by Nikepogger.",
             ];
