@@ -420,6 +420,146 @@
                     #152535
                 );
             }
+            .win-desktop {
+                background: linear-gradient(135deg, #0c1828 0%, #1a2a3a 50%, #0d1f2e 100%);
+                border: 1px solid rgba(255,255,255,0.08);
+                border-radius: 18px;
+                padding: 20px 20px 48px;
+                position: relative;
+                min-height: 420px;
+                overflow: hidden;
+                box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+            }
+            .win-icons { display: flex; gap: 24px; padding: 12px; }
+            .win-icon {
+                display: flex; flex-direction: column; align-items: center; gap: 6px;
+                cursor: pointer; padding: 8px 12px; border-radius: 8px;
+                transition: background 0.2s; width: 80px;
+                color: rgba(255,255,255,0.85); font-size: 11px; text-align: center;
+            }
+            .win-icon:hover { background: rgba(255,255,255,0.08); }
+            .win-icon-img { font-size: 28px; }
+            .win-step {
+                position: absolute; top: 80px; left: 50%; transform: translateX(-50%);
+                width: 380px; max-width: 90vw;
+                background: #1e1e1e; border: 1px solid rgba(255,255,255,0.1);
+                border-radius: 10px; overflow: hidden;
+                display: none; z-index: 10;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            }
+            .win-step.active { display: block; }
+            .win-titlebar {
+                display: flex; align-items: center; justify-content: space-between;
+                background: #2d2d2d; padding: 8px 12px;
+                font-size: 12px; color: #ccc; user-select: none;
+            }
+            .win-controls { display: flex; gap: 8px; }
+            .win-controls span { color: #888; cursor: pointer; font-size: 13px; }
+            .win-controls span:last-child:hover { color: #e81123; }
+            .win-body { padding: 16px; }
+            .win-launcher .launcher-instances { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+            .launcher-card {
+                display: flex; align-items: center; gap: 12px;
+                padding: 10px 14px; background: #2a2a2a; border: 1px solid #3a3a3a;
+                border-radius: 8px; cursor: pointer;
+            }
+            .launcher-card.selected { border-color: #0ea5e9; background: #0a2a3a; }
+            .launcher-card-icon { font-size: 24px; }
+            .launcher-card-name { font-size: 14px; font-weight: 600; color: #eee; }
+            .launcher-card-ver { font-size: 11px; color: #888; }
+            .win-btn {
+                width: 100%; padding: 10px; border: none; border-radius: 8px;
+                font-weight: 700; font-size: 13px; cursor: pointer;
+                transition: all 0.2s;
+            }
+            .launch-btn {
+                background: #0ea5e9; color: white;
+            }
+            .launch-btn:hover { background: #0284c7; }
+            .win-mc { padding: 0; }
+            .mc-topbar {
+                display: flex; align-items: center; gap: 4px;
+                padding: 8px 12px; background: #1a1a1a; border-bottom: 1px solid #333;
+            }
+            .mc-tab {
+                background: none; border: none; color: #888; padding: 6px 12px;
+                font-size: 12px; cursor: pointer; border-radius: 4px;
+            }
+            .mc-tab.active { color: #fff; background: #333; }
+            .mc-user { font-size: 11px; color: #888; }
+            .mc-server-list { padding: 8px; }
+            .mc-server {
+                display: flex; align-items: center; gap: 12px;
+                padding: 10px; border-radius: 8px; cursor: pointer;
+                transition: background 0.2s;
+            }
+            .mc-server:hover, .mc-server.selected { background: rgba(255,255,255,0.06); }
+            .mc-server-icon { font-size: 28px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: #2a2a2a; border-radius: 8px; }
+            .mc-server-info { flex: 1; }
+            .mc-server-name { font-size: 14px; font-weight: 600; color: #eee; }
+            .mc-server-desc { font-size: 11px; color: #888; }
+            .mc-server-players { font-size: 11px; color: #666; display: flex; align-items: center; gap: 4px; margin-top: 2px; }
+            .mc-dot { width: 6px; height: 6px; background: #3ba55c; border-radius: 50%; display: inline-block; }
+            .mc-server-ping { font-size: 11px; color: #3ba55c; font-family: monospace; }
+            .mc-bottombar {
+                display: flex; gap: 8px; padding: 8px 12px;
+                border-top: 1px solid #333; background: #1a1a1a;
+            }
+            .mc-btn {
+                flex: 1; padding: 8px; border: 1px solid #444; border-radius: 6px;
+                background: #2a2a2a; color: #ccc; font-size: 12px; cursor: pointer;
+                transition: all 0.2s;
+            }
+            .mc-btn:hover { background: #3a3a3a; }
+            .mc-btn.primary { background: #0ea5e9; border-color: #0ea5e9; color: white; }
+            .mc-btn.primary:hover { background: #0284c7; }
+            .win-connect { display: flex; flex-direction: column; gap: 16px; }
+            .connect-row label { font-size: 12px; color: #aaa; display: block; margin-bottom: 6px; }
+            .connect-input-wrap {
+                display: flex; align-items: center; gap: 8px;
+                background: #2a2a2a; border: 1px solid #444; border-radius: 8px; padding: 8px 12px;
+            }
+            .connect-ip { font-size: 14px; color: #0ea5e9; font-family: 'JetBrains Mono', monospace; flex: 1; }
+            .copy-ip-btn {
+                background: #3a3a3a; border: 1px solid #555; color: #ccc;
+                padding: 4px 10px; border-radius: 6px; font-size: 11px; cursor: pointer;
+            }
+            .copy-ip-btn:hover { background: #4a4a4a; }
+            .win-joining { display: flex; align-items: center; justify-content: center; min-height: 180px; }
+            .joining-anim { text-align: center; color: #aaa; font-size: 13px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+            .joining-spinner {
+                width: 36px; height: 36px; border: 3px solid #333;
+                border-top-color: #0ea5e9; border-radius: 50%;
+                animation: win-spin 0.8s linear infinite;
+            }
+            @keyframes win-spin { to { transform: rotate(360deg); } }
+            .joining-ip { font-size: 11px; color: #555; font-family: monospace; }
+            .win-taskbar {
+                position: absolute; bottom: 0; left: 0; right: 0;
+                height: 40px; background: rgba(0,0,0,0.6);
+                backdrop-filter: blur(12px); border-top: 1px solid rgba(255,255,255,0.06);
+                display: flex; align-items: center; padding: 0 8px;
+                z-index: 20;
+            }
+            .win-start {
+                display: flex; align-items: center; gap: 6px;
+                padding: 4px 12px; border-radius: 4px; cursor: pointer;
+                font-size: 12px; color: #ccc; transition: background 0.2s;
+            }
+            .win-start:hover { background: rgba(255,255,255,0.1); }
+            .win-start-icon { font-size: 16px; }
+            .win-task-items { display: flex; gap: 4px; margin-left: 8px; flex: 1; }
+            .win-task-item {
+                padding: 3px 12px; background: rgba(255,255,255,0.05);
+                border-radius: 4px; font-size: 11px; color: #aaa;
+                border: 1px solid rgba(255,255,255,0.06);
+            }
+            .win-task-item.active { background: rgba(255,255,255,0.1); color: #eee; }
+            .win-clock { font-size: 11px; color: #aaa; }
+            @media(max-width: 600px) {
+                .win-step { width: 320px; }
+                .win-desktop { min-height: 360px; }
+            }
             #updates-feed { min-height: 200px; }
             .loading-updates { min-height: 200px; display: flex; align-items: center; justify-content: center; }
             .ucard {
@@ -996,6 +1136,117 @@
                                 <span class="text-sm font-bold text-accent">Eaglercraft</span>
                             </div>
                             <code class="text-sm font-mono text-txt bg-black/20 px-3 py-1.5 rounded block break-all">play.updraftnetwork.org</code>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How to Play -->
+            <section class="py-24 px-6">
+                <div class="max-w-5xl mx-auto">
+                    <div class="text-center mb-16">
+                        <span class="reveal inline-block text-[11px] font-bold tracking-[.2em] uppercase text-primary mb-4">How to Play</span>
+                        <h2 class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+                            Join in <span class="text-gradient">Seconds</span>
+                        </h2>
+                        <p class="reveal rd2 text-muted text-sm mt-3 max-w-lg mx-auto">Follow the steps below — it works with any launcher.</p>
+                    </div>
+                    <div class="reveal rd3 relative">
+                        <!-- Windows Desktop Simulation -->
+                        <div class="win-desktop">
+                            <!-- Desktop Icons -->
+                            <div class="win-icons">
+                                <div class="win-icon" data-step="1">
+                                    <div class="win-icon-img">📁</div>
+                                    <span>Prism Launcher</span>
+                                </div>
+                                <div class="win-icon" data-step="2">
+                                    <div class="win-icon-img">🌐</div>
+                                    <span>Multiplayer</span>
+                                </div>
+                                <div class="win-icon" data-step="3">
+                                    <div class="win-icon-img">➕</div>
+                                    <span>Add Server</span>
+                                </div>
+                            </div>
+
+                            <!-- Windows that appear per step -->
+                            <div class="win-step active" data-step="1">
+                                <div class="win-titlebar"><span>Prism Launcher</span><div class="win-controls"><span>─</span><span>□</span><span>✕</span></div></div>
+                                <div class="win-body win-launcher">
+                                    <div class="launcher-instances">
+                                        <div class="launcher-card selected">
+                                            <div class="launcher-card-icon">⛏️</div>
+                                            <div><div class="launcher-card-name">Updraft</div><div class="launcher-card-ver">1.21.4</div></div>
+                                        </div>
+                                    </div>
+                                    <button class="win-btn launch-btn" onclick="nextWinStep(1)">Launch</button>
+                                </div>
+                            </div>
+
+                            <div class="win-step" data-step="2">
+                                <div class="win-titlebar"><span>Minecraft 1.21.4</span><div class="win-controls"><span>─</span><span>□</span><span>✕</span></div></div>
+                                <div class="win-body win-mc">
+                                    <div class="mc-topbar">
+                                        <button class="mc-tab active">Multiplayer</button>
+                                        <button class="mc-tab">Singleplayer</button>
+                                        <div style="flex:1"></div>
+                                        <span class="mc-user">Player</span>
+                                    </div>
+                                    <div class="mc-server-list">
+                                        <div class="mc-server selected" onclick="nextWinStep(2)">
+                                            <div class="mc-server-icon">🌍</div>
+                                            <div class="mc-server-info">
+                                                <div class="mc-server-name">Updraft Network</div>
+                                                <div class="mc-server-desc">Survival • Lifesteal • Practice</div>
+                                                <div class="mc-server-players"><span class="mc-dot"></span>0/100 players</div>
+                                            </div>
+                                            <div class="mc-server-ping">5ms</div>
+                                        </div>
+                                    </div>
+                                    <div class="mc-bottombar">
+                                        <button class="mc-btn">Direct Connect</button>
+                                        <button class="mc-btn primary" onclick="nextWinStep(3)">Join Server</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="win-step" data-step="3">
+                                <div class="win-titlebar"><span>Direct Connect</span><div class="win-controls"><span>─</span><span>□</span><span>✕</span></div></div>
+                                <div class="win-body win-connect">
+                                    <div class="connect-row">
+                                        <label>Server Address</label>
+                                        <div class="connect-input-wrap">
+                                            <code class="connect-ip">java.updraftnetwork.org</code>
+                                            <button class="copy-ip-btn" onclick="copyConnectIP()">📋 Copy</button>
+                                        </div>
+                                    </div>
+                                    <button class="win-btn launch-btn" onclick="nextWinStep(4)">Join</button>
+                                </div>
+                            </div>
+
+                            <div class="win-step" data-step="4">
+                                <div class="win-titlebar"><span>Connecting...</span><div class="win-controls"><span>─</span><span>□</span><span>✕</span></div></div>
+                                <div class="win-body win-joining">
+                                    <div class="joining-anim">
+                                        <div class="joining-spinner"></div>
+                                        <div>Connecting to server...</div>
+                                        <div class="joining-ip">java.updraftnetwork.org</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Taskbar -->
+                            <div class="win-taskbar">
+                                <div class="win-start" onclick="resetWinTutorial()">
+                                    <span class="win-start-icon">🪟</span>
+                                    <span>Start</span>
+                                </div>
+                                <div class="win-task-items">
+                                    <div class="win-task-item active">Updraft Network</div>
+                                </div>
+                                <div class="win-clock"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -3302,6 +3553,16 @@
 
 
             let mo = false;
+            let winStep = 1;
+            function nextWinStep(s) { winStep = s + 1; document.querySelectorAll('.win-step').forEach(el => el.classList.toggle('active', parseInt(el.dataset.step) === winStep)); }
+            function resetWinTutorial() { winStep = 0; nextWinStep(0); }
+            function copyConnectIP() {
+                navigator.clipboard.writeText('java.updraftnetwork.org');
+                const btn = document.querySelector('.copy-ip-btn');
+                const orig = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                setTimeout(() => btn.textContent = orig, 1500);
+            }
             function toggleMobileMenu() {
                 mo = !mo;
                 const m = document.getElementById("mobile-menu"),
