@@ -1118,21 +1118,21 @@
                     <div class="grid sm:grid-cols-3 gap-4">
                         <div class="reveal rd1 p-6 bg-bgcard border border-border rounded-xl text-left hover:border-primary/30 transition-colors">
                             <div class="flex items-center gap-2 mb-3">
-                                <span class="w-2 h-2 rounded-full bg-primary"></span>
+                                <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                                 <span class="text-sm font-bold text-primary">Java</span>
                             </div>
                             <code class="text-sm font-mono text-txt bg-black/20 px-3 py-1.5 rounded block break-all">java.updraftnetwork.org</code>
                         </div>
                         <div class="reveal rd2 p-6 bg-bgcard border border-border rounded-xl text-left hover:border-secondary/30 transition-colors">
                             <div class="flex items-center gap-2 mb-3">
-                                <span class="w-2 h-2 rounded-full bg-secondary"></span>
+                                <svg class="w-5 h-5 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                                 <span class="text-sm font-bold text-secondary">Bedrock</span>
                             </div>
                             <code class="text-sm font-mono text-txt bg-black/20 px-3 py-1.5 rounded block break-all">bedrock.updraftnetwork.org:1201</code>
                         </div>
                         <div class="reveal rd3 p-6 bg-bgcard border border-border rounded-xl text-left hover:border-accent/30 transition-colors">
                             <div class="flex items-center gap-2 mb-3">
-                                <span class="w-2 h-2 rounded-full bg-accent"></span>
+                                <svg class="w-5 h-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M12 11v4"/><line x1="10" y1="13" x2="14" y2="13"/></svg>
                                 <span class="text-sm font-bold text-accent">Eaglercraft</span>
                             </div>
                             <code class="text-sm font-mono text-txt bg-black/20 px-3 py-1.5 rounded block break-all">play.updraftnetwork.org</code>
@@ -1212,13 +1212,27 @@
                             </div>
 
                             <div class="win-step" data-step="3">
-                                <div class="win-titlebar"><span>Direct Connect</span><div class="win-controls"><span>─</span><span>□</span><span>✕</span></div></div>
+                                <div class="win-titlebar"><span>Select Platform</span><div class="win-controls"><span>─</span><span>□</span><span>✕</span></div></div>
                                 <div class="win-body win-connect">
                                     <div class="connect-row">
-                                        <label>Server Address</label>
+                                        <label>Java Edition</label>
                                         <div class="connect-input-wrap">
                                             <code class="connect-ip">java.updraftnetwork.org</code>
-                                            <button class="copy-ip-btn" onclick="copyConnectIP()">📋 Copy</button>
+                                            <button class="copy-ip-btn" onclick="copyIP(this,'java.updraftnetwork.org')">📋 Copy</button>
+                                        </div>
+                                    </div>
+                                    <div class="connect-row">
+                                        <label>Bedrock Edition</label>
+                                        <div class="connect-input-wrap">
+                                            <code class="connect-ip">bedrock.updraftnetwork.org:1201</code>
+                                            <button class="copy-ip-btn" onclick="copyIP(this,'bedrock.updraftnetwork.org:1201')">📋 Copy</button>
+                                        </div>
+                                    </div>
+                                    <div class="connect-row">
+                                        <label>Eaglercraft</label>
+                                        <div class="connect-input-wrap">
+                                            <code class="connect-ip">play.updraftnetwork.org</code>
+                                            <button class="copy-ip-btn" onclick="copyIP(this,'play.updraftnetwork.org')">📋 Copy</button>
                                         </div>
                                     </div>
                                     <button class="win-btn launch-btn" onclick="nextWinStep(4)">Join</button>
@@ -1231,7 +1245,7 @@
                                     <div class="joining-anim">
                                         <div class="joining-spinner"></div>
                                         <div>Connecting to server...</div>
-                                        <div class="joining-ip">java.updraftnetwork.org</div>
+                                        <div class="joining-ip">Choose your platform above</div>
                                     </div>
                                 </div>
                             </div>
@@ -2078,8 +2092,13 @@
                                     >
                                 </div>
                                 <p class="text-xs text-muted leading-relaxed">
-                                    Survival is live now across Java, Bedrock & Eaglercraft. Join us at <span class="text-txt font-mono text-[11px]">java.updraftnetwork.org</span>
+                                    Survival is live now across Java, Bedrock & Eaglercraft.
                                 </p>
+                                <div class="flex flex-wrap items-center gap-2 mt-3">
+                                    <span class="flex items-center gap-1.5 px-2.5 py-1 bg-black/20 rounded-lg text-[10px] font-mono font-bold text-txt"><svg class="w-3.5 h-3.5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>java.updraftnetwork.org</span>
+                                    <span class="flex items-center gap-1.5 px-2.5 py-1 bg-black/20 rounded-lg text-[10px] font-mono font-bold text-txt"><svg class="w-3.5 h-3.5 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>bedrock.updraftnetwork.org:1201</span>
+                                    <span class="flex items-center gap-1.5 px-2.5 py-1 bg-black/20 rounded-lg text-[10px] font-mono font-bold text-txt"><svg class="w-3.5 h-3.5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M12 11v4"/><line x1="10" y1="13" x2="14" y2="13"/></svg>play.updraftnetwork.org</span>
+                                </div>
                             </div>
                         </div>
                         <div
@@ -2170,18 +2189,21 @@
                             <p
                                 class="text-muted leading-relaxed mb-6 max-w-md mx-auto"
                             >
-                                Survival is live across Java, Bedrock & Eaglercraft. Connect now and start playing.
+                                Connect on any platform and start playing.
                             </p>
-                            <div
-                                class="inline-flex items-center gap-3 px-5 py-3 bg-bgcard border border-border rounded-xl"
-                            >
-                                <span
-                                    class="w-2.5 h-2.5 rounded-full bg-secondary pulse-dot"
-                                ></span>
-                                <span
-                                    class="text-sm font-mono font-bold text-txt tracking-wide"
-                                    >java.updraftnetwork.org</span
-                                >
+                            <div class="flex flex-wrap items-center justify-center gap-3">
+                                <div class="flex items-center gap-2 px-4 py-2.5 bg-bgcard border border-border rounded-xl">
+                                    <svg class="w-5 h-5 text-primary flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                                    <span class="text-xs font-mono font-bold text-txt">java.updraftnetwork.org</span>
+                                </div>
+                                <div class="flex items-center gap-2 px-4 py-2.5 bg-bgcard border border-border rounded-xl">
+                                    <svg class="w-5 h-5 text-secondary flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                                    <span class="text-xs font-mono font-bold text-txt">bedrock.updraftnetwork.org:1201</span>
+                                </div>
+                                <div class="flex items-center gap-2 px-4 py-2.5 bg-bgcard border border-border rounded-xl">
+                                    <svg class="w-5 h-5 text-accent flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M12 11v4"/><line x1="10" y1="13" x2="14" y2="13"/></svg>
+                                    <span class="text-xs font-mono font-bold text-txt">play.updraftnetwork.org</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -3555,9 +3577,8 @@
             let winStep = 1;
             function nextWinStep(s) { winStep = s + 1; document.querySelectorAll('.win-step').forEach(el => el.classList.toggle('active', parseInt(el.dataset.step) === winStep)); }
             function resetWinTutorial() { winStep = 0; nextWinStep(0); }
-            function copyConnectIP() {
-                navigator.clipboard.writeText('java.updraftnetwork.org');
-                const btn = document.querySelector('.copy-ip-btn');
+            function copyIP(btn, ip) {
+                navigator.clipboard.writeText(ip);
                 const orig = btn.textContent;
                 btn.textContent = '✅ Copied!';
                 setTimeout(() => btn.textContent = orig, 1500);
