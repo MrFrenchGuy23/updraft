@@ -51,7 +51,7 @@
             };
         </script>
         <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Press+Start+2P&display=swap"
             rel="stylesheet"
         />
         <style>
@@ -398,6 +398,11 @@
             }
             .cursor-blink {
                 animation: cursor-blink 1s step-end infinite;
+            }
+            .font-minecraft {
+                font-family: 'Press Start 2P', monospace;
+                letter-spacing: 0.02em;
+                color: #22D3EE;
             }
                     .timeline-line {
                 background: linear-gradient(
@@ -3498,19 +3503,24 @@
                 del = false,
                 td = 60;
             const te = document.getElementById("rotating-text");
+            function renderText(txt) {
+                return txt.replace(/\bupdraft\b/gi, '<span class="font-minecraft">updraft</span>');
+            }
             function typeLoop() {
                 const cur = phrases[pi];
                 if (!del) {
-                    te.textContent = cur.substring(0, ci + 1);
+                    te.innerHTML = renderText(cur.substring(0, ci + 1));
                     ci++;
                     if (ci === cur.length) {
                         del = true;
                         td = 2200;
                     } else td = 50 + Math.random() * 40;
                 } else {
-                    te.textContent = cur.substring(0, ci - 1);
+                    const plain = te.textContent || cur;
+                    te.textContent = plain.substring(0, plain.length - 1);
                     ci--;
-                    if (ci === 0) {
+                    if (ci <= 0) {
+                        ci = 0;
                         del = false;
                         pi = (pi + 1) % phrases.length;
                         td = 400;
