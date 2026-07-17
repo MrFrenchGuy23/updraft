@@ -83,7 +83,7 @@
                 position: fixed;
                 top: 0;
                 left: 0;
-                height: 2px;
+                height: 3px;
                 background: linear-gradient(90deg, #10b981, #0ea5e9, #22d3ee);
                 z-index: 100;
                 width: 0%;
@@ -110,12 +110,12 @@
             }
             .reveal {
                 opacity: 0;
-                transform: translateX(-40px);
+                transform: translateY(30px);
                 transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             }
             .reveal.visible {
                 opacity: 1;
-                transform: translateX(0);
+                transform: translateY(0);
             }
             .rd1 {
                 transition-delay: 0.1s;
@@ -141,8 +141,12 @@
             .rd8 {
                 transition-delay: 0.8s;
             }
+            @keyframes float {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-8px); }
+            }
             .float {
-                transition: transform 0.4s ease;
+                animation: float 6s ease-in-out infinite;
             }
             .glow-pulse {
                 opacity: 0.5;
@@ -160,9 +164,6 @@
             }
             .pulse-dot {
                 animation: pulse-dot 2s ease-in-out infinite;
-            }
-            .swirl-1, .swirl-2, .swirl-3, .swirl-4 {
-                /* static logo */
             }
             @keyframes scaleIn {
                 from {
@@ -182,7 +183,6 @@
                     background-position: 200% 0;
                 }
             }
-            /* removed */
             .card-hover {
                 transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             }
@@ -211,7 +211,9 @@
                 background: linear-gradient(135deg, #10b981, #0ea5e9, #22d3ee);
             }
             .bg-grid {
-                /* clean background */
+                background-image:
+                    radial-gradient(circle, rgba(14, 165, 233, 0.03) 1px, transparent 1px);
+                background-size: 32px 32px;
             }
             .text-gradient {
                 background: linear-gradient(135deg, #10b981, #0ea5e9, #22d3ee);
@@ -219,10 +221,6 @@
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
             }
-            .text-gradient-glow {
-                /* static gradient text */
-            }
-
             .text-gradient-r {
                 background: linear-gradient(90deg, #0ea5e9, #10b981);
                 -webkit-background-clip: text;
@@ -266,6 +264,7 @@
                 opacity: 1;
                 transform: translateX(-50%) translateY(0);
             }
+            #mobile-menu.open { opacity: 1; pointer-events: auto; transform: scale(1); }
             .feature-row {
                 transition: all 0.3s ease;
             }
@@ -498,7 +497,6 @@
             .ucard-body .spoiler.revealed {
                 color: #cbd5e1; background: rgba(255,255,255,0.06); cursor: text; user-select: text;
             }
-            /* particles removed */
             .platform-badge {
                 transition: all 0.3s ease;
             }
@@ -506,16 +504,15 @@
                 transform: translateY(-2px);
                 border-color: rgba(14, 165, 233, 0.5);
             }
-            /* orbit rings removed */
         </style>
     </head>
     <body class="bg-grid">
         <div id="scroll-progress"></div>
         <div
-            class="fixed top-1/3 -left-48 w-[500px] h-[500px] bg-primary/3 rounded-full blur-[120px] pointer-events-none"
+            class="fixed top-1/3 -left-48 w-[500px] h-[500px] bg-primary/8 rounded-full blur-[100px] pointer-events-none"
         ></div>
         <div
-            class="fixed bottom-1/4 -right-48 w-[500px] h-[500px] bg-secondary/3 rounded-full blur-[120px] pointer-events-none"
+            class="fixed bottom-1/4 -right-48 w-[500px] h-[500px] bg-secondary/8 rounded-full blur-[100px] pointer-events-none"
         ></div>
 
         <!-- Navigation -->
@@ -586,7 +583,7 @@
                         >Updraft Network</span
                     >
                 </a>
-                <div class="flex items-center gap-1 sm:gap-2">
+                <div class="hidden sm:flex items-center gap-1 sm:gap-2">
                     <button
                         onclick="navigate('survival')"
                         class="nav-link px-3 py-2 text-xs font-medium tracking-wider uppercase text-muted hover:text-txt transition-colors"
@@ -655,7 +652,8 @@
         </button>
         <div
             id="mobile-menu"
-            class="fixed inset-0 z-[55] bg-bgdark/95 backdrop-blur-xl hidden flex-col items-center justify-center gap-6"
+            class="fixed inset-0 z-[55] bg-bgdark/95 backdrop-blur-xl flex-col items-center justify-center gap-6 opacity-0 pointer-events-none"
+            style="transition: opacity 0.3s ease, transform 0.3s ease; transform: scale(0.95);"
         >
             <button
                 onclick="
@@ -844,14 +842,14 @@
                     <h1
                         class="reveal rd1 text-5xl sm:text-6xl lg:text-8xl font-black tracking-tighter leading-[1.02] mb-5"
                     >
-                        <span class="text-gradient text-gradient-glow">UPDRAFT</span><br /><span
+                        <span class="text-gradient">UPDRAFT</span><br /><span
                             class="text-txt"
                             >NETWORK</span
                         >
                     </h1>
 
-                    <p class="text-lg sm:text-xl text-muted font-light mb-10">
-                        Join the <span class="font-minecraft">updraft</span>
+                    <p class="text-lg sm:text-xl text-muted mb-10">
+                        Cross-platform Minecraft network. Java, Bedrock & Eaglercraft.
                     </p>
 
                     <div
@@ -982,7 +980,7 @@
                         <h2
                             class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight"
                         >
-                            Why <span class="text-gradient">Updraft</span>?
+                            Why <span class="text-txt">Updraft</span>?
                         </h2>
                     </div>
                     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -1008,7 +1006,7 @@
                             <h3 class="text-sm font-bold mb-1.5">
                                 Custom Built
                             </h3>
-                            <p class="text-xs text-muted leading-relaxed">
+                            <p class="text-sm text-muted leading-relaxed">
                                 Not a pre-made template. Every feature is coded
                                 from scratch for a unique experience.
                             </p>
@@ -1036,7 +1034,7 @@
                             <h3 class="text-sm font-bold mb-1.5">
                                 No Pay-to-Win
                             </h3>
-                            <p class="text-xs text-muted leading-relaxed">
+                            <p class="text-sm text-muted leading-relaxed">
                                 Cosmetic only, no gameplay advantages.
                                 Fair play for everyone.
                             </p>
@@ -1067,7 +1065,7 @@
                             <h3 class="text-sm font-bold mb-1.5">
                                 Community First
                             </h3>
-                            <p class="text-xs text-muted leading-relaxed">
+                            <p class="text-sm text-muted leading-relaxed">
                                 Player feedback directly shapes development.
                                 Your voice matters here.
                             </p>
@@ -1095,7 +1093,7 @@
                             <h3 class="text-sm font-bold mb-1.5">
                                 Active Development
                             </h3>
-                            <p class="text-xs text-muted leading-relaxed">
+                            <p class="text-sm text-muted leading-relaxed">
                                 Regular updates, transparent progress, and open
                                 communication every step.
                             </p>
@@ -1115,7 +1113,7 @@
                         <h2
                             class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight"
                         >
-                            Play <span class="text-gradient">Anywhere</span>
+                            Play <span class="text-txt">Anywhere</span>
                         </h2>
                         <p class="reveal rd2 text-muted mt-4 max-w-lg mx-auto">
                             One network, every platform. No matter how you play
@@ -1125,7 +1123,6 @@
                     <div class="grid md:grid-cols-3 gap-6">
                         <div
                             class="reveal rd1 p-8 bg-bgcard/50 border border-border rounded-2xl hover:border-primary/30 transition-all duration-500 hover:bg-bgcard group text-center"
-                            style="animation: border-dance 6s ease infinite"
                         >
                             <div
                                 class="w-16 h-16 mx-auto mb-5 bg-primary/10 border border-primary/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500"
@@ -1154,14 +1151,13 @@
                             <h3 class="text-base font-bold mb-2">
                                 Java Edition
                             </h3>
-                            <p class="text-xs text-muted leading-relaxed">
+                            <p class="text-sm text-muted leading-relaxed">
                                 The original PC experience. Full feature
                                 support, best performance, mod-compatible.
                             </p>
                         </div>
                         <div
                             class="reveal rd2 p-8 bg-bgcard/50 border border-border rounded-2xl hover:border-secondary/30 transition-all duration-500 hover:bg-bgcard group text-center"
-                            style="animation: border-dance 6s ease infinite 2s"
                         >
                             <div
                                 class="w-16 h-16 mx-auto mb-5 bg-secondary/10 border border-secondary/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500"
@@ -1189,14 +1185,13 @@
                             <h3 class="text-base font-bold mb-2">
                                 Bedrock Edition
                             </h3>
-                            <p class="text-xs text-muted leading-relaxed">
+                            <p class="text-sm text-muted leading-relaxed">
                                 Console, mobile, and Windows 10. Cross-play with
                                 friends on any device.
                             </p>
                         </div>
                         <div
                             class="reveal rd3 p-8 bg-bgcard/50 border border-border rounded-2xl hover:border-accent/30 transition-all duration-500 hover:bg-bgcard group text-center"
-                            style="animation: border-dance 6s ease infinite 4s"
                         >
                             <div
                                 class="w-16 h-16 mx-auto mb-5 bg-accent/10 border border-accent/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500"
@@ -1220,7 +1215,7 @@
                             <h3 class="text-base font-bold mb-2">
                                 Eaglercraft
                             </h3>
-                            <p class="text-xs text-muted leading-relaxed">
+                            <p class="text-sm text-muted leading-relaxed">
                                 Browser-based Minecraft, no download needed.
                                 Just open and play instantly.
                             </p>
@@ -1241,7 +1236,7 @@
                             class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight"
                         >
                             Choose Your
-                            <span class="text-gradient">Adventure</span>
+                            <span class="text-txt">Adventure</span>
                         </h2>
                     </div>
                     <div class="grid md:grid-cols-3 gap-6">
@@ -1442,7 +1437,7 @@
                     <div class="text-center mb-16">
                         <span class="reveal inline-block text-[11px] font-bold tracking-[.2em] uppercase text-primary mb-4">How to Play</span>
                         <h2 class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
-                            Join in <span class="text-gradient">Seconds</span>
+                            Join in <span class="text-txt">Seconds</span>
                         </h2>
                         <p class="reveal rd2 text-muted text-sm mt-3 max-w-lg mx-auto">Follow the steps below with any launcher.</p>
                     </div>
@@ -1560,7 +1555,7 @@
                                 <div class="win-task-items">
                                     <div class="win-task-item active">Updraft Network</div>
                                 </div>
-                                <div class="win-clock"></div>
+                                <div class="win-clock" id="win-clock"></div>
                             </div>
                         </div>
                     </div>
@@ -1578,12 +1573,15 @@
                         <h2
                             class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight"
                         >
-                            Behind <span class="text-gradient">Updraft</span>
+                            Behind <span class="text-txt">Updraft</span>
                         </h2>
                     </div>
                     <div class="grid sm:grid-cols-3 gap-6">
+                    </div>
+                </div>
+            </section>
 
-<!-- Roadmap -->
+            <!-- Roadmap -->
             <section class="py-24 px-6">
                 <div class="max-w-3xl mx-auto">
                     <div class="text-center mb-16">
@@ -1595,7 +1593,7 @@
                             class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight"
                         >
                             Server
-                            <span class="text-gradient">Released!</span>
+                            <span class="text-txt">Released!</span>
                         </h2>
                     </div>
                     <div class="relative">
@@ -1703,21 +1701,21 @@
                     <h2 class="reveal rd1 text-3xl sm:text-4xl font-bold tracking-tight mb-4">Pick Your Platform</h2>
                     <p class="reveal rd2 text-sm text-muted mb-10">Java, Bedrock, and Eaglercraft are all supported.</p>
                     <div class="grid grid-cols-3 gap-4 sm:gap-6">
-                        <div class="reveal rd1 p-4 sm:p-6 bg-bgcard border border-border rounded-xl text-left hover:border-primary/30 transition-colors">
+                        <div class="reveal rd1 p-4 sm:p-6 bg-bgcard border border-border rounded-xl text-left hover:border-primary/30 hover:-translate-y-1 transition-all duration-300">
                             <div class="flex items-center gap-2 mb-3">
                                 <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                                 <span class="text-sm font-bold text-primary">Java</span>
                             </div>
                             <code class="text-xs sm:text-sm font-mono text-txt bg-black/20 px-3 py-1.5 rounded block break-all">java.updraftnetwork.org</code>
                         </div>
-                        <div class="reveal rd2 p-4 sm:p-6 bg-bgcard border border-border rounded-xl text-left hover:border-secondary/30 transition-colors">
+                        <div class="reveal rd2 p-4 sm:p-6 bg-bgcard border border-border rounded-xl text-left hover:border-secondary/30 hover:-translate-y-1 transition-all duration-300">
                             <div class="flex items-center gap-2 mb-3">
                                 <svg class="w-5 h-5 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                                 <span class="text-sm font-bold text-secondary">Bedrock</span>
                             </div>
                             <code class="text-xs sm:text-sm font-mono text-txt bg-black/20 px-3 py-1.5 rounded block break-all">bedrock.updraftnetwork.org:1201</code>
                         </div>
-                        <div class="reveal rd3 p-4 sm:p-6 bg-bgcard border border-border rounded-xl text-left hover:border-accent/30 transition-colors">
+                        <div class="reveal rd3 p-4 sm:p-6 bg-bgcard border border-border rounded-xl text-left hover:border-accent/30 hover:-translate-y-1 transition-all duration-300">
                             <div class="flex items-center gap-2 mb-3">
                                 <svg class="w-5 h-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M12 11v4"/><line x1="10" y1="13" x2="14" y2="13"/></svg>
                                 <span class="text-sm font-bold text-accent">Eaglercraft</span>
@@ -1738,10 +1736,10 @@
                     <h2
                         class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4"
                     >
-                        Join Our <span class="text-gradient">Community</span>
+                        Join Our <span class="text-txt">Community</span>
                     </h2>
                     <p
-                        class="reveal rd2 text-lg text-muted font-light leading-relaxed mb-10 max-w-lg mx-auto"
+                        class="reveal rd2 text-lg text-muted leading-relaxed mb-10 max-w-lg mx-auto"
                     >
                         Stay up to date with updates, events, and connect with
                         the community.
@@ -1794,7 +1792,7 @@
                         <h2
                             class="reveal rd1 text-3xl sm:text-4xl font-bold tracking-tight"
                         >
-                            Common <span class="text-gradient">Questions</span>
+                            Common <span class="text-txt">Questions</span>
                         </h2>
                     </div>
                     <div class="space-y-3">
@@ -1803,7 +1801,7 @@
                         >
                             <button
                                 onclick="toggleFaq(this)"
-                                class="w-full flex items-center justify-between px-6 py-4 text-left"
+                                class="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-white/[0.02] transition-colors"
                             >
                                 <span class="text-sm font-semibold pr-4"
                                     >When is the server launching?</span
@@ -1823,9 +1821,7 @@
                                 <p
                                     class="text-sm text-muted leading-relaxed pb-4"
                                 >
-                                    No set date yet, we're focused on quality
-                                    over speed. Follow our Discord for the most
-                                    up-to-date timeline.
+                                    Survival is live now! Connect using the IPs shown on this page. Follow our Discord for updates on Practice and Lifesteal.
                                 </p>
                             </div>
                         </div>
@@ -1834,7 +1830,7 @@
                         >
                             <button
                                 onclick="toggleFaq(this)"
-                                class="w-full flex items-center justify-between px-6 py-4 text-left"
+                                class="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-white/[0.02] transition-colors"
                             >
                                 <span class="text-sm font-semibold pr-4"
                                     >What's the server IP?</span
@@ -1854,8 +1850,7 @@
                                 <p
                                     class="text-sm text-muted leading-relaxed pb-4"
                                 >
-                                    The IP has not been released yet. It will be
-                                    announced at launch in our Discord server.
+                                    java.updraftnetwork.org | bedrock.updraftnetwork.org:1201 | play.updraftnetwork.org (Eaglercraft)
                                 </p>
                             </div>
                         </div>
@@ -1864,7 +1859,7 @@
                         >
                             <button
                                 onclick="toggleFaq(this)"
-                                class="w-full flex items-center justify-between px-6 py-4 text-left"
+                                class="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-white/[0.02] transition-colors"
                             >
                                 <span class="text-sm font-semibold pr-4"
                                     >Can I play on Bedrock or Eaglercraft?</span
@@ -1895,7 +1890,7 @@
                         >
                             <button
                                 onclick="toggleFaq(this)"
-                                class="w-full flex items-center justify-between px-6 py-4 text-left"
+                                class="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-white/[0.02] transition-colors"
                             >
                                 <span class="text-sm font-semibold pr-4"
                                     >Will it be free to play?</span
@@ -1924,7 +1919,7 @@
                         >
                             <button
                                 onclick="toggleFaq(this)"
-                                class="w-full flex items-center justify-between px-6 py-4 text-left"
+                                class="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-white/[0.02] transition-colors"
                             >
                                 <span class="text-sm font-semibold pr-4"
                                     >What about Lifesteal and Practice?</span
@@ -1955,7 +1950,7 @@
                         >
                             <button
                                 onclick="toggleFaq(this)"
-                                class="w-full flex items-center justify-between px-6 py-4 text-left"
+                                class="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-white/[0.02] transition-colors"
                             >
                                 <span class="text-sm font-semibold pr-4"
                                     >Who runs the server?</span
@@ -2031,15 +2026,15 @@
                                 Connect on any platform and start playing.
                             </p>
                             <div class="flex flex-wrap items-center justify-center gap-3">
-                                <div class="flex items-center gap-2 px-4 py-2.5 bg-bgcard border border-border rounded-xl">
+                                <div class="flex items-center gap-2 px-4 py-2.5 bg-bgcard border border-border rounded-xl hover:border-primary/30 hover:bg-bgcard transition-all duration-300">
                                     <svg class="w-5 h-5 text-primary flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                                     <span class="text-xs font-mono font-bold text-txt">java.updraftnetwork.org</span>
                                 </div>
-                                <div class="flex items-center gap-2 px-4 py-2.5 bg-bgcard border border-border rounded-xl">
+                                <div class="flex items-center gap-2 px-4 py-2.5 bg-bgcard border border-border rounded-xl hover:border-primary/30 hover:bg-bgcard transition-all duration-300">
                                     <svg class="w-5 h-5 text-secondary flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                                     <span class="text-xs font-mono font-bold text-txt">bedrock.updraftnetwork.org:1201</span>
                                 </div>
-                                <div class="flex items-center gap-2 px-4 py-2.5 bg-bgcard border border-border rounded-xl">
+                                <div class="flex items-center gap-2 px-4 py-2.5 bg-bgcard border border-border rounded-xl hover:border-primary/30 hover:bg-bgcard transition-all duration-300">
                                     <svg class="w-5 h-5 text-accent flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M12 11v4"/><line x1="10" y1="13" x2="14" y2="13"/></svg>
                                     <span class="text-xs font-mono font-bold text-txt">play.updraftnetwork.org</span>
                                 </div>
@@ -2105,13 +2100,13 @@
                                     class="w-2 h-2 rounded-full bg-survival pulse-dot"
                                 ></span
                                 ><span class="text-sm font-medium text-survival"
-                                    >In Development</span
+                                    >Live</span
                                 >
                             </div>
                         </div>
                     </div>
                     <p
-                        class="reveal rd2 text-lg text-muted font-light leading-relaxed mb-12 max-w-xl"
+                        class="reveal rd2 text-lg text-muted leading-relaxed mb-12 max-w-xl"
                     >
                         A survival experience built from the ground up. Custom
                         terrain, a thriving economy, and dynamic events
@@ -2356,7 +2351,7 @@
                         </div>
                     </div>
                     <p
-                        class="reveal rd2 text-lg text-muted font-light leading-relaxed mb-12 max-w-xl"
+                        class="reveal rd2 text-lg text-muted leading-relaxed mb-12 max-w-xl"
                     >
                         Start with a single block and build an empire. Progress
                         through phases, upgrade your island, complete
@@ -2585,7 +2580,7 @@
                         </div>
                     </div>
                     <p
-                        class="reveal rd2 text-lg text-muted font-light leading-relaxed mb-12 max-w-xl"
+                        class="reveal rd2 text-lg text-muted leading-relaxed mb-12 max-w-xl"
                     >
                         Competitive PvP at its finest. Ranked and unranked
                         queues, custom kits, arena selection, and an Elo rating
@@ -2750,7 +2745,7 @@
                 <div class="max-w-3xl mx-auto w-full relative z-10 py-12">
                     <div class="text-center mb-12">
                         <span class="inline-block text-[11px] font-bold tracking-[.2em] uppercase text-primary mb-4 reveal">Updates</span>
-                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight reveal rd1">Latest <span class="text-gradient">News</span></h2>
+                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight reveal rd1">Latest <span class="text-txt">News</span></h2>
                         <p class="text-muted text-sm mt-3 reveal rd2">Synced live from our Discord server.</p>
                     </div>
                     <div id="updates-feed" class="flex flex-col gap-4">
@@ -2921,7 +2916,7 @@
                                 class="text-left text-sm text-muted hover:text-lifesteal transition-colors flex items-center gap-2"
                             >
                                 <span
-                                    class="w-1.5 h-1.5 rounded-full bg-practice"
+                                    class="w-1.5 h-1.5 rounded-full bg-lifesteal"
                                 ></span
                                 >Lifesteal
                             </button>
@@ -3083,7 +3078,7 @@
             function copyIP(btn, ip) {
                 navigator.clipboard.writeText(ip);
                 const orig = btn.textContent;
-                btn.textContent = 'âœ… Copied!';
+                btn.textContent = 'Copied!';
                 setTimeout(() => btn.textContent = orig, 1500);
             }
             function toggleMobileMenu() {
@@ -3091,12 +3086,12 @@
                 const m = document.getElementById("mobile-menu"),
                     ic = document.getElementById("menu-icon");
                 if (mo) {
-                    m.style.display = "flex";
+                    m.classList.add("open");
                     ic.innerHTML =
                         '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>';
                     document.body.style.overflow = "hidden";
                 } else {
-                    m.style.display = "none";
+                    m.classList.remove("open");
                     ic.innerHTML =
                         '<line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>';
                     document.body.style.overflow = "";
@@ -3107,6 +3102,8 @@
                 handleHash();
                 observeReveals();
             });
+
+            setInterval(()=>{const c=document.getElementById('win-clock');if(c)c.textContent=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});},1000);
 
             // Updates feed â€” Discord-style
             const feed = document.getElementById('updates-feed');
