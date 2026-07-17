@@ -1436,7 +1436,7 @@
                 </div>
             </section>
 
-<!-- How to Play -->
+            <!-- How to Play -->
             <section class="py-24 px-6">
                 <div class="max-w-5xl mx-auto">
                     <div class="text-center mb-16">
@@ -1447,6 +1447,125 @@
                         <p class="reveal rd2 text-muted text-sm mt-3 max-w-lg mx-auto">Follow the steps below with any launcher.</p>
                     </div>
                     <div class="reveal rd3 relative">
+                        <!-- Windows Desktop Simulation -->
+                        <div class="win-desktop">
+                            <!-- Desktop Icons -->
+                            <div class="win-icons">
+                                <div class="win-icon" data-step="1">
+                                    <div class="win-icon-img">
+                                        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                                    </div>
+                                    <span>Prism Launcher</span>
+                                </div>
+                                <div class="win-icon" data-step="2">
+                                    <div class="win-icon-img">
+                                        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                                    </div>
+                                    <span>Multiplayer</span>
+                                </div>
+                                <div class="win-icon" data-step="3">
+                                    <div class="win-icon-img">
+                                        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                                    </div>
+                                    <span>Add Server</span>
+                                </div>
+                            </div>
+
+                            <!-- Windows that appear per step -->
+                            <div class="win-step active" data-step="1">
+                                <div class="win-titlebar"><span>Prism Launcher</span><div class="win-controls"><span>─</span><span>□</span><span>✕</span></div></div>
+                                <div class="win-body win-launcher">
+                                    <div class="launcher-instances">
+                                        <div class="launcher-card selected">
+                                            <div class="launcher-card-icon"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+                                            <div><div class="launcher-card-name">Updraft</div><div class="launcher-card-ver">1.21.4</div></div>
+                                        </div>
+                                    </div>
+                                    <button class="win-btn launch-btn" onclick="nextWinStep(1)">Launch</button>
+                                </div>
+                            </div>
+
+                            <div class="win-step" data-step="2">
+                                <div class="win-titlebar"><span>Minecraft 1.21.4</span><div class="win-controls"><span>─</span><span>□</span><span>✕</span></div></div>
+                                <div class="win-body win-mc">
+                                    <div class="mc-topbar">
+                                        <button class="mc-tab active">Multiplayer</button>
+                                        <button class="mc-tab">Singleplayer</button>
+                                        <div style="flex:1"></div>
+                                        <span class="mc-user">Player</span>
+                                    </div>
+                                    <div class="mc-server-list">
+                                        <div class="mc-server selected" onclick="nextWinStep(2)">
+                                            <div class="mc-server-icon"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+                                            <div class="mc-server-info">
+                                                <div class="mc-server-name">Updraft Network</div>
+                                                <div class="mc-server-desc">Survival, Lifesteal, Practice</div>
+                                                <div class="mc-server-players"><span class="mc-dot"></span>0/100 players</div>
+                                            </div>
+                                            <div class="mc-server-ping">5ms</div>
+                                        </div>
+                                    </div>
+                                    <div class="mc-bottombar">
+                                        <button class="mc-btn">Direct Connect</button>
+                                        <button class="mc-btn primary" onclick="nextWinStep(3)">Join Server</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="win-step" data-step="3">
+                                <div class="win-titlebar"><span>Select Platform</span><div class="win-controls"><span>─</span><span>□</span><span>✕</span></div></div>
+                                <div class="win-body win-connect">
+                                    <div class="connect-row">
+                                        <label>Java Edition</label>
+                                        <div class="connect-input-wrap">
+                                            <code class="connect-ip">java.updraftnetwork.org</code>
+                                            <button class="copy-ip-btn" onclick="copyIP(this,'java.updraftnetwork.org')"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+                                        </div>
+                                    </div>
+                                    <div class="connect-row">
+                                        <label>Bedrock Edition</label>
+                                        <div class="connect-input-wrap">
+                                            <code class="connect-ip">bedrock.updraftnetwork.org:1201</code>
+                                            <button class="copy-ip-btn" onclick="copyIP(this,'bedrock.updraftnetwork.org:1201')"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+                                        </div>
+                                    </div>
+                                    <div class="connect-row">
+                                        <label>Eaglercraft</label>
+                                        <div class="connect-input-wrap">
+                                            <code class="connect-ip">play.updraftnetwork.org</code>
+                                            <button class="copy-ip-btn" onclick="copyIP(this,'play.updraftnetwork.org')"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+                                        </div>
+                                    </div>
+                                    <button class="win-btn launch-btn" onclick="nextWinStep(4)">Join</button>
+                                </div>
+                            </div>
+
+                            <div class="win-step" data-step="4">
+                                <div class="win-titlebar"><span>Connecting...</span><div class="win-controls"><span>─</span><span>□</span><span>✕</span></div></div>
+                                <div class="win-body win-joining">
+                                    <div class="joining-anim">
+                                        <div class="joining-spinner"></div>
+                                        <div>Connecting to server...</div>
+                                        <div class="joining-ip">Choose your platform above</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Taskbar -->
+                            <div class="win-taskbar">
+                                <div class="win-start" onclick="resetWinTutorial()">
+                                    <span class="win-start-icon"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h7.95v7.95H3V3zm10.05 0H21v7.95h-7.95V3zM3 13.05h7.95V21H3v-7.95zm10.05 0H21V21h-7.95v-7.95z"/></svg></span>
+                                    <span>Start</span>
+                                </div>
+                                <div class="win-task-items">
+                                    <div class="win-task-item active">Updraft Network</div>
+                                </div>
+                                <div class="win-clock"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
 <!-- Team Section -->
             <section class="py-24 px-6">
