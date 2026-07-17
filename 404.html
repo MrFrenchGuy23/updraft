@@ -24,20 +24,11 @@
       content: "";
       position: fixed;
       inset: 0;
-      background:
-        radial-gradient(ellipse 50% 40% at 30% 30%, rgba(0, 212, 255, 0.06), transparent),
-        radial-gradient(ellipse 50% 40% at 70% 70%, rgba(159, 92, 255, 0.06), transparent),
-        #050505;
+      background: #050505;
       z-index: -1;
     }
     .bg-grid {
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-      background-size: 48px 48px;
-      z-index: -1;
+      /* clean background */
     }
     .code {
       font-size: 8rem;
@@ -96,16 +87,6 @@
 <a href="/">Go Home</a>
 
 <script>
-  for (let i = 0; i < 20; i++) {
-    const dot = document.createElement('div');
-    dot.className = 'particle';
-    const size = Math.random() * 2 + 1;
-    dot.style.cssText = `width:${size}px;height:${size}px;background:rgba(0,212,255,${Math.random()*0.3+0.05});top:${Math.random()*100}%;left:${Math.random()*100}%;animation:float${Math.random()*6+3}s ease-in-out infinite alternate`;
-    document.body.appendChild(dot);
-  }
-  const style = document.createElement('style');
-  style.textContent = `.particle{animation:float 5s ease-in-out infinite alternate}@keyframes float{0%{transform:translateY(0)}100%{transform:translateY(-20px)}}`;
-  document.head.appendChild(style);
 </script>
 </body>
 </html>
