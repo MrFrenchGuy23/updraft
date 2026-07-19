@@ -277,6 +277,37 @@ export default {
       return jsonResponse({ ok: true });
     }
 
+    // --- AI Chat proxy (OpenAI) ---
+    if (path === '/api/chat' && request.method === 'POST') {
+      const OPENAI_API_KEY = env.OPENAI_API_KEY;
+      if (!OPENAI_API_KEY) return jsonResponse({ error: 'OPENAI_API_KEY env var not set' }, 500);
+
+      const { messages } = await request.json();
+      if (!messages || !Array.isArray(messages)) return jsonResponse({ error: 'messages array required' }, 400);
+
+      const res = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: 'gpt-3.5-turbo',
+          messages,
+          max_tokens: 300,
+          temperature: 0.7,
+        }),
+      });
+
+      if (!res.ok) {
+        const err = await res.text();
+        return jsonResponse({ error: 'OpenAI request failed', detail: err }, 502);
+      }
+
+      const data = await res.json();
+      return jsonResponse(data);
+    }
+
     // --- Pass through for all other routes (Pages static assets) ---
     return env.ASSETS.fetch(request);
     } catch (e) {

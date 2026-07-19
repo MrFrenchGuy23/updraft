@@ -3558,7 +3558,6 @@
             </div>
         </div>
 
-        <script src="config.js"></script>
         <script>
 
             function navigate(page) {
@@ -3786,7 +3785,6 @@
             setInterval(fetchUpdates, 30000);
 
             // AI Chat Widget
-            const OPENAI_API_KEY = (typeof CONFIG !== 'undefined' && CONFIG.OPENAI_API_KEY) || '';
             const SYSTEM_PROMPT = `You are the Updraft Network assistant, a friendly and knowledgeable AI for a Minecraft server network. Always be helpful, concise, and enthusiastic. Use short paragraphs and bullet points when listing features. Never make up information — if you don't know, say so and direct them to the Discord.
 
 ## About Updraft Network
@@ -3888,10 +3886,6 @@ If someone asks about something you don't know about the server, suggest they jo
                 const input = document.getElementById('chat-input');
                 const text = input.value.trim();
                 if (!text) return;
-                if (!OPENAI_API_KEY) {
-                    addMessage('bot', 'API key not configured yet. The site owner needs to add their OpenAI API key to enable the assistant.');
-                    return;
-                }
                 input.value = '';
                 addMessage('user', text);
                 chatHistory.push({ role: 'user', content: text });
@@ -3903,20 +3897,14 @@ If someone asks about something you don't know about the server, suggest they jo
                 document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
 
                 try {
-                    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+                    const res = await fetch('/api/chat', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Bearer ' + OPENAI_API_KEY
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
-                            model: 'gpt-3.5-turbo',
                             messages: [
                                 { role: 'system', content: SYSTEM_PROMPT },
                                 ...chatHistory.slice(-10)
-                            ],
-                            max_tokens: 300,
-                            temperature: 0.7
+                            ]
                         })
                     });
                     const data = await res.json();
