@@ -280,7 +280,7 @@ export default {
     // --- AI Chat proxy (OpenAI) ---
     if (path === '/api/chat' && request.method === 'POST') {
       const OPENAI_API_KEY = env.OPENAI_API_KEY;
-      if (!OPENAI_API_KEY) return jsonResponse({ error: 'OPENAI_API_KEY env var not set' }, 500);
+      if (!OPENAI_API_KEY) return jsonResponse({ error: 'OPENAI_API_KEY env var not set', keys: Object.keys(env).filter(k => !k.startsWith('_')) }, 500);
 
       const { messages } = await request.json();
       if (!messages || !Array.isArray(messages)) return jsonResponse({ error: 'messages array required' }, 400);

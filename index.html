@@ -3953,10 +3953,10 @@ You CAN help with general Minecraft questions too:
                         chatHistory.push({ role: 'assistant', content: reply });
                         addMessage('bot', reply);
                     } else {
-                        addMessage('bot', 'Sorry, I had trouble processing that. Try again or ask in our Discord.');
+                        addMessage('bot', 'Sorry, I had trouble processing that. Try again or ask in our Discord.' + (data.error ? ' Error: ' + data.error + ' ' + (data.detail || '') : '') + (data.detail && !data.error ? ' Detail: ' + data.detail : ''));
                     }
                 } catch (e) {
-                    addMessage('bot', 'Connection error. Please try again later.');
+                    addMessage('bot', 'Connection error: ' + e.message);
                 }
                 typing.classList.remove('show');
                 sendBtn.disabled = false;
