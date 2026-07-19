@@ -507,11 +507,11 @@
             }
             #chat-toggle {
                 position: fixed;
-                bottom: 24px;
-                right: 24px;
+                bottom: 28px;
+                right: 28px;
                 z-index: 999;
-                width: 56px;
-                height: 56px;
+                width: 64px;
+                height: 64px;
                 border-radius: 50%;
                 background: linear-gradient(135deg, #10B981, #0EA5E9);
                 border: none;
@@ -519,14 +519,20 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                box-shadow: 0 4px 24px rgba(14, 165, 233, 0.3);
+                box-shadow: 0 4px 30px rgba(14, 165, 233, 0.5), 0 0 60px rgba(16, 185, 129, 0.25);
                 transition: all 0.3s ease;
             }
             #chat-toggle:hover {
-                transform: scale(1.08);
-                box-shadow: 0 6px 32px rgba(14, 165, 233, 0.45);
+                transform: scale(1.12);
+                box-shadow: 0 6px 40px rgba(14, 165, 233, 0.65), 0 0 80px rgba(16, 185, 129, 0.35);
             }
-            #chat-toggle svg { width: 24px; height: 24px; color: white; }
+            #chat-toggle svg { width: 28px; height: 28px; color: white; }
+            @keyframes chat-pulse {
+                0%, 100% { box-shadow: 0 4px 30px rgba(14, 165, 233, 0.5), 0 0 60px rgba(16, 185, 129, 0.25); }
+                50% { box-shadow: 0 4px 30px rgba(14, 165, 233, 0.7), 0 0 80px rgba(16, 185, 129, 0.4); }
+            }
+            #chat-toggle { animation: chat-pulse 3s ease-in-out infinite; }
+            #chat-toggle:hover { animation: none; }
             #chat-panel {
                 position: fixed;
                 bottom: 92px;
@@ -900,13 +906,13 @@
                 class="min-h-screen flex flex-col items-center justify-center px-6 pt-16 relative overflow-hidden"
             >
                 <!-- Floating decorative icons -->
-                <svg class="absolute top-[15%] left-[8%] w-10 h-10 text-primary/[0.07] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                <svg class="absolute top-[22%] right-[10%] w-8 h-8 text-secondary/[0.07] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-                <svg class="absolute bottom-[20%] left-[12%] w-9 h-9 text-accent/[0.06] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                <svg class="absolute top-[35%] left-[3%] w-7 h-7 text-secondary/[0.05] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                <svg class="absolute bottom-[28%] right-[6%] w-8 h-8 text-primary/[0.06] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                <svg class="absolute top-[60%] right-[15%] w-6 h-6 text-accent/[0.05] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <svg class="absolute top-[12%] right-[25%] w-6 h-6 text-primary/[0.05] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                <svg class="absolute top-[15%] left-[8%] w-10 h-10 text-primary/15 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.5 2l4 4-7.5 7.5L7 13l7.5-7.5z"/><path d="M7 13l-2 6 6-2"/><path d="M18 17l-3 3"/></svg>
+                <svg class="absolute top-[22%] right-[10%] w-8 h-8 text-secondary/12 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg class="absolute bottom-[20%] left-[12%] w-9 h-9 text-accent/12 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 4 8 4 20 12 18 20 20 20 8"/></svg>
+                <svg class="absolute top-[35%] left-[3%] w-7 h-7 text-secondary/10 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                <svg class="absolute bottom-[28%] right-[6%] w-8 h-8 text-primary/15 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg>
+                <svg class="absolute top-[60%] right-[15%] w-6 h-6 text-accent/10 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15 9 22 9 17 14 18 21 12 17 6 21 7 14 2 9 9 9"/></svg>
+                <svg class="absolute top-[12%] right-[25%] w-6 h-6 text-primary/10 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
 
                 <div class="text-center max-w-3xl mx-auto relative z-10">
                     <div class="reveal float mb-10">
@@ -3490,11 +3496,11 @@
                     class="pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4"
                 >
                     <p class="text-xs text-muted">
-                        &copy; 2026 Updraft Network. Not affiliated with Mojang
+                        &copy; 2026 Updraft. Not affiliated with Mojang
                         or Microsoft.
                     </p>
                     <p class="text-xs text-muted">
-                        Minecraft is a trademark of Mojang AB
+                        Skibidi sigma
                     </p>
                 </div>
             </div>
@@ -3819,7 +3825,6 @@ The flagship mode, fully released and playable now. Features include:
 - Daily login rewards
 - Auction house
 - Quests
-- Teams
 A fresh survival experience built from the ground up.
 
 ### Lifesteal (PLANNED)
