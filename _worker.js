@@ -277,35 +277,24 @@ export default {
       return jsonResponse({ ok: true });
     }
 
-    // --- AI Chat proxy (OpenAI) ---
+    // --- AI Chat proxy (Cloudflare Workers AI) ---
     if (path === '/api/chat' && request.method === 'POST') {
-      const OPENAI_API_KEY = env.OPENAI_API_KEY;
-      if (!OPENAI_API_KEY) return jsonResponse({ error: 'OPENAI_API_KEY env var not set', keys: Object.keys(env).filter(k => !k.startsWith('_')) }, 500);
+      if (!env.AI) return jsonResponse({ error: 'Workers AI not enabled — add AI binding in dashboard', keys: Object.keys(env).filter(k => !k.startsWith('_')) }, 500);
 
       const { messages } = await request.json();
       if (!messages || !Array.isArray(messages)) return jsonResponse({ error: 'messages array required' }, 400);
 
-      const res = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${OPENAI_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: 'gpt-4o-mini',
-          messages,
-          max_tokens: 800,
-          temperature: 0.7,
-        }),
+      const res = await env.AI.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', {
+        messages,
+        max_tokens: 800,
+        temperature: 0.7,
       });
 
-      if (!res.ok) {
-        const err = await res.text();
-        return jsonResponse({ error: 'OpenAI request failed', detail: err }, 502);
-      }
+      if (res.error) return jsonResponse({ error: 'Workers AI error', detail: res.error }, 502);
 
-      const data = await res.json();
-      return jsonResponse(data);
+      return jsonResponse({
+        choices: [{ message: { content: res.response } }]
+      });
     }
 
     // --- Pass through for all other routes (Pages static assets) ---
