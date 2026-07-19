@@ -3212,6 +3212,7 @@
         </div>
         </div>
 
+        <script src="config.js"></script>
         <script>
 
             function navigate(page) {
@@ -3439,7 +3440,7 @@
             setInterval(fetchUpdates, 30000);
 
             // AI Chat Widget
-            const OPENAI_API_KEY = '';
+            const OPENAI_API_KEY = (typeof CONFIG !== 'undefined' && CONFIG.OPENAI_API_KEY) || '';
             const SYSTEM_PROMPT = `You are the Updraft Network assistant. You are a helpful, friendly AI that knows everything about the Updraft Network Minecraft server. You answer questions about the server, game modes, how to join, IPs, features, and anything Minecraft-related. Be concise and helpful. If you don't know something specific about Updraft Network, say so honestly and suggest asking in their Discord.`;
             let chatHistory = [];
             let chatOpen = false;
