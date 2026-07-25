@@ -3744,7 +3744,7 @@
                     <div class="flex items-center gap-4 px-6 py-3 border-b border-border/40 last:border-0 hover:bg-white/[.02] transition-colors">
                         <span class="w-8 text-center font-bold text-sm ${i < 3 ? 'text-secondary' : 'text-muted'}">#${e.position || i+1}</span>
                         <span class="flex-1 font-semibold text-sm text-txt truncate">${e.name}</span>
-                        <span class="text-sm font-mono text-muted">${e.score}${e.scoreTime ? ' ' + e.scoreTime : ''}</span>
+                        <span class="text-sm font-mono text-muted">${e.scoreTime || e.score}</span>
                     </div>
                 `).join('');
             }
