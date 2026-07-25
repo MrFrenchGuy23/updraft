@@ -518,20 +518,14 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                box-shadow: 0 4px 30px rgba(14, 165, 233, 0.5), 0 0 60px rgba(16, 185, 129, 0.25);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
                 transition: all 0.3s ease;
             }
             #chat-toggle:hover {
                 transform: scale(1.12);
-                box-shadow: 0 6px 40px rgba(14, 165, 233, 0.65), 0 0 80px rgba(16, 185, 129, 0.35);
+                box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
             }
             #chat-toggle svg { width: 28px; height: 28px; color: white; }
-            @keyframes chat-pulse {
-                0%, 100% { box-shadow: 0 4px 30px rgba(14, 165, 233, 0.5), 0 0 60px rgba(16, 185, 129, 0.25); }
-                50% { box-shadow: 0 4px 30px rgba(14, 165, 233, 0.7), 0 0 80px rgba(16, 185, 129, 0.4); }
-            }
-            #chat-toggle { animation: chat-pulse 3s ease-in-out infinite; }
-            #chat-toggle:hover { animation: none; }
             #chat-panel {
                 position: fixed;
                 bottom: 92px;
@@ -921,9 +915,9 @@
                 <svg class="absolute top-[12%] right-[25%] w-6 h-6 text-primary/10 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
 
                 <div class="text-center max-w-3xl mx-auto relative z-10">
-                    <div class="reveal float mb-10">
+                    <div class="reveal mb-10">
                         <svg
-                            class="w-28 h-28 sm:w-40 sm:h-40 mx-auto drop-shadow-2xl"
+                            class="w-28 h-28 sm:w-40 sm:h-40 mx-auto"
                             viewBox="0 0 512 512"
                             fill="none"
                         >
