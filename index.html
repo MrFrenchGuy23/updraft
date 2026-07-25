@@ -1770,6 +1770,27 @@
                 </div>
             </section>
 
+        <!-- Leaderboards -->
+            <section class="py-24 px-6">
+                <div class="max-w-3xl mx-auto">
+                    <div class="text-center mb-12">
+                        <span class="reveal inline-block text-[11px] font-bold tracking-[.2em] uppercase text-secondary mb-4">Leaderboards</span>
+                        <h2 class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+                            Top <span class="text-txt">Players</span>
+                        </h2>
+                        <p class="reveal rd2 text-muted text-sm mt-3">Live stats from Survival. Updates every 30 seconds.</p>
+                    </div>
+                    <div class="reveal rd3 flex justify-center gap-2 mb-8">
+                        <button onclick="switchLb('statistic_player_kills', this)" class="lb-tab active px-4 py-2 rounded-lg text-xs font-bold tracking-wider uppercase transition-all bg-secondary/15 text-secondary border border-secondary/20">Kills</button>
+                        <button onclick="switchLb('vault_eco_balance', this)" class="lb-tab px-4 py-2 rounded-lg text-xs font-bold tracking-wider uppercase transition-all bg-bgcard border border-border text-muted hover:text-txt">Money</button>
+                        <button onclick="switchLb('statistic_time_played', this)" class="lb-tab px-4 py-2 rounded-lg text-xs font-bold tracking-wider uppercase transition-all bg-bgcard border border-border text-muted hover:text-txt">Playtime</button>
+                    </div>
+                    <div id="leaderboard-list" class="reveal rd4 bg-bgcard border border-border rounded-2xl overflow-hidden">
+                        <div class="px-6 py-8 text-center text-muted text-sm">Loading leaderboards...</div>
+                    </div>
+                </div>
+            </section>
+
 <!-- Team Section -->
             <section class="py-24 px-6">
                 <div class="max-w-5xl mx-auto">
@@ -3690,6 +3711,47 @@
             }
             fetchPlayerCount();
             setInterval(fetchPlayerCount, 1000);
+
+            // Leaderboards
+            let lbData = {};
+            let currentLb = 'statistic_player_kills';
+
+            function switchLb(board, btn) {
+                currentLb = board;
+                document.querySelectorAll('.lb-tab').forEach(t => {
+                    t.className = 'lb-tab px-4 py-2 rounded-lg text-xs font-bold tracking-wider uppercase transition-all bg-bgcard border border-border text-muted hover:text-txt';
+                });
+                btn.className = 'lb-tab active px-4 py-2 rounded-lg text-xs font-bold tracking-wider uppercase transition-all bg-secondary/15 text-secondary border border-secondary/20';
+                renderLb();
+            }
+
+            function renderLb() {
+                const el = document.getElementById('leaderboard-list');
+                if (!el) return;
+                const board = lbData[currentLb];
+                if (!board || !board.entries.length) {
+                    el.innerHTML = '<div class="px-6 py-8 text-center text-muted text-sm">No data available.</div>';
+                    return;
+                }
+                el.innerHTML = board.entries.map((e, i) => `
+                    <div class="flex items-center gap-4 px-6 py-3 border-b border-border/40 last:border-0 hover:bg-white/[.02] transition-colors">
+                        <span class="w-8 text-center font-bold text-sm ${i < 3 ? 'text-secondary' : 'text-muted'}">#${e.position || i+1}</span>
+                        <span class="flex-1 font-semibold text-sm text-txt truncate">${e.name}</span>
+                        <span class="text-sm font-mono text-muted">${e.score}${e.scoreTime ? ' ' + e.scoreTime : ''}</span>
+                    </div>
+                `).join('');
+            }
+
+            async function fetchLeaderboard() {
+                try {
+                    const res = await fetch('/api/leaderboard');
+                    const data = await res.json();
+                    lbData = data;
+                    renderLb();
+                } catch {}
+            }
+            fetchLeaderboard();
+            setInterval(fetchLeaderboard, 30000);
 
             // AI Chat Widget
             const SYSTEM_PROMPT = `You are the Updraft Network assistant — a friendly, knowledgeable, and enthusiastic AI guide for the Updraft Minecraft server network. You speak like a helpful, passionate community member, not a robot. Be conversational, use humor when appropriate, and genuinely help people.

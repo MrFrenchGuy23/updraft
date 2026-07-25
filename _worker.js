@@ -20,6 +20,8 @@ const HC_WEBHOOK_URL = "https://discord.com/api/webhooks/1519710656276992203/h2p
 
 let statusCache = null;
 let statusCacheTime = 0;
+let lbCache = null;
+let lbCacheTime = 0;
 
 async function encrypt(data, secret) {
   const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret.padEnd(32).slice(0, 32)), { name: 'AES-CBC' }, false, ['encrypt']);
@@ -295,6 +297,48 @@ export default {
       };
       statusCacheTime = now;
       return jsonResponse(statusCache);
+    }
+
+    // --- Leaderboards (ajLb-REST) ---
+    if (path === '/api/leaderboard' && request.method === 'GET') {
+      const now = Date.now();
+      if (lbCache && now - lbCacheTime < 30000) return jsonResponse(lbCache);
+
+      const LB_HOST = 'http://java.updraftnetwork.org:8296';
+      const boards = [
+        { name: 'statistic_player_kills', label: 'Kills' },
+        { name: 'vault_eco_balance', label: 'Money' },
+        { name: 'statistic_time_played', label: 'Playtime' },
+      ];
+      const result = {};
+
+      for (const board of boards) {
+        const entries = [];
+        const fetches = [];
+        for (let i = 1; i <= 10; i++) {
+          fetches.push(
+            fetch(`${LB_HOST}/${board.name}/alltime/${i}`)
+              .then(r => r.ok ? r.json() : null)
+              .catch(() => null)
+          );
+        }
+        const results = await Promise.all(fetches);
+        for (const data of results) {
+          if (data && data.playerName) {
+            entries.push({
+              name: data.playerDisplayName || data.playerName,
+              score: data.scorePretty || String(data.score),
+              scoreTime: data.scoreTime || '',
+              position: data.position,
+            });
+          }
+        }
+        result[board.name] = { label: board.label, entries };
+      }
+
+      lbCache = result;
+      lbCacheTime = now;
+      return jsonResponse(result);
     }
 
     // --- AI Chat proxy (Cloudflare Workers AI) ---
