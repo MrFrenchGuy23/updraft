@@ -805,6 +805,13 @@
                     >
                         Updates
                     </button>
+                    <button
+                        onclick="navigate('home'); setTimeout(() => document.getElementById('leaderboards')?.scrollIntoView({behavior:'smooth'}), 100)"
+                        class="nav-link px-3 py-2 text-xs font-medium tracking-wider uppercase text-muted hover:text-txt transition-colors"
+                        data-page="home"
+                    >
+                        Leaderboards
+                    </button>
                     <div class="w-px h-5 bg-border mx-1 hidden sm:block"></div>
                     <a
                         href="https://discord.gg/B4u9ap3VRb"
@@ -1771,7 +1778,7 @@
             </section>
 
         <!-- Leaderboards -->
-            <section class="py-24 px-6">
+            <section id="leaderboards" class="py-24 px-6">
                 <div class="max-w-3xl mx-auto">
                     <div class="text-center mb-12">
                         <span class="reveal inline-block text-[11px] font-bold tracking-[.2em] uppercase text-secondary mb-4">Leaderboards</span>
