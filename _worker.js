@@ -18,6 +18,9 @@ const SCOPES        = 'identify';
 // Webhook URL for sending messages (optional, falls back to bot)
 const HC_WEBHOOK_URL = "https://discord.com/api/webhooks/1519710656276992203/h2pwjCxmZZC-NMmDRMb2mtREyEt8zTYG8VKpjTjRbQ_TuJipBymfHN1ggk8DWuOOmBNl";
 
+let statusCache = null;
+let statusCacheTime = 0;
+
 async function encrypt(data, secret) {
   const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret.padEnd(32).slice(0, 32)), { name: 'AES-CBC' }, false, ['encrypt']);
   const iv = crypto.getRandomValues(new Uint8Array(16));
@@ -279,15 +282,19 @@ export default {
 
     // --- Server Status (player count) ---
     if (path === '/api/status' && request.method === 'GET') {
+      const now = Date.now();
+      if (statusCache && now - statusCacheTime < 30000) return jsonResponse(statusCache);
       const res = await fetch('https://api.mcsrvstat.us/3/java.updraftnetwork.org');
       const data = await res.json();
-      return jsonResponse({
+      statusCache = {
         online: data.online || false,
         players: data.players ? data.players.online : 0,
         max: data.players ? data.players.max : 0,
         version: data.version || '1.21.4',
         motd: data.motd ? data.motd.clean : '',
-      });
+      };
+      statusCacheTime = now;
+      return jsonResponse(statusCache);
     }
 
     // --- AI Chat proxy (Cloudflare Workers AI) ---
