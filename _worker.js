@@ -277,6 +277,19 @@ export default {
       return jsonResponse({ ok: true });
     }
 
+    // --- Server Status (player count) ---
+    if (path === '/api/status' && request.method === 'GET') {
+      const res = await fetch('https://api.mcsrvstat.us/3/java.updraftnetwork.org');
+      const data = await res.json();
+      return jsonResponse({
+        online: data.online || false,
+        players: data.players ? data.players.online : 0,
+        max: data.players ? data.players.max : 0,
+        version: data.version || '1.21.4',
+        motd: data.motd ? data.motd.clean : '',
+      });
+    }
+
     // --- AI Chat proxy (Cloudflare Workers AI) ---
     if (path === '/api/chat' && request.method === 'POST') {
       if (!env.AI) return jsonResponse({ error: 'Workers AI not enabled — add AI binding in dashboard', keys: Object.keys(env).filter(k => !k.startsWith('_')) }, 500);

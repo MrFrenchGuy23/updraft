@@ -1141,14 +1141,15 @@
                     </div>
                     <div class="reveal rd2 text-center">
                         <div
-                            class="text-2xl sm:text-3xl font-black text-gradient-r mb-1"
+                            class="text-2xl sm:text-3xl font-black text-secondary mb-1 flex items-center justify-center gap-2"
                         >
-                            1
+                            <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+                            <span id="player-count">--</span>
                         </div>
                         <div
                             class="text-xs font-medium tracking-wider uppercase text-muted"
                         >
-                            In Development
+                            Players Online
                         </div>
                     </div>
                     <div class="reveal rd3 text-center">
@@ -3255,7 +3256,7 @@
                         <p
                             class="text-sm text-muted leading-relaxed max-w-sm mb-3"
                         >
-                            A cross-platform Minecraft network featuring
+                            A crossplatform Minecraft network featuring
                             Survival, Lifesteal, and Practice. Java, Bedrock &
                             Eaglercraft.
                         </p>
@@ -3443,7 +3444,6 @@
                 </div>
             </div>
             <div class="chat-typing" id="chat-typing">
-                <span></span><span></span><span></span>
             </div>
             <div class="chat-input-wrap">
                 <input type="text" class="chat-input" id="chat-input" placeholder="Ask a question..." maxlength="500" />
@@ -3679,6 +3679,18 @@
             fetchUpdates();
             setInterval(fetchUpdates, 30000);
 
+            // Live player count
+            async function fetchPlayerCount() {
+                try {
+                    const res = await fetch('/api/status');
+                    const data = await res.json();
+                    const el = document.getElementById('player-count');
+                    if (el) el.textContent = data.online ? data.players : 0;
+                } catch {}
+            }
+            fetchPlayerCount();
+            setInterval(fetchPlayerCount, 60000);
+
             // AI Chat Widget
             const SYSTEM_PROMPT = `You are the Updraft Network assistant — a friendly, knowledgeable, and enthusiastic AI guide for the Updraft Minecraft server network. You speak like a helpful, passionate community member, not a robot. Be conversational, use humor when appropriate, and genuinely help people.
 
@@ -3757,10 +3769,10 @@ The flagship gamemode, fully released and playable right now. It's a fresh survi
 - Welcoming to all skill levels — newbies and veterans alike
 
 ## Fun Facts & Talking Points
-- The server runs on 1.21.4 so you get all the latest Minecraft features
+- The server runs on 1.21.4 
 - Cross-platform play means you're never split from your friends based on what device they have
-- Eaglercraft support means anyone with a web browser can play — no Minecraft account or download required
-- The team is small but dedicated — mostly developers and helpers who are active in the community
+- Eaglercraft support means anyone with a web browser can play no Minecraft account or download required
+- The team is small but dedicated mostly developers and helpers who are active in the community
 - The server was built entirely from scratch by the team
 - Updates are frequent and the team listens to community feedback
 
@@ -3843,7 +3855,7 @@ You CAN help with general Minecraft questions too:
                         chatHistory.push({ role: 'assistant', content: reply });
                         addMessage('bot', reply);
                     } else {
-                        addMessage('bot', 'Sorry, I had trouble processing that. Try again or ask in our Discord.' + (data.error ? ' Error: ' + data.error + ' ' + (data.detail || '') : '') + (data.detail && !data.error ? ' Detail: ' + data.detail : ''));
+                        addMessage('bot', 'Hmm, i dont seem to know what your talking about 🤔. Try again or ask in our Discord.' + (data.error ? ' Error: ' + data.error + ' ' + (data.detail || '') : '') + (data.detail && !data.error ? ' Detail: ' + data.detail : ''));
                     }
                 } catch (e) {
                     addMessage('bot', 'Connection error: ' + e.message);
