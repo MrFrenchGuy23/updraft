@@ -304,7 +304,7 @@ export default {
       const now = Date.now();
       if (lbCache && now - lbCacheTime < 30000) return jsonResponse(lbCache);
 
-      const LB_HOST = 'http://java.updraftnetwork.org:8296';
+      const LB_HOST = 'https://lb.api.updraftnetwork.org';
       const boards = [
         { name: 'statistic_player_kills', label: 'Kills' },
         { name: 'vault_eco_balance', label: 'Money' },
