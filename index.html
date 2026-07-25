@@ -141,13 +141,6 @@
             .rd8 {
                 transition-delay: 0.8s;
             }
-            @keyframes float {
-                0%, 100% { transform: translateY(0); }
-                50% { transform: translateY(-8px); }
-            }
-            .float {
-                animation: float 6s ease-in-out infinite;
-            }
             .glow-pulse {
                 opacity: 0.5;
             }
@@ -184,10 +177,10 @@
                 }
             }
             .card-hover {
-                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                transition: all 0.3s ease;
             }
             .card-hover:hover {
-                transform: translateY(-8px);
+                transform: translateY(-4px);
             }
             .gradient-border {
                 position: relative;
@@ -205,11 +198,6 @@
                 -webkit-mask-composite: xor;
                 mask-composite: exclude;
                 pointer-events: none;
-            }
-            .bg-grid {
-                background-image:
-                    radial-gradient(circle, rgba(14, 165, 233, 0.03) 1px, transparent 1px);
-                background-size: 32px 32px;
             }
             .text-gradient {
                 background: linear-gradient(135deg, #10b981, #0ea5e9, #22d3ee);
@@ -541,7 +529,7 @@
                 transform: translateY(12px) scale(0.96);
                 pointer-events: none;
                 transition: opacity 0.25s ease, transform 0.25s ease;
-                box-shadow: 0 12px 48px rgba(0,0,0,0.5);
+                box-shadow: 0 8px 32px rgba(0,0,0,0.4);
             }
             #chat-panel.open {
                 opacity: 1;
@@ -689,7 +677,7 @@
             .chat-welcome strong { color: #94a3b8; display: block; margin-bottom: 4px; font-size: 13px; }
         </style>
     </head>
-    <body class="bg-grid">
+    <body>
         <div id="scroll-progress"></div>
         <div
             class="fixed top-1/3 -left-48 w-[500px] h-[500px] bg-primary/8 rounded-full blur-[100px] pointer-events-none"
@@ -729,36 +717,28 @@
                             </linearGradient>
                         </defs>
                         <path
-                            class="swirl-1"
-                            d="M130 450 A126 30 0 0 1 382 450"
+                            d="M256 190 L256 260"
                             stroke="url(#ng)"
-                            stroke-width="14"
+                            stroke-width="6"
                             fill="none"
                             stroke-linecap="round"
+                            opacity=".45"
                         />
                         <path
-                            class="swirl-2"
-                            d="M170 385 A86 25 0 0 0 342 385"
+                            d="M242 210 L256 185 L270 210"
                             stroke="url(#ng)"
-                            stroke-width="12"
+                            stroke-width="5"
                             fill="none"
                             stroke-linecap="round"
+                            stroke-linejoin="round"
+                            opacity=".4"
                         />
-                        <path
-                            class="swirl-3"
-                            d="M205 325 A51 18 0 0 1 307 325"
-                            stroke="url(#ng)"
-                            stroke-width="10"
-                            fill="none"
-                            stroke-linecap="round"
-                        />
-                        <path
-                            class="swirl-4"
-                            d="M228 275 A28 12 0 0 0 284 275"
-                            stroke="url(#ng)"
-                            stroke-width="8"
-                            fill="none"
-                            stroke-linecap="round"
+                        <circle
+                            cx="256"
+                            cy="256"
+                            r="8"
+                            fill="url(#ng)"
+                            opacity=".6"
                         />
                     </svg>
                     <span
@@ -901,15 +881,6 @@
             <section
                 class="min-h-screen flex flex-col items-center justify-center px-6 pt-16 relative overflow-hidden"
             >
-                <!-- Floating decorative icons -->
-                <svg class="absolute top-[15%] left-[8%] w-10 h-10 text-primary/15 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.5 2l4 4-7.5 7.5L7 13l7.5-7.5z"/><path d="M7 13l-2 6 6-2"/><path d="M18 17l-3 3"/></svg>
-                <svg class="absolute top-[22%] right-[10%] w-8 h-8 text-secondary/12 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <svg class="absolute bottom-[20%] left-[12%] w-9 h-9 text-accent/12 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 4 8 4 20 12 18 20 20 20 8"/></svg>
-                <svg class="absolute top-[35%] left-[3%] w-7 h-7 text-secondary/10 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                <svg class="absolute bottom-[28%] right-[6%] w-8 h-8 text-primary/15 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg>
-                <svg class="absolute top-[60%] right-[15%] w-6 h-6 text-accent/10 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15 9 22 9 17 14 18 21 12 17 6 21 7 14 2 9 9 9"/></svg>
-                <svg class="absolute top-[12%] right-[25%] w-6 h-6 text-primary/10 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-
                 <div class="text-center max-w-3xl mx-auto relative z-10">
                     <div class="reveal mb-10">
                         <svg
@@ -930,86 +901,6 @@
                                     <stop offset="100%" stop-color="#0EA5E9" />
                                 </linearGradient>
                             </defs>
-                            <circle
-                                class="swirl-1"
-                                cx="128"
-                                cy="415"
-                                r="5"
-                                fill="#10B981"
-                                opacity=".3"
-                            />
-                            <circle
-                                class="swirl-2"
-                                cx="384"
-                                cy="405"
-                                r="4"
-                                fill="#0EA5E9"
-                                opacity=".25"
-                            />
-                            <circle
-                                class="swirl-3"
-                                cx="155"
-                                cy="365"
-                                r="3.5"
-                                fill="#22D3EE"
-                                opacity=".2"
-                            />
-                            <circle
-                                class="swirl-4"
-                                cx="358"
-                                cy="355"
-                                r="3"
-                                fill="#10B981"
-                                opacity=".2"
-                            />
-                            <circle
-                                class="swirl-1"
-                                cx="195"
-                                cy="310"
-                                r="2.5"
-                                fill="#0EA5E9"
-                                opacity=".15"
-                            />
-                            <circle
-                                class="swirl-3"
-                                cx="320"
-                                cy="290"
-                                r="2"
-                                fill="#22D3EE"
-                                opacity=".12"
-                            />
-                            <path
-                                class="swirl-1"
-                                d="M120 460 A136 32 0 0 1 392 460"
-                                stroke="url(#hg)"
-                                stroke-width="14"
-                                fill="none"
-                                stroke-linecap="round"
-                            />
-                            <path
-                                class="swirl-2"
-                                d="M162 392 A94 27 0 0 0 350 392"
-                                stroke="url(#hg)"
-                                stroke-width="13"
-                                fill="none"
-                                stroke-linecap="round"
-                            />
-                            <path
-                                class="swirl-3"
-                                d="M198 332 A58 20 0 0 1 314 332"
-                                stroke="url(#hg)"
-                                stroke-width="11"
-                                fill="none"
-                                stroke-linecap="round"
-                            />
-                            <path
-                                class="swirl-4"
-                                d="M224 278 A32 14 0 0 0 288 278"
-                                stroke="url(#hg)"
-                                stroke-width="9"
-                                fill="none"
-                                stroke-linecap="round"
-                            />
                             <path
                                 d="M256 190 L256 260"
                                 stroke="url(#hg)"
@@ -1057,7 +948,7 @@
                             href="https://discord.gg/B4u9ap3VRb"
                             target="_blank"
                             rel="noopener"
-                            class="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-secondary to-primary rounded-xl text-white font-bold text-sm tracking-wider uppercase hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-1"
+                            class="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-secondary to-primary rounded-xl text-white font-bold text-sm tracking-wider uppercase hover:opacity-90 transition-all duration-300 hover:-translate-y-1"
                         >
                             <svg
                                 class="w-5 h-5"
@@ -2407,9 +2298,9 @@
                     <div
                         class="reveal relative overflow-hidden p-12 sm:p-16 bg-bgcard border border-border rounded-3xl text-center"
                     >
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none"
-                        ></div>
+                    <div
+                        class="absolute inset-0 pointer-events-none"
+                    ></div>
                         <div class="relative z-10">
                             <svg
                                 class="w-10 h-10 mx-auto mb-6 text-secondary"
@@ -3323,18 +3214,12 @@
                                 ><span
                                     class="w-1.5 h-1.5 rounded-full bg-accent"
                                 ></span
-                                >Eaglercraft</span
+                                >Eagler</span
                             >
                         </div>
                         <p class="text-xs text-muted">
-                            Founded by
-                            <span class="text-txt font-medium">Nikepogger</span>
-                            &middot; Co owned by
+                            &middot; Website by
                             <span class="text-txt font-medium">MrFrench</span>
-                            &middot; Head Builder
-                            <span class="text-txt font-medium"
-                                >Sunbloom_4k</span
-                            >
                         </p>
                     </div>
                     <div>
@@ -3404,8 +3289,7 @@
                     class="pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4"
                 >
                     <p class="text-xs text-muted">
-                        &copy; 2026 Updraft. Not affiliated with Mojang
-                        or Microsoft.
+                        &copy; 2026 Updraft. Please contact support on our discord for any inquiries.
                     </p>
                     <p class="text-xs text-muted">
                         Skibidi sigma
