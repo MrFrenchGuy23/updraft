@@ -3021,6 +3021,47 @@
                 return html;
             }
 
+            // Leaderboards
+            let lbData = {};
+            let currentLb = 'statistic_player_kills';
+
+            function switchLb(board, btn) {
+                currentLb = board;
+                document.querySelectorAll('.lb-tab').forEach(t => {
+                    t.className = 'lb-tab px-4 py-2 rounded-lg text-xs font-bold tracking-wider uppercase transition-all bg-bgcard border border-border text-muted hover:text-txt';
+                });
+                btn.className = 'lb-tab active px-4 py-2 rounded-lg text-xs font-bold tracking-wider uppercase transition-all bg-secondary/15 text-secondary border border-secondary/20';
+                renderLb();
+            }
+
+            function renderLb() {
+                const el = document.getElementById('leaderboard-list');
+                if (!el) return;
+                const board = lbData[currentLb];
+                if (!board || !board.entries.length) {
+                    el.innerHTML = '<div class="px-6 py-8 text-center text-muted text-sm">No data available.</div>';
+                    return;
+                }
+                el.innerHTML = board.entries.map((e, i) => `
+                    <div class="flex items-center gap-4 px-6 py-3 border-b border-border/40 last:border-0 hover:bg-white/[.02] transition-colors">
+                        <span class="w-8 text-center font-bold text-sm ${i < 3 ? 'text-secondary' : 'text-muted'}">#${e.position || i+1}</span>
+                        <span class="flex-1 font-semibold text-sm text-txt truncate">${e.name}</span>
+                        <span class="text-sm font-mono text-muted">${currentLb === 'statistic_time_played' && e.scoreTime ? e.scoreTime : e.score}</span>
+                    </div>
+                `).join('');
+            }
+
+            async function fetchLeaderboard() {
+                try {
+                    const res = await fetch('/api/leaderboard');
+                    const data = await res.json();
+                    lbData = data;
+                    renderLb();
+                } catch {}
+            }
+            fetchLeaderboard();
+            setInterval(fetchLeaderboard, 30000);
+
             // AI Chat Widget
             const SYSTEM_PROMPT = `You are the Updraft Network assistant — a friendly, knowledgeable, and enthusiastic AI guide for the Updraft Minecraft server network. You speak like a helpful, passionate community member, not a robot. Be conversational, use humor when appropriate, and genuinely help people.
 
