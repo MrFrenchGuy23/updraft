@@ -10,6 +10,12 @@
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
+![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![C](https://img.shields.io/badge/C-A8B9CC?style=for-the-badge&logo=c&logoColor=white)
+![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=cplusplus&logoColor=white)
+![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=csharp&logoColor=white)
+![WebAssembly](https://img.shields.io/badge/WebAssembly-654FF0?style=for-the-badge&logo=webassembly&logoColor=white)
 
 ### Build Systems & Frameworks
 
@@ -27,24 +33,4 @@
 ![Velocity](https://img.shields.io/badge/Velocity-00ADB5?style=for-the-badge)
 ![Fabric](https://img.shields.io/badge/Fabric-FFF8E7?style=for-the-badge&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNv1OCegAAAE6SURBVDhPjZMxTsNAEEX3N3aEFB0iBQUiBwUlBQ0VJbfhAlyDG3ANLkBBQUFBQUEBFZKSIkWKFF9h3uzO2utNApE/WZqd/+bP2N6JoggBYIyBECKM4xhKKQAAYwyiKIIxBlmWXQH4IyLSbrcrxhiKoshYlgVKKYqiCJRSKKVACMHj46N+fn6+IiLEcXx+cXHxMBgMwBgDIYQQQiBNU8xmMxiGgU6nA9d1IYQA5xxlWZ7f3t6+djqdKwDnJycnN8vl8lMIgSRJQAgBpRSiKIIxBlmWwXVdGIYBKSW01pjNZivXdR8B7AohIAiCz+Vy+UEIgRACGGNIkgSWZYEQgul0CqUUGGOoqiqUUra/r+u6CIIAS0opaK0BAFprUEpBKYU8z1EUBSilIKVEWZZQSsFxHBBCHFmW9XN2eHh4QAgBIQSUUl9KqTxN068sy+4B/ANHHPmJmJT4rAAAAABJRU5ErkJggg==)
 
-### All Projects
 
-| Project | Language | Type |
-|---------|----------|------|
-| **Updraft Website** | HTML, CSS, JS, Python | Website + Cloudflare Worker |
-| **Updraft AntiCheat** | Java | Paper plugin (anti-cheat) |
-| **Updraft Duels** | Java | Paper plugin (duels/tournaments) |
-| **Updraft Quests** | Java | Paper plugin (quests & rewards) |
-| **Updraft Party** | Java | Paper plugin (party system) |
-| **Updraft Transfer** | Java | Paper plugin (server transfer) |
-| **Updraft Orders** | Java | Paper plugin (command ordering) |
-| **aeroplane (Optimized)** | Java | Paper plugin (server optimizer) |
-| **Fancy Clans** | Java | Paper plugin (clan system) |
-| **flowclient** | Java | Fabric mod (client-side) |
-| **FWPL** | Java | BungeeCord/Velocity plugin (friends) |
-| **maintenance placeholder** | Java | BungeeCord/Spigot plugin (maintenance) |
-| **region-transfer-plugin** | Java | Spigot plugin (region transfer) |
-| **rg converter** | Java | Spigot plugin (region transfer) |
-| **uac** | Java | Paper plugin (anti-cheat) |
-| **wonton's little friend** | Java | Paper plugin (friends) |
-| **updraftdbconverter** | Python | FoxHomes → SQLite converter |
