@@ -173,6 +173,23 @@
             .card-hover:hover {
                 transform: translateY(-4px);
             }
+            .pixel {
+                border-radius: 6px !important;
+            }
+            .reveal.visible.pixel {
+                transform: translate(0, 0);
+                box-shadow: 8px 8px 0 #0d0d0d;
+                transition: transform 120ms ease, box-shadow 120ms ease;
+            }
+            .reveal.visible.pixel:hover {
+                transform: translate(-2px, -2px);
+                box-shadow: 10px 10px 0 #0d0d0d;
+            }
+            .reveal.visible.pixel:active {
+                transform: translate(8px, 8px);
+                box-shadow: 0 0 0 #0d0d0d;
+                transition: transform 60ms ease, box-shadow 60ms ease;
+            }
             .gradient-border {
                 position: relative;
             }
@@ -869,7 +886,7 @@
                         </p>
                     </div>
                     <div class="flex flex-col gap-4">
-                        <div class="reveal rd1 flex items-center gap-5 p-5 bg-bgcard/30 border border-border/50 rounded-xl hover:border-primary/30 transition-all duration-300">
+                        <div class="reveal rd1 pixel flex items-center gap-5 p-5 bg-bgcard/30 border border-border/50 rounded-xl hover:border-primary/30 transition-all duration-300">
                             <div class="w-12 h-12 flex-shrink-0 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center">
                                 <svg class="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                             </div>
@@ -879,7 +896,7 @@
                             </div>
                             <span class="text-xs font-mono font-bold text-txt bg-black/20 px-3 py-1.5 rounded hidden sm:block">java.updraftnetwork.org</span>
                         </div>
-                        <div class="reveal rd2 flex items-center gap-5 p-5 bg-bgcard/30 border border-border/50 rounded-xl hover:border-secondary/30 transition-all duration-300">
+                        <div class="reveal rd2 pixel flex items-center gap-5 p-5 bg-bgcard/30 border border-border/50 rounded-xl hover:border-secondary/30 transition-all duration-300">
                             <div class="w-12 h-12 flex-shrink-0 bg-secondary/10 border border-secondary/20 rounded-xl flex items-center justify-center">
                                 <svg class="w-6 h-6 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
                             </div>
@@ -889,7 +906,7 @@
                             </div>
                             <span class="text-xs font-mono font-bold text-txt bg-black/20 px-3 py-1.5 rounded hidden sm:block">bedrock.updraftnetwork.org:1201</span>
                         </div>
-                        <div class="reveal rd3 flex items-center gap-5 p-5 bg-bgcard/30 border border-border/50 rounded-xl hover:border-accent/30 transition-all duration-300">
+                        <div class="reveal rd3 pixel flex items-center gap-5 p-5 bg-bgcard/30 border border-border/50 rounded-xl hover:border-accent/30 transition-all duration-300">
                             <div class="w-12 h-12 flex-shrink-0 bg-accent/10 border border-accent/20 rounded-xl flex items-center justify-center">
                                 <svg class="w-6 h-6 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                             </div>
@@ -924,7 +941,7 @@
                     <div class="grid md:grid-cols-3 gap-6">
                         <button
                             onclick="navigate('survival')"
-                            class="reveal rd1 card-hover gradient-border group text-left p-8 bg-bgcard border border-border rounded-2xl hover:shadow-2xl hover:shadow-survival/10"
+                            class="reveal rd1 pixel group text-left p-8 bg-bgcard border border-border rounded-2xl hover:shadow-2xl hover:shadow-survival/10"
                         >
                             <div
                                 class="w-14 h-14 mb-5 bg-survival/10 border border-survival/20 rounded-2xl flex items-center justify-center"
@@ -980,7 +997,7 @@
                         </button>
                         <button
                             onclick="navigate('lifesteal')"
-                            class="reveal rd2 card-hover gradient-border group text-left p-8 bg-bgcard border border-border rounded-2xl hover:shadow-2xl hover:shadow-lifesteal/10"
+                            class="reveal rd2 pixel group text-left p-8 bg-bgcard border border-border rounded-2xl hover:shadow-2xl hover:shadow-lifesteal/10"
                         >
                             <div
                                 class="w-14 h-14 mb-5 bg-lifesteal/10 border border-lifesteal/20 rounded-2xl flex items-center justify-center"
@@ -1046,7 +1063,7 @@
                         </button>
                         <button
                             onclick="navigate('practice')"
-                            class="reveal rd3 card-hover gradient-border group text-left p-8 bg-bgcard border border-border rounded-2xl hover:shadow-2xl hover:shadow-practice/10"
+                            class="reveal rd3 pixel group text-left p-8 bg-bgcard border border-border rounded-2xl hover:shadow-2xl hover:shadow-practice/10"
                         >
                             <div
                                 class="w-14 h-14 mb-5 bg-practice/10 border border-practice/20 rounded-2xl flex items-center justify-center"
@@ -1384,21 +1401,21 @@
                     <h2 class="reveal rd1 text-3xl sm:text-4xl font-bold tracking-tight mb-4">Pick Your Platform</h2>
                     <p class="reveal rd2 text-sm text-muted mb-10">Java, Bedrock, and Eaglercraft are all supported.</p>
                     <div class="grid grid-cols-3 gap-4 sm:gap-6">
-                        <div class="reveal rd1 p-4 sm:p-6 bg-bgcard border border-border rounded-xl text-left hover:border-primary/30 hover:-translate-y-1 transition-all duration-300">
+                        <div class="reveal rd1 pixel p-4 sm:p-6 bg-bgcard border border-border rounded-xl text-left hover:border-primary/30 hover:-translate-y-1 transition-all duration-300">
                             <div class="flex items-center gap-2 mb-3">
                                 <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                                 <span class="text-sm font-bold text-primary">Java</span>
                             </div>
                             <code class="text-xs sm:text-sm font-mono text-txt bg-black/20 px-3 py-1.5 rounded block break-all">java.updraftnetwork.org</code>
                         </div>
-                        <div class="reveal rd2 p-4 sm:p-6 bg-bgcard border border-border rounded-xl text-left hover:border-secondary/30 hover:-translate-y-1 transition-all duration-300">
+                        <div class="reveal rd2 pixel p-4 sm:p-6 bg-bgcard border border-border rounded-xl text-left hover:border-secondary/30 hover:-translate-y-1 transition-all duration-300">
                             <div class="flex items-center gap-2 mb-3">
                                 <svg class="w-5 h-5 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                                 <span class="text-sm font-bold text-secondary">Bedrock</span>
                             </div>
                             <code class="text-xs sm:text-sm font-mono text-txt bg-black/20 px-3 py-1.5 rounded block break-all">bedrock.updraftnetwork.org:1201</code>
                         </div>
-                        <div class="reveal rd3 p-4 sm:p-6 bg-bgcard border border-border rounded-xl text-left hover:border-accent/30 hover:-translate-y-1 transition-all duration-300">
+                        <div class="reveal rd3 pixel p-4 sm:p-6 bg-bgcard border border-border rounded-xl text-left hover:border-accent/30 hover:-translate-y-1 transition-all duration-300">
                             <div class="flex items-center gap-2 mb-3">
                                 <svg class="w-5 h-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M12 11v4"/><line x1="10" y1="13" x2="14" y2="13"/></svg>
                                 <span class="text-sm font-bold text-accent">Eaglercraft</span>
