@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Updraft Network — Client</title>
+        <meta name="description" content="Updraft Network client download page." />
+        <link
+            rel="icon"
+            href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='g' x1='0%25' y1='100%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%2310B981'/><stop offset='100%25' stop-color='%230EA5E9'/></linearGradient></defs><circle cx='256' cy='256' r='256' fill='%23040810'/><path d='M130 450 A126 30 0 0 1 382 450' stroke='url(%23g)' stroke-width='12' fill='none' stroke-linecap='round'/><path d='M170 385 A86 25 0 0 0 342 385' stroke='url(%23g)' stroke-width='10' fill='none' stroke-linecap='round'/><path d='M205 325 A51 18 0 0 1 307 325' stroke='url(%23g)' stroke-width='9' fill='none' stroke-linecap='round'/><path d='M228 275 A28 12 0 0 0 284 275' stroke='url(%23g)' stroke-width='7' fill='none' stroke-linecap='round'/></svg>"
+        />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            primary: "#0EA5E9",
+                            secondary: "#10B981",
+                            accent: "#22D3EE",
+                            survival: "#10B981",
+                            lifesteal: "#EF4444",
+                            practice: "#0EA5E9",
+                            bgdark: "#040810",
+                            bgcard: "#0A1520",
+                            border: "#152535",
+                            txt: "#F0FDFA",
+                            muted: "#94A3B8",
+                        },
+                        fontFamily: {
+                            sans: ["Inter", "system-ui", "sans-serif"],
+                            mojangles: ["Mojangles", "monospace"],
+                        },
+                    },
+                },
+            };
+        </script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            @font-face {
+                font-family: "Mojangles";
+                src: url("https://cdn.jsdelivr.net/gh/hypixeloffical/DFWikiTests@main/mojangles.woff2")
+                        format("woff2"),
+                    url("https://cdn.jsdelivr.net/gh/lithium-labs/hsbi@main/mojangles.woff2")
+                        format("woff2");
+                font-weight: normal;
+                font-style: normal;
+                font-display: swap;
+            }
+            body {
+                font-family: "Inter", system-ui, sans-serif;
+                background: #040810 url("background.png") center / cover fixed
+                    no-repeat;
+                color: #f0fdfa;
+                overflow-x: hidden;
+                zoom: 0.9;
+            }
+            ::-webkit-scrollbar {
+                width: 5px;
+            }
+            ::-webkit-scrollbar-track {
+                background: #040810;
+            }
+            ::-webkit-scrollbar-thumb {
+                background: #152535;
+                border-radius: 3px;
+            }
+            ::-webkit-scrollbar-thumb:hover {
+                background: #0ea5e9;
+            }
+            .nav-link {
+                position: relative;
+            }
+            .nav-link::after {
+                content: "";
+                position: absolute;
+                bottom: -4px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: linear-gradient(90deg, #10b981, #0ea5e9);
+                transition: width 0.3s ease;
+                border-radius: 1px;
+            }
+            .nav-link:hover::after,
+            .nav-link.active::after {
+                width: 100%;
+            }
+            .font-mojangles {
+                font-family: "Mojangles", monospace;
+                letter-spacing: 0.04em;
+            }
+            .coming-soon {
+                color: #38bdf8;
+                text-shadow: 0 0 8px rgba(56, 189, 248, 0.9),
+                    0 0 18px rgba(14, 165, 233, 0.8),
+                    0 0 36px rgba(14, 165, 233, 0.6),
+                    0 0 60px rgba(14, 165, 233, 0.4);
+                animation: glow-pulse 2.4s ease-in-out infinite;
+            }
+            @keyframes glow-pulse {
+                0%,
+                100% {
+                    text-shadow: 0 0 8px rgba(56, 189, 248, 0.9),
+                        0 0 18px rgba(14, 165, 233, 0.8),
+                        0 0 36px rgba(14, 165, 233, 0.6),
+                        0 0 60px rgba(14, 165, 233, 0.4);
+                    opacity: 0.92;
+                }
+                50% {
+                    text-shadow: 0 0 12px rgba(56, 189, 248, 1),
+                        0 0 26px rgba(14, 165, 233, 0.95),
+                        0 0 50px rgba(14, 165, 233, 0.75),
+                        0 0 80px rgba(14, 165, 233, 0.55);
+                    opacity: 1;
+                }
+            }
+            .image-box {
+                position: relative;
+                aspect-ratio: 16 / 9;
+                border-radius: 16px;
+                border: 1px solid rgba(14, 165, 233, 0.25);
+                background: linear-gradient(
+                    135deg,
+                    rgba(10, 21, 32, 0.9),
+                    rgba(4, 8, 16, 0.9)
+                );
+                overflow: hidden;
+                box-shadow: 0 0 0 1px rgba(14, 165, 233, 0.1),
+                    0 20px 60px rgba(0, 0, 0, 0.5),
+                    inset 0 0 60px rgba(14, 165, 233, 0.05);
+            }
+            .image-box::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(
+                    circle at 50% 45%,
+                    rgba(14, 165, 233, 0.12),
+                    transparent 60%
+                );
+                pointer-events: none;
+            }
+            .image-box img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <div
+            class="fixed top-1/3 -left-48 w-[500px] h-[500px] bg-primary/8 rounded-full blur-[100px] pointer-events-none"
+        ></div>
+        <div
+            class="fixed bottom-1/4 -right-48 w-[500px] h-[500px] bg-secondary/8 rounded-full blur-[100px] pointer-events-none"
+        ></div>
+
+        <!-- Navigation -->
+        <nav
+            id="navbar"
+            class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        >
+            <div
+                class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between"
+            >
+                <a
+                    href="index.html"
+                    class="flex items-center gap-3 group"
+                >
+                    <svg
+                        class="w-8 h-8 transition-transform duration-300 group-hover:scale-110"
+                        viewBox="0 0 512 512"
+                        fill="none"
+                    >
+                        <defs>
+                            <linearGradient
+                                id="ng"
+                                x1="0%"
+                                y1="100%"
+                                x2="100%"
+                                y2="0%"
+                            >
+                                <stop offset="0%" stop-color="#10B981" />
+                                <stop offset="100%" stop-color="#0EA5E9" />
+                            </linearGradient>
+                        </defs>
+                        <path
+                            d="M256 190 L256 260"
+                            stroke="url(#ng)"
+                            stroke-width="6"
+                            fill="none"
+                            stroke-linecap="round"
+                            opacity=".45"
+                        />
+                        <path
+                            d="M242 210 L256 185 L270 210"
+                            stroke="url(#ng)"
+                            stroke-width="5"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            opacity=".4"
+                        />
+                        <circle
+                            cx="256"
+                            cy="256"
+                            r="8"
+                            fill="url(#ng)"
+                            opacity=".6"
+                        />
+                    </svg>
+                    <span
+                        class="text-sm font-bold tracking-wider uppercase hidden sm:block"
+                        >Updraft Network</span
+                    >
+                </a>
+                <div class="hidden sm:flex items-center gap-2">
+                    <a
+                        href="index.html"
+                        class="nav-link px-3 py-2 text-xs font-medium tracking-wider uppercase text-muted hover:text-txt transition-colors"
+                        >Home</a
+                    >
+                    <a
+                        href="index.html"
+                        class="nav-link px-3 py-2 text-xs font-medium tracking-wider uppercase text-primary transition-colors active"
+                        >Client</a
+                    >
+                    <a
+                        href="https://discord.gg/B4u9ap3VRb"
+                        target="_blank"
+                        rel="noopener"
+                        class="flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-lg text-primary text-xs font-bold tracking-wider uppercase hover:bg-primary/20 hover:border-primary/40 transition-all duration-300"
+                    >
+                        <svg class="w-4 h-4" viewBox="0 0 64 64" fill="#5865F2">
+                            <path
+                                d="M48 18c-3-1.4-6.3-2.4-9.7-3-0.4 1.5-0.9 3.5-1.2 5.1-3.6-0.5-7.2-0.5-10.8 0-0.3-1.6-0.8-3.6-1.2-5.1-3.4 0.6-6.7 1.6-9.7 3-6.1 9.1-7.8 18-6.9 26.8 4 3 8 4.8 11.8 6 0.9-1.2 1.7-2.5 2.4-3.9-1.8-0.7-3.6-1.5-5.2-2.5 0.4-0.3 0.8-0.6 1.2-1 8.4 3.9 17.5 3.9 25.9 0 0.4 0.3 0.8 0.7 1.2 1-1.6 1-3.4 1.8-5.2 2.5 0.7 1.4 1.5 2.7 2.4 3.9 3.8-1.2 7.8-3 11.8-6 1-10.2-1.7-19.1-7-26.8zM23 39c-2.3 0-4.2-2.1-4.2-4.7s1.8-4.7 4.2-4.7 4.3 2.1 4.2 4.7c0 2.6-1.8 4.7-4.2 4.7zm14 0c-2.3 0-4.2-2.1-4.2-4.7s1.8-4.7 4.2-4.7 4.3 2.1 4.2 4.7c0 2.6-1.8 4.7-4.2 4.7z"
+                            />
+                        </svg>
+                        <span class="hidden sm:inline">Discord</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Client -->
+        <main
+            class="min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16 relative"
+        >
+            <div class="max-w-3xl w-full text-center">
+                <span
+                    class="inline-block text-[11px] font-bold tracking-[.2em] uppercase text-accent mb-4"
+                    >Client</span
+                >
+                <h1
+                    class="font-mojangles text-4xl sm:text-5xl lg:text-6xl mb-4 text-txt"
+                >
+                    UPDRAFT CLIENT
+                </h1>
+                <p class="text-muted mb-12">
+                    A custom launcher experience for the Updraft Network.
+                </p>
+
+                <!-- Image Box -->
+                <div class="image-box mx-auto max-w-2xl flex items-center justify-center">
+                    <!-- Replace the img below with the real client artwork when ready -->
+                    <!-- <img src="client-preview.png" alt="Updraft Client preview" /> -->
+                    <span
+                        class="font-mojangles coming-soon text-3xl sm:text-5xl select-none"
+                        >COMING SOON</span
+                    >
+                </div>
+
+                <p class="text-sm text-muted mt-8">
+                    Watch the Discord for the public release.
+                </p>
+            </div>
+        </main>
+    </body>
+</html>
