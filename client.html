@@ -477,23 +477,27 @@
                     </h2>
                 </div>
 
-                <div id="featImage" class="feat-image bg-gradient-to-br from-secondary to-primary">
+                <div id="featImage" class="feat-image bg-gradient-to-br from-accent to-primary">
                     <span
                         id="featName"
                         class="text-2xl sm:text-4xl font-bold text-white drop-shadow-lg px-4 text-center"
-                        >One-Click Join</span
+                        >Low Latency</span
                     >
                 </div>
                 <p
                     id="featDesc"
                     class="text-center text-muted mt-5 max-w-lg mx-auto text-sm sm:text-base"
                 >
-                    Connect to any Updraft server instantly — no manual IP typing,
-                    ever.
+                    Optimized routing and a lightweight client keep your ping low,
+                    wherever you play from.
                 </p>
 
                 <div class="feat-thumbs" id="featThumbs">
-                    <button type="button" class="feat-thumb active" data-id="join">
+                    <button type="button" class="feat-thumb active" data-id="latency">
+                        <span class="thumb-img bg-gradient-to-br from-accent to-primary"></span>
+                        <span>Low Latency</span>
+                    </button>
+                    <button type="button" class="feat-thumb" data-id="join">
                         <span class="thumb-img bg-gradient-to-br from-secondary to-primary"></span>
                         <span>One-Click Join</span>
                     </button>
@@ -603,6 +607,11 @@
             // Features selector
             (function () {
                 const features = {
+                    latency: {
+                        grad: "from-accent to-primary",
+                        name: "Low Latency",
+                        desc: "Optimized routing and a lightweight client keep your ping low, wherever you play from.",
+                    },
                     join: {
                         grad: "from-secondary to-primary",
                         name: "One-Click Join",
