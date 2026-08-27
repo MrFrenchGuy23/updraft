@@ -248,6 +248,58 @@
                 object-fit: cover;
                 display: block;
             }
+            .feat-image {
+                cursor: pointer;
+            }
+            .feat-desc {
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 1.5rem 1.75rem;
+                text-align: center;
+                background: rgba(4, 8, 16, 0.84);
+                color: #f0fdfa;
+                font-size: 0.95rem;
+                line-height: 1.6;
+                opacity: 0;
+                pointer-events: none;
+                transform: translateY(10px);
+                transition: opacity 0.25s ease, transform 0.25s ease;
+                backdrop-filter: blur(2px);
+                z-index: 5;
+            }
+            .feat-image.show-desc .feat-desc {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .feat-image.show-desc #featName {
+                opacity: 0;
+            }
+            .feat-image #featName {
+                transition: opacity 0.25s ease;
+                z-index: 2;
+            }
+            .feat-hint {
+                position: absolute;
+                bottom: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 11px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: rgba(240, 253, 250, 0.85);
+                background: rgba(4, 8, 16, 0.55);
+                padding: 4px 10px;
+                border-radius: 9999px;
+                pointer-events: none;
+                transition: opacity 0.25s ease;
+                z-index: 3;
+            }
+            .feat-image.show-desc .feat-hint {
+                opacity: 0;
+            }
             .feat-thumbs {
                 display: flex;
                 gap: 12px;
@@ -501,6 +553,14 @@
                             class="text-2xl sm:text-4xl font-bold text-white drop-shadow-lg px-4 text-center"
                             >Instant Crystals</span
                         >
+                        <div
+                            id="featDesc"
+                            class="feat-desc"
+                        >
+                            The client works together with the server to make placing and
+                            breaking end crystals faster and more responsive than ever.
+                        </div>
+                        <span class="feat-hint">Click image for details</span>
                     </div>
 
                     <button
@@ -512,13 +572,6 @@
                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                     </button>
                 </div>
-                <p
-                    id="featDesc"
-                    class="text-center text-muted mt-5 max-w-lg mx-auto text-sm sm:text-base"
-                >
-                    The client works together with the server to make placing and
-                    breaking end crystals faster and more responsive than ever.
-                </p>
 
                 <div class="flex items-center justify-center gap-4 mt-6">
                     <span
@@ -720,6 +773,9 @@
                         index = (index + 1) % features.length;
                         render();
                     }
+                });
+                featImage.addEventListener("click", () => {
+                    featImage.classList.toggle("show-desc");
                 });
                 render();
             })();
