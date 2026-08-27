@@ -527,8 +527,6 @@
                         >1 / 3</span
                     >
                 </div>
-
-                <div class="feat-thumbs" id="featThumbs"></div>
             </div>
 
             <p class="text-sm text-muted mt-16">
@@ -685,26 +683,7 @@
                 const counter = document.getElementById("featCounter");
                 const prev = document.getElementById("featPrev");
                 const next = document.getElementById("featNext");
-                const thumbs = document.getElementById("featThumbs");
                 let index = 0;
-                features.forEach((f, i) => {
-                    const b = document.createElement("button");
-                    b.type = "button";
-                    b.className =
-                        "feat-thumb" + (i === 0 ? " active" : "");
-                    b.innerHTML =
-                        '<span class="thumb-img bg-gradient-to-br ' +
-                        f.grad +
-                        '"></span><span>' +
-                        f.name +
-                        "</span>";
-                    b.addEventListener("click", () => {
-                        index = i;
-                        render();
-                    });
-                    thumbs.appendChild(b);
-                });
-                const thumbEls = thumbs.querySelectorAll(".feat-thumb");
                 function render() {
                     const f = features[index];
                     featImage.className =
@@ -721,9 +700,6 @@
                     featDesc.textContent = f.desc;
                     counter.textContent =
                         index + 1 + " / " + features.length;
-                    thumbEls.forEach((t, i) =>
-                        t.classList.toggle("active", i === index)
-                    );
                 }
                 prev.addEventListener("click", () => {
                     index = (index - 1 + features.length) % features.length;
