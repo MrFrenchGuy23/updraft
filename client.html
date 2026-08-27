@@ -527,6 +527,8 @@
                         >1 / 3</span
                     >
                 </div>
+
+                <div class="feat-thumbs" id="featThumbs"></div>
             </div>
 
             <p class="text-sm text-muted mt-16">
@@ -636,6 +638,46 @@
                         name: "Instant Windcharges",
                         desc: "The client works together with the server to make wind charges faster and more responsive than ever.",
                     },
+                    {
+                        grad: "from-secondary to-primary",
+                        name: "Low Latency",
+                        desc: "A custom connection layer and regional routing keep your ping low, so every action registers the instant you make it.",
+                    },
+                    {
+                        grad: "from-lifesteal to-accent",
+                        name: "Auto Sprint",
+                        desc: "Built-in movement tweaks like auto sprint and auto jump keep you at full speed without fumbling with keys.",
+                    },
+                    {
+                        grad: "from-accent to-lifesteal",
+                        name: "Hitbox Preview",
+                        desc: "Optional, server-approved hitbox and reach indicators give you clearer feedback in fights and practice.",
+                    },
+                    {
+                        grad: "from-primary to-secondary",
+                        name: "FPS Boost",
+                        desc: "Lightweight rendering and smart chunk handling squeeze more frames out of any machine, from laptops to desktops.",
+                    },
+                    {
+                        grad: "from-secondary to-accent",
+                        name: "One-Click Connect",
+                        desc: "No manual server addresses — pick your gamemode and the client drops you straight into the right world.",
+                    },
+                    {
+                        grad: "from-primary to-lifesteal",
+                        name: "Best Performance",
+                        desc: "Tuned from the ground up for silky-smooth gameplay, balancing visuals and speed so you never drop a frame when it matters.",
+                    },
+                    {
+                        grad: "from-accent to-primary",
+                        name: "Handpicked Mods",
+                        desc: "Only the best, server-approved quality-of-life mods are bundled in — no bloat, no conflicts, just the upgrades you actually want.",
+                    },
+                    {
+                        grad: "from-secondary to-lifesteal",
+                        name: "Certified by Professionals",
+                        desc: "Reviewed and signed off by the Updraft team and competitive players, so you get a client that's safe, fair, and battle-tested.",
+                    },
                 ];
                 const featImage = document.getElementById("featImage");
                 const featName = document.getElementById("featName");
@@ -643,7 +685,26 @@
                 const counter = document.getElementById("featCounter");
                 const prev = document.getElementById("featPrev");
                 const next = document.getElementById("featNext");
+                const thumbs = document.getElementById("featThumbs");
                 let index = 0;
+                features.forEach((f, i) => {
+                    const b = document.createElement("button");
+                    b.type = "button";
+                    b.className =
+                        "feat-thumb" + (i === 0 ? " active" : "");
+                    b.innerHTML =
+                        '<span class="thumb-img bg-gradient-to-br ' +
+                        f.grad +
+                        '"></span><span>' +
+                        f.name +
+                        "</span>";
+                    b.addEventListener("click", () => {
+                        index = i;
+                        render();
+                    });
+                    thumbs.appendChild(b);
+                });
+                const thumbEls = thumbs.querySelectorAll(".feat-thumb");
                 function render() {
                     const f = features[index];
                     featImage.className =
@@ -660,6 +721,9 @@
                     featDesc.textContent = f.desc;
                     counter.textContent =
                         index + 1 + " / " + features.length;
+                    thumbEls.forEach((t, i) =>
+                        t.classList.toggle("active", i === index)
+                    );
                 }
                 prev.addEventListener("click", () => {
                     index = (index - 1 + features.length) % features.length;
