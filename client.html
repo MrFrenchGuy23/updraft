@@ -432,7 +432,9 @@
                         >
                             <span>Windows</span>
                             <span class="flex items-center gap-2">
-                                <span id="platformIcon" class="text-base">🪟</span>
+                                <span id="platformIcon" class="flex items-center justify-center w-4 h-4">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><rect x="3" y="3" width="8.5" height="8.5" rx="1"/><rect x="12.5" y="3" width="8.5" height="8.5" rx="1"/><rect x="3" y="12.5" width="8.5" height="8.5" rx="1"/><rect x="12.5" y="12.5" width="8.5" height="8.5" rx="1"/></svg>
+                                </span>
                                 <svg class="chevron w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="6 9 12 15 18 9"></polyline>
                                 </svg>
@@ -440,13 +442,16 @@
                         </button>
                         <div class="platform-menu" role="listbox" id="platformMenu">
                             <button type="button" class="platform-option selected" data-platform="windows" role="option" aria-selected="true">
-                                <span class="text-base">🪟</span><span>Windows</span>
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 flex-shrink-0"><rect x="3" y="3" width="8.5" height="8.5" rx="1"/><rect x="12.5" y="3" width="8.5" height="8.5" rx="1"/><rect x="3" y="12.5" width="8.5" height="8.5" rx="1"/><rect x="12.5" y="12.5" width="8.5" height="8.5" rx="1"/></svg>
+                                <span>Windows</span>
                             </button>
                             <button type="button" class="platform-option" data-platform="macos" role="option" aria-selected="false">
-                                <span class="text-base">🍎</span><span>macOS</span>
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 flex-shrink-0"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.572-2.27 1.206-2.98.804-.94 2.142-1.64 3.248-1.68.03.13.05.28.05.43zm4.565 15.71c-.03.07-.463 1.58-1.518 3.12-.945 1.34-1.94 2.71-3.43 2.71-1.517 0-1.9-.88-3.63-.88-1.718 0-2.32.91-3.67.91-1.377 0-2.332-1.26-3.428-2.8-1.287-1.82-2.323-4.63-2.323-7.28 0-4.28 2.797-6.55 5.552-6.55 1.448 0 2.675.95 3.6.95.865 0 2.222-1.01 3.902-1.01.613 0 2.886.06 4.374 2.19-.13.09-2.383 1.37-2.383 4.19 0 3.26 2.854 4.42 2.955 4.45z"/></svg>
+                                <span>macOS</span>
                             </button>
                             <button type="button" class="platform-option" data-platform="linux" role="option" aria-selected="false">
-                                <span class="text-base">🐧</span><span>Linux</span>
+                                <svg viewBox="0 0 24 24" class="w-4 h-4 flex-shrink-0"><path d="M12 3c-2.2 0-3.6 2-3.6 4.4 0 1-.2 1.7-.7 2.6-.6 1-1.4 2-2.1 3.2-1.4 2.1-2 4.2-1.2 5.6.5 1 1.6 1.6 3 1.6.5 0 .9-.1 1.2-.3.2 1 .9 1.8 1.9 1.8.5 0 .9-.2 1.2-.5.3.3.7.5 1.2.5.5 0 .9-.2 1.2-.5.3.3.7.5 1.2.5 1 0 1.7-.8 1.9-1.8.3.2.7.3 1.2.3 1.4 0 2.5-.6 3-1.6.8-1.4.2-3.5-1.2-5.6-.7-1.2-1.5-2.2-2.1-3.2-.5-.9-.7-1.6-.7-2.6C15.6 5 14.2 3 12 3z" fill="#0b1220"/><ellipse cx="12" cy="15" rx="3" ry="5" fill="#F0FDFA"/><circle cx="10.3" cy="9.5" r=".9" fill="#0b1220"/><circle cx="13.7" cy="9.5" r=".9" fill="#0b1220"/><path d="M11 11l1 1.4 1-1.4z" fill="#F59E0B"/><ellipse cx="10" cy="21.4" rx="1.3" ry=".7" fill="#F59E0B"/><ellipse cx="14" cy="21.4" rx="1.3" ry=".7" fill="#F59E0B"/></svg>
+                                <span>Linux</span>
                             </button>
                         </div>
                     </div>
@@ -544,7 +549,14 @@
                 const label = trigger.querySelector("span");
                 const icon = document.getElementById("platformIcon");
                 const options = menu.querySelectorAll(".platform-option");
-                const icons = { windows: "🪟", macos: "🍎", linux: "🐧" };
+                const icons = {
+                    windows:
+                        '<svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><rect x="3" y="3" width="8.5" height="8.5" rx="1"/><rect x="12.5" y="3" width="8.5" height="8.5" rx="1"/><rect x="3" y="12.5" width="8.5" height="8.5" rx="1"/><rect x="12.5" y="12.5" width="8.5" height="8.5" rx="1"/></svg>',
+                    macos:
+                        '<svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.572-2.27 1.206-2.98.804-.94 2.142-1.64 3.248-1.68.03.13.05.28.05.43zm4.565 15.71c-.03.07-.463 1.58-1.518 3.12-.945 1.34-1.94 2.71-3.43 2.71-1.517 0-1.9-.88-3.63-.88-1.718 0-2.32.91-3.67.91-1.377 0-2.332-1.26-3.428-2.8-1.287-1.82-2.323-4.63-2.323-7.28 0-4.28 2.797-6.55 5.552-6.55 1.448 0 2.675.95 3.6.95.865 0 2.222-1.01 3.902-1.01.613 0 2.886.06 4.374 2.19-.13.09-2.383 1.37-2.383 4.19 0 3.26 2.854 4.42 2.955 4.45z"/></svg>',
+                    linux:
+                        '<svg viewBox="0 0 24 24" class="w-4 h-4"><path d="M12 3c-2.2 0-3.6 2-3.6 4.4 0 1-.2 1.7-.7 2.6-.6 1-1.4 2-2.1 3.2-1.4 2.1-2 4.2-1.2 5.6.5 1 1.6 1.6 3 1.6.5 0 .9-.1 1.2-.3.2 1 .9 1.8 1.9 1.8.5 0 .9-.2 1.2-.5.3.3.7.5 1.2.5.5 0 .9-.2 1.2-.5.3.3.7.5 1.2.5 1 0 1.7-.8 1.9-1.8.3.2.7.3 1.2.3 1.4 0 2.5-.6 3-1.6.8-1.4.2-3.5-1.2-5.6-.7-1.2-1.5-2.2-2.1-3.2-.5-.9-.7-1.6-.7-2.6C15.6 5 14.2 3 12 3z" fill="#0b1220"/><ellipse cx="12" cy="15" rx="3" ry="5" fill="#F0FDFA"/><circle cx="10.3" cy="9.5" r=".9" fill="#0b1220"/><circle cx="13.7" cy="9.5" r=".9" fill="#0b1220"/><path d="M11 11l1 1.4 1-1.4z" fill="#F59E0B"/><ellipse cx="10" cy="21.4" rx="1.3" ry=".7" fill="#F59E0B"/><ellipse cx="14" cy="21.4" rx="1.3" ry=".7" fill="#F59E0B"/></svg>',
+                };
                 function detectPlatform() {
                     const ua = navigator.userAgent || "";
                     if (/Mac/i.test(ua)) return "macos";
@@ -558,7 +570,7 @@
                         opt.setAttribute("aria-selected", match ? "true" : "false");
                         if (match) {
                             label.textContent = opt.textContent.trim();
-                            icon.textContent = icons[p];
+                            icon.innerHTML = icons[p];
                         }
                     });
                 }
