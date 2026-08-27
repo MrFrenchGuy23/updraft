@@ -240,6 +240,14 @@
                 overflow: hidden;
                 box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             }
+            .feat-image img {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
             .feat-thumbs {
                 display: flex;
                 gap: 12px;
@@ -615,6 +623,7 @@
                     {
                         grad: "from-lifesteal to-primary",
                         name: "Instant Crystals",
+                        image: "2026-08-27T10_42_39.png",
                         desc: "The client works together with the server to make placing and breaking end crystals faster and more responsive than ever.",
                     },
                     {
@@ -639,6 +648,13 @@
                     const f = features[index];
                     featImage.className =
                         "feat-image bg-gradient-to-br " + f.grad;
+                    featImage.querySelectorAll("img").forEach((i) => i.remove());
+                    if (f.image) {
+                        const img = document.createElement("img");
+                        img.src = f.image;
+                        img.alt = f.name;
+                        featImage.appendChild(img);
+                    }
                     featImage.appendChild(featName);
                     featName.textContent = f.name;
                     featDesc.textContent = f.desc;
