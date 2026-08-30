@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,10 +8,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg-body: #050505;
+      --text-primary: #ffffff;
+      --text-muted: rgba(255,255,255,0.3);
+      --text-glow: rgba(255,255,255,0.5);
+    }
+    [data-theme="light"] {
+      --bg-body: #f0f4f8;
+      --text-primary: #0f172a;
+      --text-muted: rgba(15,23,42,0.5);
+      --text-glow: rgba(15,23,42,0.6);
+    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: #050505;
-      color: white;
+      background: var(--bg-body);
+      color: var(--text-primary);
       font-family: 'Inter', sans-serif;
       overflow: hidden;
       height: 100vh;
@@ -24,7 +36,7 @@
       content: "";
       position: fixed;
       inset: 0;
-      background: #050505;
+      background: var(--bg-body);
       z-index: -1;
     }
     .bg-grid {
@@ -43,11 +55,11 @@
     .glow {
       font-size: 1.4rem;
       font-weight: 700;
-      color: rgba(255,255,255,0.5);
+      color: var(--text-glow);
       margin-bottom: 16px;
     }
     p {
-      color: rgba(255,255,255,0.3);
+      color: var(--text-muted);
       font-size: 0.95rem;
       margin-bottom: 36px;
       line-height: 1.7;
@@ -67,6 +79,44 @@
       transform: translateY(-3px);
       box-shadow: 0 8px 40px rgba(0, 170, 255, 0.25);
     }
+    .theme-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.6);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+    [data-theme="light"] .theme-toggle {
+      border-color: rgba(0,0,0,0.1);
+      background: rgba(0,0,0,0.04);
+      color: rgba(0,0,0,0.5);
+    }
+    .theme-toggle:hover {
+      border-color: rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.9);
+    }
+    [data-theme="light"] .theme-toggle:hover {
+      border-color: rgba(0,0,0,0.2);
+      color: rgba(0,0,0,0.8);
+    }
+    .theme-toggle .icon-sun,
+    .theme-toggle .icon-moon {
+      width: 20px;
+      height: 20px;
+      display: none;
+    }
+    [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+    [data-theme="light"] .theme-toggle .icon-moon { display: block; }
     .particle {
       position: fixed;
       border-radius: 50%;
@@ -81,12 +131,41 @@
 <body>
 <div class="bg-grid"></div>
 
+<button
+    type="button"
+    class="theme-toggle"
+    aria-label="Toggle theme"
+    onclick="toggleTheme()"
+>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+</button>
+
 <div class="code">404</div>
 <div class="glow">Lost in the void</div>
 <p>The page you're looking for doesn't exist.<br>Maybe it never did.</p>
 <a href="/">Go Home</a>
 
 <script>
+    (function () {
+        var saved = localStorage.getItem("theme");
+        if (saved) {
+            document.documentElement.setAttribute("data-theme", saved);
+        } else if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+    })();
+    function toggleTheme() {
+        var html = document.documentElement;
+        var current = html.getAttribute("data-theme") || "dark";
+        var next = current === "dark" ? "light" : "dark";
+        html.setAttribute("data-theme", next);
+        localStorage.setItem("theme", next);
+    }
 </script>
 </body>
 </html>

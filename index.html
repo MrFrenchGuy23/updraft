@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth" data-theme="dark">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -37,11 +37,11 @@
                             survival: "#10B981",
                             lifesteal: "#EF4444",
                             practice: "#0EA5E9",
-                            bgdark: "#040810",
-                            bgcard: "#0A1520",
-                            border: "#152535",
-                            txt: "#F0FDFA",
-                            muted: "#94A3B8",
+                            bgdark: "rgb(var(--bg-body-rgb) / <alpha-value>)",
+                            bgcard: "rgb(var(--bg-card-rgb) / <alpha-value>)",
+                            border: "rgb(var(--border-rgb) / <alpha-value>)",
+                            txt: "rgb(var(--text-rgb) / <alpha-value>)",
+                            muted: "rgb(var(--muted-rgb) / <alpha-value>)",
                         },
                         fontFamily: {
                             sans: ["Inter", "system-ui", "sans-serif"],
@@ -55,6 +55,38 @@
             rel="stylesheet"
         />
         <style>
+            :root {
+                --bg-body: #040810;
+                --bg-body-rgb: 4, 8, 16;
+                --bg-card: #0A1520;
+                --bg-card-rgb: 10, 21, 32;
+                --border-color: #152535;
+                --border-rgb: 21, 37, 53;
+                --text-primary: #F0FDFA;
+                --text-rgb: 240, 253, 250;
+                --text-muted: #94A3B8;
+                --muted-rgb: 148, 163, 184;
+                --nav-bg: rgba(4, 8, 16, 0);
+                --mobile-bg: rgba(4, 8, 16, 0.95);
+                --footer-bg: #040810;
+                --toast-bg: rgba(10, 21, 32, 0.95);
+            }
+            [data-theme="light"] {
+                --bg-body: #f0f4f8;
+                --bg-body-rgb: 240, 244, 248;
+                --bg-card: #ffffff;
+                --bg-card-rgb: 255, 255, 255;
+                --border-color: #d1dce6;
+                --border-rgb: 209, 220, 230;
+                --text-primary: #0f172a;
+                --text-rgb: 15, 23, 42;
+                --text-muted: #64748b;
+                --muted-rgb: 100, 116, 139;
+                --nav-bg: rgba(255, 255, 255, 0.85);
+                --mobile-bg: rgba(240, 244, 248, 0.95);
+                --footer-bg: #ffffff;
+                --toast-bg: rgba(255, 255, 255, 0.95);
+            }
             * {
                 margin: 0;
                 padding: 0;
@@ -62,19 +94,22 @@
             }
             body {
                 font-family: "Inter", system-ui, sans-serif;
-                background: #040810 url('background.png') center/cover fixed no-repeat;
-                color: #f0fdfa;
+                background: var(--bg-body) url('background.png') center/cover fixed no-repeat;
+                color: var(--text-primary);
                 overflow-x: hidden;
                 zoom: 0.9;
+            }
+            [data-theme="light"] body {
+                background-image: none;
             }
             ::-webkit-scrollbar {
                 width: 5px;
             }
             ::-webkit-scrollbar-track {
-                background: #040810;
+                background: var(--bg-body);
             }
             ::-webkit-scrollbar-thumb {
-                background: #152535;
+                background: var(--border-color);
                 border-radius: 3px;
             }
             ::-webkit-scrollbar-thumb:hover {
@@ -242,8 +277,8 @@
                 bottom: 24px;
                 left: 50%;
                 transform: translateX(-50%) translateY(80px);
-                background: #0a1520;
-                border: 1px solid #152535;
+                background: var(--toast-bg);
+                border: 1px solid var(--border-color);
                 padding: 12px 24px;
                 border-radius: 12px;
                 z-index: 1000;
@@ -449,7 +484,7 @@
             #updates-feed { min-height: 200px; }
             .loading-updates { min-height: 200px; display: flex; align-items: center; justify-content: center; }
             .ucard {
-                background: #0a1520; border: 1px solid #152535;
+                background: var(--bg-card); border: 1px solid var(--border-color);
                 border-radius: 16px; padding: 20px 24px;
                 transition: all 0.3s ease;
             }
@@ -457,33 +492,33 @@
             .ucard-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
             .ucard-avatar {
                 width: 36px; height: 36px; border-radius: 50%; object-fit: cover;
-                background: #152535; flex-shrink: 0;
+                background: var(--border-color); flex-shrink: 0;
             }
-            .ucard-name { font-size: 14px; font-weight: 700; color: #f0fdfa; }
-            .ucard-date { font-size: 11px; color: #94a3b8; font-family: 'JetBrains Mono', monospace; }
+            .ucard-name { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+            .ucard-date { font-size: 11px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
             .ucard-body { font-size: 15px; color: #cbd5e1; line-height: 1.6; word-wrap: break-word; }
-            .ucard-body strong { font-weight: 700; color: #f0fdfa; }
+            .ucard-body strong { font-weight: 700; color: var(--text-primary); }
             .ucard-body em { font-style: italic; }
             .ucard-body u { text-decoration: underline; }
             .ucard-body s { text-decoration: line-through; color: #64748b; }
             .ucard-body code {
-                background: #152535; border: 1px solid #1e3a5f; border-radius: 4px;
+                background: var(--border-color); border: 1px solid #1e3a5f; border-radius: 4px;
                 padding: 2px 5px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #22d3ee;
             }
             .ucard-body pre {
-                background: #0a0f18; border: 1px solid #152535; border-radius: 8px;
+                background: rgba(var(--bg-body-rgb), 0.8); border: 1px solid var(--border-color); border-radius: 8px;
                 padding: 12px 14px; overflow-x: auto; margin: 8px 0;
             }
             .ucard-body pre code { background: none; border: none; padding: 0; white-space: pre; color: #cbd5e1; }
             .ucard-body blockquote {
-                border-left: 3px solid #152535; padding-left: 12px; margin: 8px 0; color: #64748b;
+                border-left: 3px solid var(--border-color); padding-left: 12px; margin: 8px 0; color: #64748b;
             }
             .ucard-body ul, .ucard-body ol { margin: 6px 0 6px 22px; }
             .ucard-body li { margin-bottom: 4px; }
             .ucard-body a { color: #0ea5e9; text-decoration: none; }
             .ucard-body a:hover { text-decoration: underline; }
             .ucard-body .spoiler {
-                background: #152535; color: transparent; border-radius: 4px;
+                background: var(--border-color); color: transparent; border-radius: 4px;
                 padding: 0 4px; cursor: pointer; user-select: none;
             }
             .ucard-body .spoiler.revealed {
@@ -496,6 +531,56 @@
                 transform: translateY(-2px);
                 border-color: rgba(14, 165, 233, 0.5);
             }
+            [data-theme="light"] #navbar {
+                background: var(--nav-bg);
+                backdrop-filter: blur(12px);
+                border-bottom: 1px solid var(--border-color);
+            }
+            [data-theme="light"] #mobile-menu {
+                background: var(--mobile-bg);
+            }
+            [data-theme="light"] footer {
+                background: var(--footer-bg);
+            }
+            [data-theme="light"] .reveal.visible.pixel {
+                box-shadow: 8px 8px 0 #d1dce6;
+            }
+            [data-theme="light"] .reveal.visible.pixel:hover {
+                box-shadow: 10px 10px 0 #d1dce6;
+            }
+            [data-theme="light"] .reveal.visible.pixel:active {
+                box-shadow: 0 0 0 #d1dce6;
+            }
+            [data-theme="light"] .feature-row:hover {
+                background: rgba(0, 0, 0, 0.02);
+            }
+            .theme-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 36px;
+                height: 36px;
+                border-radius: 8px;
+                border: 1px solid var(--border-color);
+                background: rgba(var(--bg-card-rgb), 0.6);
+                color: var(--text-muted);
+                cursor: pointer;
+                transition: all 0.2s ease;
+                flex-shrink: 0;
+            }
+            .theme-toggle:hover {
+                border-color: rgba(14, 165, 233, 0.5);
+                color: var(--text-primary);
+                background: rgba(var(--bg-card-rgb), 0.8);
+            }
+            .theme-toggle .icon-sun,
+            .theme-toggle .icon-moon {
+                width: 18px;
+                height: 18px;
+                display: none;
+            }
+            [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+            [data-theme="light"] .theme-toggle .icon-moon { display: block; }
         </style>
     </head>
     <body>
@@ -601,6 +686,19 @@
                         Leaderboards
                     </button>
                     <div class="w-px h-5 bg-border mx-1 hidden sm:block"></div>
+                    <button
+                        type="button"
+                        class="theme-toggle"
+                        aria-label="Toggle theme"
+                        onclick="toggleTheme()"
+                    >
+                        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                        </svg>
+                        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
                     <a
                         href="https://discord.gg/B4u9ap3VRb"
                         target="_blank"
@@ -684,6 +782,18 @@
                 class="text-lg font-medium tracking-wider uppercase text-muted hover:text-txt transition-colors"
                 >Client</a
             >
+            <button
+                type="button"
+                class="theme-toggle mt-2"
+                onclick="toggleTheme()"
+            >
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
             <a
                 href="https://discord.gg/B4u9ap3VRb"
                 target="_blank"
@@ -2635,6 +2745,21 @@
         </div>
 
         <script>
+            (function () {
+                var saved = localStorage.getItem("theme");
+                if (saved) {
+                    document.documentElement.setAttribute("data-theme", saved);
+                } else if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+                    document.documentElement.setAttribute("data-theme", "light");
+                }
+            })();
+            function toggleTheme() {
+                var html = document.documentElement;
+                var current = html.getAttribute("data-theme") || "dark";
+                var next = current === "dark" ? "light" : "dark";
+                html.setAttribute("data-theme", next);
+                localStorage.setItem("theme", next);
+            }
 
             function navigate(page) {
                 document
@@ -2677,9 +2802,9 @@
             function updateNav() {
                 const nav = document.getElementById("navbar");
                 if (window.scrollY > 40) {
-                    nav.style.background = "rgba(4,8,16,0.88)";
+                    nav.style.background = "var(--nav-bg)";
                     nav.style.backdropFilter = "blur(12px)";
-                    nav.style.borderBottom = "1px solid rgba(21,37,53,0.6)";
+                    nav.style.borderBottom = "1px solid var(--border-color)";
                 } else {
                     nav.style.background = "transparent";
                     nav.style.backdropFilter = "none";
