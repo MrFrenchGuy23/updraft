@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth" data-theme="dark">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,11 +25,11 @@
                             secondary: "#10B981",
                             accent: "#22D3EE",
                             lifesteal: "#EF4444",
-                            bgdark: "#040810",
-                            bgcard: "#0A1520",
-                            border: "#152535",
-                            txt: "#F0FDFA",
-                            muted: "#94A3B8",
+                            bgdark: "rgb(var(--bg-body-rgb) / <alpha-value>)",
+                            bgcard: "rgb(var(--bg-card-rgb) / <alpha-value>)",
+                            border: "rgb(var(--border-rgb) / <alpha-value>)",
+                            txt: "rgb(var(--text-rgb) / <alpha-value>)",
+                            muted: "rgb(var(--muted-rgb) / <alpha-value>)",
                         },
                         fontFamily: {
                             sans: ["Inter", "system-ui", "sans-serif"],
@@ -43,6 +43,40 @@
             rel="stylesheet"
         />
         <style>
+            :root {
+                --bg-body: #040810;
+                --bg-body-rgb: 4, 8, 16;
+                --bg-card: #0A1520;
+                --bg-card-rgb: 10, 21, 32;
+                --border-color: #152535;
+                --border-rgb: 21, 37, 53;
+                --text-primary: #F0FDFA;
+                --text-rgb: 240, 253, 250;
+                --text-muted: #94A3B8;
+                --muted-rgb: 148, 163, 184;
+                --nav-bg: rgba(4, 8, 16, 0);
+                --mobile-bg: rgba(4, 8, 16, 0.95);
+                --dropdown-bg: #0a1520;
+                --glow-bg: rgba(4, 8, 16, 0.84);
+                --hint-bg: rgba(4, 8, 16, 0.55);
+            }
+            [data-theme="light"] {
+                --bg-body: #f0f4f8;
+                --bg-body-rgb: 240, 244, 248;
+                --bg-card: #ffffff;
+                --bg-card-rgb: 255, 255, 255;
+                --border-color: #d1dce6;
+                --border-rgb: 209, 220, 230;
+                --text-primary: #0f172a;
+                --text-rgb: 15, 23, 42;
+                --text-muted: #64748b;
+                --muted-rgb: 100, 116, 139;
+                --nav-bg: rgba(255, 255, 255, 0.85);
+                --mobile-bg: rgba(240, 244, 248, 0.95);
+                --dropdown-bg: #ffffff;
+                --glow-bg: rgba(255, 255, 255, 0.88);
+                --hint-bg: rgba(255, 255, 255, 0.7);
+            }
             * {
                 margin: 0;
                 padding: 0;
@@ -50,20 +84,23 @@
             }
             body {
                 font-family: "Inter", system-ui, sans-serif;
-                background: #040810 url("background.png") center / cover fixed
+                background: var(--bg-body) url("background.png") center / cover fixed
                     no-repeat;
-                color: #f0fdfa;
+                color: var(--text-primary);
                 overflow-x: hidden;
                 line-height: 1.6;
+            }
+            [data-theme="light"] body {
+                background-image: none;
             }
             ::-webkit-scrollbar {
                 width: 5px;
             }
             ::-webkit-scrollbar-track {
-                background: #040810;
+                background: var(--bg-body);
             }
             ::-webkit-scrollbar-thumb {
-                background: #152535;
+                background: var(--border-color);
                 border-radius: 3px;
             }
             ::-webkit-scrollbar-thumb:hover {
@@ -118,8 +155,8 @@
                 border: 1px solid rgba(14, 165, 233, 0.25);
                 background: linear-gradient(
                     135deg,
-                    rgba(10, 21, 32, 0.9),
-                    rgba(4, 8, 16, 0.9)
+                    var(--bg-card),
+                    var(--bg-body)
                 );
                 overflow: hidden;
                 display: flex;
@@ -157,10 +194,10 @@
                 gap: 0.75rem;
                 width: 100%;
                 padding: 0.85rem 1.1rem;
-                background: rgba(10, 21, 32, 0.6);
-                border: 1px solid #152535;
+                background: rgba(var(--bg-card-rgb), 0.6);
+                border: 1px solid var(--border-color);
                 border-radius: 12px;
-                color: #f0fdfa;
+                color: var(--text-primary);
                 font-family: "Inter", system-ui, sans-serif;
                 font-size: 0.95rem;
                 font-weight: 600;
@@ -170,7 +207,7 @@
             .platform-trigger:hover,
             .platform-select.open .platform-trigger {
                 border-color: rgba(14, 165, 233, 0.5);
-                background: rgba(13, 28, 43, 0.8);
+                background: rgba(var(--bg-card-rgb), 0.8);
             }
             .platform-trigger .chevron {
                 transition: transform 0.2s ease;
@@ -185,8 +222,8 @@
                 top: calc(100% + 8px);
                 left: 0;
                 right: 0;
-                background: #0a1520;
-                border: 1px solid #152535;
+                background: var(--dropdown-bg);
+                border: 1px solid var(--border-color);
                 border-radius: 12px;
                 overflow: hidden;
                 box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
@@ -209,7 +246,7 @@
                 padding: 0.75rem 1.1rem;
                 background: transparent;
                 border: none;
-                color: #f0fdfa;
+                color: var(--text-primary);
                 font-family: "Inter", system-ui, sans-serif;
                 font-size: 0.9rem;
                 font-weight: 500;
@@ -226,7 +263,7 @@
                 color: #0ea5e9;
             }
             .platform-option + .platform-option {
-                border-top: 1px solid #152535;
+                border-top: 1px solid var(--border-color);
             }
             /* Features selector */
             .feat-image {
@@ -259,8 +296,8 @@
                 justify-content: center;
                 padding: 1.5rem 1.75rem;
                 text-align: center;
-                background: rgba(4, 8, 16, 0.84);
-                color: #f0fdfa;
+                background: var(--glow-bg);
+                color: var(--text-primary);
                 font-size: 0.95rem;
                 line-height: 1.6;
                 opacity: 0;
@@ -289,8 +326,8 @@
                 font-size: 11px;
                 letter-spacing: 0.08em;
                 text-transform: uppercase;
-                color: rgba(240, 253, 250, 0.85);
-                background: rgba(4, 8, 16, 0.55);
+                color: var(--text-primary);
+                background: var(--hint-bg);
                 padding: 4px 10px;
                 border-radius: 9999px;
                 pointer-events: none;
@@ -310,8 +347,8 @@
                 flex: 1 1 140px;
                 padding: 10px;
                 border-radius: 12px;
-                border: 1px solid #152535;
-                background: rgba(10, 21, 32, 0.6);
+                border: 1px solid var(--border-color);
+                background: rgba(var(--bg-card-rgb), 0.6);
                 cursor: pointer;
                 transition: all 0.2s ease;
                 display: flex;
@@ -321,7 +358,7 @@
             }
             .feat-thumb:hover {
                 border-color: rgba(14, 165, 233, 0.4);
-                background: rgba(13, 28, 43, 0.8);
+                background: rgba(var(--bg-card-rgb), 0.8);
             }
             .feat-thumb.active {
                 border-color: rgba(14, 165, 233, 0.7);
@@ -334,18 +371,68 @@
             }
             .feat-thumb span {
                 font-size: 11px;
-                color: #cbd5e1;
+                color: var(--text-muted);
                 text-align: center;
                 font-weight: 600;
             }
+            [data-theme="light"] #navbar {
+                background: var(--nav-bg);
+                backdrop-filter: blur(12px);
+                border-bottom: 1px solid var(--border-color);
+            }
+            [data-theme="light"] .coming-soon {
+                color: #0284c7;
+                text-shadow: 0 0 6px rgba(2, 132, 199, 0.3);
+            }
+            [data-theme="light"] .coming-soon {
+                animation: glow-pulse-light 2.4s ease-in-out infinite;
+            }
+            @keyframes glow-pulse-light {
+                0%, 100% { opacity: 0.92; }
+                50% { opacity: 1; }
+            }
+            [data-theme="light"] #mobile-menu {
+                background: var(--mobile-bg);
+            }
+            [data-theme="light"] .glow-orb-primary,
+            [data-theme="light"] .glow-orb-secondary {
+                opacity: 0.3;
+            }
+            .theme-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 36px;
+                height: 36px;
+                border-radius: 8px;
+                border: 1px solid var(--border-color);
+                background: rgba(var(--bg-card-rgb), 0.6);
+                color: var(--text-muted);
+                cursor: pointer;
+                transition: all 0.2s ease;
+                flex-shrink: 0;
+            }
+            .theme-toggle:hover {
+                border-color: rgba(14, 165, 233, 0.5);
+                color: var(--text-primary);
+                background: rgba(var(--bg-card-rgb), 0.8);
+            }
+            .theme-toggle .icon-sun,
+            .theme-toggle .icon-moon {
+                width: 18px;
+                height: 18px;
+                display: none;
+            }
+            [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+            [data-theme="light"] .theme-toggle .icon-moon { display: block; }
         </style>
     </head>
     <body>
         <div
-            class="fixed top-1/3 -left-48 w-[500px] h-[500px] bg-primary/8 rounded-full blur-[100px] pointer-events-none"
+            class="glow-orb-primary fixed top-1/3 -left-48 w-[500px] h-[500px] bg-primary/8 rounded-full blur-[100px] pointer-events-none"
         ></div>
         <div
-            class="fixed bottom-1/4 -right-48 w-[500px] h-[500px] bg-secondary/8 rounded-full blur-[100px] pointer-events-none"
+            class="glow-orb-secondary fixed bottom-1/4 -right-48 w-[500px] h-[500px] bg-secondary/8 rounded-full blur-[100px] pointer-events-none"
         ></div>
 
         <!-- Navigation -->
@@ -403,6 +490,20 @@
                         >Leaderboards</a
                     >
                     <div class="w-px h-5 bg-border mx-1 hidden sm:block"></div>
+                    <button
+                        type="button"
+                        class="theme-toggle"
+                        id="themeToggle"
+                        aria-label="Toggle theme"
+                        onclick="toggleTheme()"
+                    >
+                        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                        </svg>
+                        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
                     <a
                         href="https://discord.gg/B4u9ap3VRb"
                         target="_blank"
@@ -440,6 +541,18 @@
             <a href="index.html#practice" class="text-lg font-medium tracking-wider uppercase text-muted hover:text-txt transition-colors">Practice</a>
             <a href="client.html" class="text-lg font-medium tracking-wider uppercase text-primary transition-colors">Client</a>
             <a href="index.html#leaderboards" class="text-lg font-medium tracking-wider uppercase text-muted hover:text-txt transition-colors">Leaderboards</a>
+            <button
+                type="button"
+                class="theme-toggle mt-2"
+                onclick="toggleTheme()"
+            >
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
             <a
                 href="https://discord.gg/B4u9ap3VRb"
                 target="_blank"
@@ -596,6 +709,21 @@
         </main>
 
         <script>
+            (function () {
+                var saved = localStorage.getItem("theme");
+                if (saved) {
+                    document.documentElement.setAttribute("data-theme", saved);
+                } else if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+                    document.documentElement.setAttribute("data-theme", "light");
+                }
+            })();
+            function toggleTheme() {
+                var html = document.documentElement;
+                var current = html.getAttribute("data-theme") || "dark";
+                var next = current === "dark" ? "light" : "dark";
+                html.setAttribute("data-theme", next);
+                localStorage.setItem("theme", next);
+            }
             function toggleMobileMenu() {
                 const m = document.getElementById("mobile-menu");
                 const ic = document.getElementById("menu-icon");
