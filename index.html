@@ -685,6 +685,13 @@
                     >
                         Leaderboards
                     </button>
+                    <button
+                        onclick="navigate('store')"
+                        class="nav-link px-3 py-2 text-xs font-medium tracking-wider uppercase text-muted hover:text-txt transition-colors"
+                        data-page="store"
+                    >
+                        Store
+                    </button>
                     <div class="w-px h-5 bg-border mx-1 hidden sm:block"></div>
                     <button
                         type="button"
@@ -2574,6 +2581,104 @@
             </section>
         </div>
 
+        <!-- ==================== STORE ==================== -->
+        <div id="page-store" class="page">
+            <section class="min-h-screen pt-32 pb-24 px-6">
+                <div class="max-w-5xl mx-auto">
+                    <button
+                        onclick="navigate('home')"
+                        class="reveal group flex items-center gap-2 text-muted hover:text-txt text-sm font-medium transition-colors mb-12"
+                    >
+                        <svg
+                            class="w-4 h-4 rotate-180 transition-transform group-hover:-translate-x-1"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                            <polyline points="12 5 19 12 12 19" /></svg
+                        >Back to Home
+                    </button>
+                    <div class="flex items-start gap-5 mb-12">
+                        <div
+                            class="reveal flex-shrink-0 w-16 h-16 bg-accent/10 border border-accent/20 rounded-2xl flex items-center justify-center"
+                        >
+                            <svg
+                                class="w-8 h-8"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="#22D3EE"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                                <line x1="3" y1="6" x2="21" y2="6" />
+                                <path d="M16 10a4 4 0 01-8 0" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h1
+                                class="reveal rd1 text-4xl sm:text-5xl font-black tracking-tighter mb-2"
+                            >
+                                STORE
+                            </h1>
+                            <div class="reveal rd2 flex items-center gap-2">
+                                <span
+                                    class="w-2 h-2 rounded-full bg-accent pulse-dot"
+                                ></span>
+                                <span class="text-sm text-muted"
+                                    >Cosmetics &amp; Support</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="reveal rd3 bg-bgcard border border-border rounded-2xl p-8 mb-8"
+                    >
+                        <p class="text-muted text-sm leading-relaxed mb-4">
+                            Support the server and get exclusive cosmetic items!
+                            None of these give any gameplay advantage &mdash;
+                            they're just for flexing.
+                        </p>
+                        <p class="text-muted text-sm leading-relaxed">
+                            <strong class="text-txt">How it works:</strong> Pick
+                            an item below, send the listed price via Cash App to
+                            <span class="text-accent font-semibold"
+                                >$YourTag</span
+                            >, then contact us on
+                            <a
+                                href="https://discord.gg/B4u9ap3VRb"
+                                target="_blank"
+                                rel="noopener"
+                                class="text-[#5865F2] hover:underline"
+                                >Discord</a
+                            >
+                            with your Minecraft username and proof of payment.
+                            We'll activate your cosmetic in-game!
+                        </p>
+                    </div>
+
+                    <div
+                        id="store-grid"
+                        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                    >
+                        <!-- Add cosmetic item cards here -->
+                    </div>
+
+                    <div
+                        class="reveal mt-12 text-center text-muted text-sm py-12"
+                    >
+                        <p>More items coming soon &mdash; check back later!</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
         <!-- ==================== FOOTER ==================== -->
         <footer
             class="relative border-t border-border bg-[#040810]"
@@ -2694,6 +2799,15 @@
                             Links
                         </h4>
                         <div class="flex flex-col gap-3">
+                            <button
+                                onclick="navigate('store')"
+                                class="text-left text-sm text-muted hover:text-accent transition-colors flex items-center gap-2"
+                            >
+                                <span
+                                    class="w-1.5 h-1.5 rounded-full bg-accent"
+                                ></span
+                                >Store
+                            </button>
                             <a
                                 href="https://discord.gg/B4u9ap3VRb"
                                 target="_blank"
@@ -2776,7 +2890,7 @@
             }
             function handleHash() {
                 const h = window.location.hash.replace("#", "") || "home";
-                if (["home", "survival", "lifesteal", "practice", "updates"].includes(h))
+                if (["home", "survival", "lifesteal", "practice", "updates", "store"].includes(h))
                     navigate(h);
             }
             window.addEventListener("hashchange", handleHash);
