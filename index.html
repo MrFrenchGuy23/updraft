@@ -70,6 +70,9 @@
                 --mobile-bg: rgba(4, 8, 16, 0.95);
                 --footer-bg: #040810;
                 --toast-bg: rgba(10, 21, 32, 0.95);
+                --glow-primary: rgba(14, 165, 233, 0.15);
+                --glow-secondary: rgba(16, 185, 129, 0.15);
+                --glow-accent: rgba(34, 211, 238, 0.15);
             }
             [data-theme="light"] {
                 --bg-body: #f0f4f8;
@@ -86,145 +89,116 @@
                 --mobile-bg: rgba(240, 244, 248, 0.95);
                 --footer-bg: #ffffff;
                 --toast-bg: rgba(255, 255, 255, 0.95);
+                --glow-primary: rgba(14, 165, 233, 0.08);
+                --glow-secondary: rgba(16, 185, 129, 0.08);
+                --glow-accent: rgba(34, 211, 238, 0.08);
             }
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
+
+            /* ── Reset ── */
+            *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+            /* ── Body ── */
             body {
                 font-family: "Inter", system-ui, sans-serif;
                 background: var(--bg-body) url('background.png') center/cover fixed no-repeat;
                 color: var(--text-primary);
                 overflow-x: hidden;
-                zoom: 0.9;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
             }
-            [data-theme="light"] body {
-                background-image: none;
+            [data-theme="light"] body { background-image: none; }
+
+            /* ── Grain overlay ── */
+            body::after {
+                content: "";
+                position: fixed;
+                inset: 0;
+                z-index: 9999;
+                pointer-events: none;
+                opacity: 0.025;
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+                background-repeat: repeat;
+                background-size: 200px 200px;
             }
-            ::-webkit-scrollbar {
-                width: 5px;
-            }
-            ::-webkit-scrollbar-track {
-                background: var(--bg-body);
-            }
+
+            /* ── Scrollbar ── */
+            ::-webkit-scrollbar { width: 6px; }
+            ::-webkit-scrollbar-track { background: transparent; }
             ::-webkit-scrollbar-thumb {
-                background: var(--border-color);
+                background: linear-gradient(180deg, #10b981, #0ea5e9);
                 border-radius: 3px;
             }
-            ::-webkit-scrollbar-thumb:hover {
-                background: #0ea5e9;
-            }
-            .page {
-                display: none;
-                opacity: 0;
-                transform: translateY(16px);
-            }
+
+            /* ── Page transitions ── */
+            .page { display: none; opacity: 0; transform: translateY(20px); }
             .page.active {
                 display: block;
-                animation: pageIn 0.5s ease-out forwards;
+                animation: pageIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
             }
             @keyframes pageIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(16px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
             }
+
+            /* ── Reveal animations ── */
             .reveal {
                 opacity: 0;
-                transform: translateX(-40px);
-                transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+                transform: translateY(28px);
+                transition:
+                    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
             }
-            .reveal.visible {
-                opacity: 1;
-                transform: translateX(0);
-            }
-            .rd1 {
-                transition-delay: 0.1s;
-            }
-            .rd2 {
-                transition-delay: 0.2s;
-            }
-            .rd3 {
-                transition-delay: 0.3s;
-            }
-            .rd4 {
-                transition-delay: 0.4s;
-            }
-            .rd5 {
-                transition-delay: 0.5s;
-            }
-            .rd6 {
-                transition-delay: 0.6s;
-            }
-            .rd7 {
-                transition-delay: 0.7s;
-            }
-            .rd8 {
-                transition-delay: 0.8s;
-            }
-            .glow-pulse {
-                opacity: 0.5;
-            }
+            .reveal.visible { opacity: 1; transform: translateY(0); }
+            .rd1 { transition-delay: 0.08s; }
+            .rd2 { transition-delay: 0.16s; }
+            .rd3 { transition-delay: 0.24s; }
+            .rd4 { transition-delay: 0.32s; }
+            .rd5 { transition-delay: 0.40s; }
+            .rd6 { transition-delay: 0.48s; }
+            .rd7 { transition-delay: 0.56s; }
+            .rd8 { transition-delay: 0.64s; }
+
+            /* ── Glow pulse ── */
+            .glow-pulse { opacity: 0.5; }
+
+            /* ── Pulse dot ── */
             @keyframes pulse-dot {
-                0%,
-                100% {
-                    opacity: 1;
-                    transform: scale(1);
-                }
-                50% {
-                    opacity: 0.4;
-                    transform: scale(0.85);
-                }
+                0%, 100% { opacity: 1; transform: scale(1); }
+                50% { opacity: 0.35; transform: scale(0.8); }
             }
-            .pulse-dot {
-                animation: pulse-dot 2s ease-in-out infinite;
+            .pulse-dot { animation: pulse-dot 2.4s ease-in-out infinite; }
+
+            /* ── Float animation ── */
+            @keyframes float {
+                0%, 100% { transform: translateY(0px) rotate(0deg); }
+                33% { transform: translateY(-8px) rotate(1deg); }
+                66% { transform: translateY(4px) rotate(-0.5deg); }
             }
-            @keyframes scaleIn {
-                from {
-                    opacity: 0;
-                    transform: scale(0.85);
-                }
-                to {
-                    opacity: 1;
-                    transform: scale(1);
-                }
-            }
+
+            /* ── Shimmer ── */
             @keyframes shimmer {
-                0% {
-                    background-position: -200% 0;
-                }
-                100% {
-                    background-position: 200% 0;
-                }
+                0% { background-position: -200% 0; }
+                100% { background-position: 200% 0; }
             }
-            .card-hover {
-                transition: all 0.3s ease;
-            }
-            .card-hover:hover {
-                transform: translateY(-4px);
-            }
-            .pixel {
-                border-radius: 6px !important;
-            }
+
+            /* ── Pixel (Minecraft-style cards) ── */
+            .pixel { border-radius: 6px !important; }
             .reveal.visible.pixel {
                 transform: translate(0, 0);
-                box-shadow: 8px 8px 0 #0d0d0d;
-                transition: transform 120ms ease, box-shadow 120ms ease;
+                box-shadow: 6px 6px 0 #0d0d0d;
+                transition: transform 150ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 150ms cubic-bezier(0.22, 1, 0.36, 1);
             }
             .reveal.visible.pixel:hover {
                 transform: translate(-2px, -2px);
-                box-shadow: 10px 10px 0 #0d0d0d;
+                box-shadow: 8px 8px 0 #0d0d0d;
             }
             .reveal.visible.pixel:active {
-                transform: translate(8px, 8px);
+                transform: translate(6px, 6px);
                 box-shadow: 0 0 0 #0d0d0d;
                 transition: transform 60ms ease, box-shadow 60ms ease;
             }
+
+            /* ── Text gradients ── */
             .text-gradient {
                 background: linear-gradient(135deg, #10b981, #0ea5e9, #22d3ee);
                 -webkit-background-clip: text;
@@ -237,24 +211,49 @@
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
             }
-            .nav-link {
-                position: relative;
+
+            /* ── Animated gradient text (hero) ── */
+            .hero-gradient-text {
+                background: linear-gradient(
+                    135deg,
+                    #0ea5e9 0%,
+                    #10b981 25%,
+                    #22d3ee 50%,
+                    #0ea5e9 75%,
+                    #10b981 100%
+                );
+                background-size: 300% 300%;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                animation: gradientShift 6s ease infinite;
             }
+            @keyframes gradientShift {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+
+            /* ── Nav link underline ── */
+            .nav-link { position: relative; }
             .nav-link::after {
                 content: "";
                 position: absolute;
                 bottom: -4px;
-                left: 0;
+                left: 50%;
                 width: 0;
                 height: 2px;
                 background: linear-gradient(90deg, #10b981, #0ea5e9);
-                transition: width 0.3s ease;
+                transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1), left 0.3s cubic-bezier(0.22, 1, 0.36, 1);
                 border-radius: 1px;
             }
             .nav-link:hover::after,
             .nav-link.active::after {
                 width: 100%;
+                left: 0;
             }
+
+            /* ── Toast ── */
             .toast {
                 position: fixed;
                 bottom: 24px;
@@ -266,63 +265,151 @@
                 border-radius: 12px;
                 z-index: 1000;
                 opacity: 0;
-                transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
                 pointer-events: none;
-                backdrop-filter: blur(12px);
+                backdrop-filter: blur(16px);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             }
             .toast.show {
                 opacity: 1;
                 transform: translateX(-50%) translateY(0);
             }
+
+            /* ── Mobile menu ── */
             #mobile-menu.open { opacity: 1; pointer-events: auto; transform: scale(1); }
+
+            /* ── Feature rows ── */
             .feature-row {
-                transition: all 0.3s ease;
+                transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+                border-left: 2px solid transparent;
             }
-.feature-row:hover {
-    background: rgba(255, 255, 255, 0.06);
-    padding-left: 1.5rem;
-}
+            .feature-row:hover {
+                background: rgba(255, 255, 255, 0.04);
+                padding-left: 1.5rem;
+                border-left-color: #10b981;
+            }
+
+            /* ── FAQ ── */
             .faq-answer {
                 max-height: 0;
                 overflow: hidden;
-                transition:
-                    max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                    padding 0.3s ease;
+                transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1), padding 0.3s ease;
             }
-            .faq-answer.open {
-                max-height: 200px;
-            }
-            .faq-chevron {
-                transition: transform 0.3s ease;
-            }
-            .faq-chevron.open {
-                transform: rotate(180deg);
-            }
+            .faq-answer.open { max-height: 200px; }
+            .faq-chevron { transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+            .faq-chevron.open { transform: rotate(180deg); }
+
+            /* ── Cursor blink ── */
             @keyframes cursor-blink {
-                0%,
-                100% {
-                    opacity: 1;
-                }
-                50% {
-                    opacity: 0;
-                }
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0; }
             }
-            .cursor-blink {
-                animation: cursor-blink 1s step-end infinite;
-            }
+            .cursor-blink { animation: cursor-blink 1s step-end infinite; }
+
+            /* ── Minecraft font ── */
             .font-minecraft {
                 font-family: 'Press Start 2P', monospace;
                 letter-spacing: 0.02em;
                 color: #22D3EE;
             }
-                    .timeline-line {
-                background: linear-gradient(
-                    to bottom,
-                    #10b981,
-                    #0ea5e9,
-                    #152535
-                );
+
+            /* ── Timeline ── */
+            .timeline-line {
+                background: linear-gradient(to bottom, #10b981, #0ea5e9, var(--border-color));
             }
+
+            /* ── Glassmorphism card mixin ── */
+            .glass-card {
+                background: rgba(var(--bg-card-rgb), 0.6);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border: 1px solid rgba(var(--border-rgb), 0.5);
+                transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+            .glass-card:hover {
+                border-color: rgba(var(--border-rgb), 0.8);
+                box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+            }
+
+            /* ── Glow card hover ── */
+            .glow-card {
+                position: relative;
+                transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+            .glow-card::before {
+                content: "";
+                position: absolute;
+                inset: -1px;
+                border-radius: inherit;
+                padding: 1px;
+                background: linear-gradient(135deg, transparent, transparent);
+                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                -webkit-mask-composite: xor;
+                mask-composite: exclude;
+                opacity: 0;
+                transition: opacity 0.35s ease;
+                pointer-events: none;
+            }
+            .glow-card:hover::before {
+                opacity: 1;
+                background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(14, 165, 233, 0.3));
+            }
+            .glow-card:hover {
+                transform: translateY(-4px);
+                box-shadow:
+                    0 4px 20px rgba(14, 165, 233, 0.08),
+                    0 20px 40px rgba(0, 0, 0, 0.12);
+            }
+
+            /* ── Button glow ── */
+            .btn-glow {
+                position: relative;
+                overflow: hidden;
+                transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+            .btn-glow::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+            .btn-glow:hover::after { opacity: 1; }
+            .btn-glow:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            }
+            .btn-glow:active {
+                transform: translateY(0);
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+            }
+
+            /* ── Section divider ── */
+            .section-divider {
+                width: 48px;
+                height: 3px;
+                background: linear-gradient(90deg, #10b981, #0ea5e9);
+                border-radius: 2px;
+                margin: 0 auto 1rem;
+            }
+
+            /* ── Floating orbs (hero decoration) ── */
+            .orb {
+                position: absolute;
+                border-radius: 50%;
+                filter: blur(80px);
+                opacity: 0.12;
+                pointer-events: none;
+                animation: orbFloat 8s ease-in-out infinite;
+            }
+            @keyframes orbFloat {
+                0%, 100% { transform: translate(0, 0) scale(1); }
+                33% { transform: translate(15px, -20px) scale(1.05); }
+                66% { transform: translate(-10px, 10px) scale(0.95); }
+            }
+
+            /* ── Win-desktop (How to Play) ── */
             .win-desktop {
                 background: linear-gradient(135deg, #0c1828 0%, #1a2a3a 50%, #0d1f2e 100%);
                 border: 1px solid rgba(255,255,255,0.08);
@@ -375,9 +462,7 @@
                 font-weight: 700; font-size: 13px; cursor: pointer;
                 transition: all 0.2s;
             }
-            .launch-btn {
-                background: #0ea5e9; color: white;
-            }
+            .launch-btn { background: #0ea5e9; color: white; }
             .launch-btn:hover { background: #0284c7; }
             .win-mc { padding: 0; }
             .mc-topbar {
@@ -464,14 +549,23 @@
                 .win-step { width: 320px; }
                 .win-desktop { min-height: 360px; }
             }
+
+            /* ── Updates feed ── */
             #updates-feed { min-height: 200px; }
             .loading-updates { min-height: 200px; display: flex; align-items: center; justify-content: center; }
+
+            /* ── Discord ucard ── */
             .ucard {
-                background: var(--bg-card); border: 1px solid var(--border-color);
-                border-radius: 16px; padding: 20px 24px;
-                transition: all 0.3s ease;
+                background: var(--bg-card);
+                border: 1px solid var(--border-color);
+                border-radius: 16px;
+                padding: 20px 24px;
+                transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
             }
-            .ucard:hover { border-color: rgba(14,165,233,0.25); }
+            .ucard:hover {
+                border-color: rgba(14,165,233,0.25);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            }
             .ucard-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
             .ucard-avatar {
                 width: 36px; height: 36px; border-radius: 50%; object-fit: cover;
@@ -507,43 +601,42 @@
             .ucard-body .spoiler.revealed {
                 color: #cbd5e1; background: rgba(255,255,255,0.06); cursor: text; user-select: text;
             }
+
+            /* ── Platform badge ── */
             .platform-badge {
-                transition: all 0.3s ease;
+                transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
             }
             .platform-badge:hover {
                 transform: translateY(-2px);
                 border-color: rgba(14, 165, 233, 0.5);
             }
+
+            /* ── Theme toggle ── */
             [data-theme="light"] #navbar {
                 background: var(--nav-bg);
                 backdrop-filter: blur(12px);
                 border-bottom: 1px solid var(--border-color);
             }
-            [data-theme="light"] #mobile-menu {
-                background: var(--mobile-bg);
-            }
-            [data-theme="light"] footer {
-                background: var(--footer-bg);
-            }
-            [data-theme="light"] .reveal.visible.pixel {
-                box-shadow: 8px 8px 0 #d1dce6;
-            }
-            [data-theme="light"] .reveal.visible.pixel:hover {
-                box-shadow: 10px 10px 0 #d1dce6;
-            }
-            [data-theme="light"] .reveal.visible.pixel:active {
-                box-shadow: 0 0 0 #d1dce6;
-            }
-            [data-theme="light"] .feature-row:hover {
-                background: rgba(0, 0, 0, 0.06);
-            }
+            [data-theme="light"] #mobile-menu { background: var(--mobile-bg); }
+            [data-theme="light"] footer { background: var(--footer-bg); }
+            [data-theme="light"] .reveal.visible.pixel { box-shadow: 6px 6px 0 #d1dce6; }
+            [data-theme="light"] .reveal.visible.pixel:hover { box-shadow: 8px 8px 0 #d1dce6; }
+            [data-theme="light"] .reveal.visible.pixel:active { box-shadow: 0 0 0 #d1dce6; }
+            [data-theme="light"] .feature-row:hover { background: rgba(0, 0, 0, 0.04); border-left-color: #0ea5e9; }
             [data-theme="light"] .ucard-body { color: #334155; }
             [data-theme="light"] .ucard-body strong { color: var(--text-primary); }
             [data-theme="light"] .ucard-body s { color: #94a3b8; }
             [data-theme="light"] .ucard-body pre code { color: #334155; }
             [data-theme="light"] .ucard-body code { background: #e2e8f0; color: #0ea5e9; }
-            [data-theme="light"] .theme-toggle {
+            [data-theme="light"] body::after { opacity: 0.015; }
+
+            .theme-toggle {
                 display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 36px;
+                height: 36px;
+                border-radius: 8px;
                 align-items: center;
                 justify-content: center;
                 width: 36px;
@@ -573,10 +666,16 @@
     </head>
     <body>
         <div
-            class="fixed top-1/3 -left-48 w-[500px] h-[500px] bg-primary/8 rounded-full blur-[100px] pointer-events-none"
+            class="orb fixed top-1/3 -left-48 w-[500px] h-[500px] rounded-full pointer-events-none"
+            style="background: radial-gradient(circle, rgba(14, 165, 233, 0.15), transparent 70%);"
         ></div>
         <div
-            class="fixed bottom-1/4 -right-48 w-[500px] h-[500px] bg-secondary/8 rounded-full blur-[100px] pointer-events-none"
+            class="orb fixed bottom-1/4 -right-48 w-[500px] h-[500px] rounded-full pointer-events-none"
+            style="background: radial-gradient(circle, rgba(16, 185, 129, 0.12), transparent 70%); animation-delay: -3s;"
+        ></div>
+        <div
+            class="orb fixed top-2/3 left-1/3 w-[300px] h-[300px] rounded-full pointer-events-none"
+            style="background: radial-gradient(circle, rgba(34, 211, 238, 0.08), transparent 70%); animation-delay: -5s;"
         ></div>
 
         <!-- Navigation -->
@@ -871,13 +970,13 @@
                     <h1
                         class="reveal rd1 text-5xl sm:text-6xl lg:text-8xl font-black tracking-tighter leading-[1.02] mb-5"
                     >
-                        <span style="color: #0ea5e9;">UPDRAFT</span><br /><span
+                        <span class="hero-gradient-text">UPDRAFT</span><br /><span
                             style="color: #10b981;"
                             >NETWORK</span
                         >
                     </h1>
 
-                        <p class="text-lg sm:text-xl text-muted mb-10">
+                        <p class="reveal rd2 text-lg sm:text-xl text-muted mb-10">
                             Crossplatform (yes even eaglercraft) with custom survival!
                         </p>
 
@@ -888,7 +987,7 @@
                             href="https://discord.gg/B4u9ap3VRb"
                             target="_blank"
                             rel="noopener"
-                            class="group flex items-center gap-3 px-8 py-4 bg-[#5865F2] rounded-xl text-white font-bold text-sm tracking-wider uppercase hover:bg-[#4752C4] transition-all duration-300 hover:-translate-y-1"
+                            class="btn-glow group flex items-center gap-3 px-8 py-4 bg-[#5865F2] rounded-xl text-white font-bold text-sm tracking-wider uppercase hover:bg-[#4752C4] transition-all duration-300"
                         >
                             <svg
                                 class="w-5 h-5"
@@ -1074,7 +1173,7 @@
                     <div class="grid md:grid-cols-3 gap-6">
                         <button
                             onclick="navigate('survival')"
-                            class="reveal rd1 pixel group text-left p-8 bg-bgcard border border-border rounded-2xl hover:shadow-2xl hover:shadow-survival/10"
+                            class="reveal rd1 pixel glow-card group text-left p-8 bg-bgcard border border-border rounded-2xl"
                         >
                             <div
                                 class="w-14 h-14 mb-5 bg-survival/10 border border-survival/20 rounded-2xl flex items-center justify-center"
@@ -1130,7 +1229,7 @@
                         </button>
                         <button
                             onclick="navigate('lifesteal')"
-                            class="reveal rd2 pixel group text-left p-8 bg-bgcard border border-border rounded-2xl hover:shadow-2xl hover:shadow-lifesteal/10"
+                            class="reveal rd2 pixel glow-card group text-left p-8 bg-bgcard border border-border rounded-2xl"
                         >
                             <div
                                 class="w-14 h-14 mb-5 bg-lifesteal/10 border border-lifesteal/20 rounded-2xl flex items-center justify-center"
@@ -1196,7 +1295,7 @@
                         </button>
                         <button
                             onclick="navigate('practice')"
-                            class="reveal rd3 pixel group text-left p-8 bg-bgcard border border-border rounded-2xl hover:shadow-2xl hover:shadow-practice/10"
+                            class="reveal rd3 pixel glow-card group text-left p-8 bg-bgcard border border-border rounded-2xl"
                         >
                             <div
                                 class="w-14 h-14 mb-5 bg-practice/10 border border-practice/20 rounded-2xl flex items-center justify-center"
@@ -1534,21 +1633,21 @@
                     <h2 class="reveal rd1 text-3xl sm:text-4xl font-bold tracking-tight mb-4">Pick Your Platform</h2>
                     <p class="reveal rd2 text-sm text-muted mb-10">Java, Bedrock, and Eaglercraft are all supported.</p>
                     <div class="grid grid-cols-3 gap-4 sm:gap-6">
-                        <div class="reveal rd1 pixel p-4 sm:p-6 bg-bgcard border border-border rounded-xl text-left hover:border-primary/30 hover:-translate-y-1 transition-all duration-300">
+                        <div class="reveal rd1 pixel glow-card p-4 sm:p-6 bg-bgcard border border-border rounded-xl text-left">
                             <div class="flex items-center gap-2 mb-3">
                                 <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                                 <span class="text-sm font-bold text-primary">Java</span>
                             </div>
                             <code class="text-xs sm:text-sm font-mono text-txt bg-black/40 px-3 py-1.5 rounded block break-all">java.updraftnetwork.org</code>
                         </div>
-                        <div class="reveal rd2 pixel p-4 sm:p-6 bg-bgcard border border-border rounded-xl text-left hover:border-secondary/30 hover:-translate-y-1 transition-all duration-300">
+                        <div class="reveal rd2 pixel glow-card p-4 sm:p-6 bg-bgcard border border-border rounded-xl text-left">
                             <div class="flex items-center gap-2 mb-3">
                                 <svg class="w-5 h-5 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                                 <span class="text-sm font-bold text-secondary">Bedrock</span>
                             </div>
                             <code class="text-xs sm:text-sm font-mono text-txt bg-black/40 px-3 py-1.5 rounded block break-all">bedrock.updraftnetwork.org:1201</code>
                         </div>
-                        <div class="reveal rd3 pixel p-4 sm:p-6 bg-bgcard border border-border rounded-xl text-left hover:border-accent/30 hover:-translate-y-1 transition-all duration-300">
+                        <div class="reveal rd3 pixel glow-card p-4 sm:p-6 bg-bgcard border border-border rounded-xl text-left">
                             <div class="flex items-center gap-2 mb-3">
                                 <svg class="w-5 h-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M12 11v4"/><line x1="10" y1="13" x2="14" y2="13"/></svg>
                                 <span class="text-sm font-bold text-accent">Eaglercraft</span>
@@ -1581,7 +1680,7 @@
                             href="https://discord.gg/B4u9ap3VRb"
                             target="_blank"
                             rel="noopener"
-                            class="group inline-flex items-center gap-3 px-10 py-5 bg-[#5865F2] rounded-2xl text-white font-bold text-sm tracking-wider uppercase hover:bg-[#4752C4] hover:shadow-xl hover:shadow-[#5865F2]/20 transition-all duration-300 hover:-translate-y-1"
+                            class="btn-glow group inline-flex items-center gap-3 px-10 py-5 bg-[#5865F2] rounded-2xl text-white font-bold text-sm tracking-wider uppercase hover:bg-[#4752C4] hover:shadow-xl hover:shadow-[#5865F2]/20 transition-all duration-300"
                         >
                             <svg
                                 class="w-6 h-6"
@@ -2093,7 +2192,7 @@
                             href="https://discord.gg/B4u9ap3VRb"
                             target="_blank"
                             rel="noopener"
-                            class="inline-flex items-center gap-2 px-6 py-3 bg-survival/10 border border-survival/20 rounded-xl text-survival font-bold text-xs tracking-wider uppercase hover:bg-survival/20 transition-all duration-300"
+                            class="btn-glow inline-flex items-center gap-2 px-6 py-3 bg-survival/10 border border-survival/20 rounded-xl text-survival font-bold text-xs tracking-wider uppercase transition-all duration-300"
                             >Follow Development on Discord<svg
                                 class="w-4 h-4"
                                 viewBox="0 0 24 24"
@@ -2326,7 +2425,7 @@
                             href="https://discord.gg/B4u9ap3VRb"
                             target="_blank"
                             rel="noopener"
-                            class="inline-flex items-center gap-2 px-6 py-3 bg-bgcard border border-border rounded-xl text-muted font-bold text-xs tracking-wider uppercase hover:border-lifesteal/40 hover:text-lifesteal transition-all duration-300"
+                            class="btn-glow inline-flex items-center gap-2 px-6 py-3 bg-bgcard border border-border rounded-xl text-muted font-bold text-xs tracking-wider uppercase hover:text-lifesteal transition-all duration-300"
                             >Join Discord for Updates<svg
                                 class="w-4 h-4"
                                 viewBox="0 0 24 24"
@@ -2553,7 +2652,7 @@
                             href="https://discord.gg/B4u9ap3VRb"
                             target="_blank"
                             rel="noopener"
-                            class="inline-flex items-center gap-2 px-6 py-3 bg-bgcard border border-border rounded-xl text-muted font-bold text-xs tracking-wider uppercase hover:border-primary/40 hover:text-txt transition-all duration-300"
+                            class="btn-glow inline-flex items-center gap-2 px-6 py-3 bg-bgcard border border-border rounded-xl text-muted font-bold text-xs tracking-wider uppercase hover:text-txt transition-all duration-300"
                             >Join Discord for Updates<svg
                                 class="w-4 h-4"
                                 viewBox="0 0 24 24"
