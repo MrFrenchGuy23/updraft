@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="scroll-smooth" data-theme="dark">
+<html lang="en" class="smooth" data-theme="dark">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -525,7 +525,7 @@
     </head>
     <body>
         <!-- Scroll progress -->
-        <div class="scroll-progress"></div>
+        <div class="progress"></div>
 
         <!-- Navigation -->
         <nav
@@ -688,7 +688,7 @@
                 onclick="
                     navigate('home');
                     toggleMobileMenu();
-                "
+"
                 class="text-lg font-medium tracking-wider uppercase text-muted hover:text-txt transition-colors"
             >
                 Home
@@ -697,7 +697,7 @@
                 onclick="
                     navigate('survival');
                     toggleMobileMenu();
-                "
+"
                 class="text-lg font-medium tracking-wider uppercase text-muted hover:text-txt transition-colors"
             >
                 Survival
@@ -706,7 +706,7 @@
                 onclick="
                     navigate('lifesteal');
                     toggleMobileMenu();
-                "
+"
                 class="text-lg font-medium tracking-wider uppercase text-muted hover:text-txt transition-colors"
             >
                 Lifesteal
@@ -715,7 +715,7 @@
                 onclick="
                     navigate('practice');
                     toggleMobileMenu();
-                "
+"
                 class="text-lg font-medium tracking-wider uppercase text-muted hover:text-txt transition-colors"
             >
                 Practice
@@ -729,7 +729,7 @@
                 onclick="
                     navigate('home');
                     setTimeout(() => { toggleMobileMenu(); document.getElementById('leaderboards')?.scrollIntoView({behavior:'smooth'}) }, 100);
-                "
+"
                 class="text-lg font-medium tracking-wider uppercase text-muted hover:text-txt transition-colors"
             >
                 Leaderboards
@@ -738,7 +738,7 @@
                 onclick="
                     navigate('store');
                     toggleMobileMenu();
-                "
+"
                 class="text-lg font-medium tracking-wider uppercase text-muted hover:text-txt transition-colors"
             >
                 Store
@@ -867,7 +867,7 @@
 
 <!-- Stats -->
             <section class="py-12 px-6 flex justify-center">
-                <div data-anim="scale" class="reveal relative bg-bgcard border border-border rounded-sm hover-lift glow-pulse px-8 py-5 shadow-lg shadow-black/30 -rotate-1 hover:rotate-0 transition-transform duration-300" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 23px, rgba(255,255,255,0.02) 23px, rgba(255,255,255,0.02) 24px);">
+                <div data-anim="scale" class="relative bg-bgcard border border-border rounded-sm hover-lift glow-pulse px-8 py-5 shadow-lg shadow-black/30 -rotate-1 hover:rotate-0 transition-transform duration-300" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 23px, rgba(255,255,255,0.02) 23px, rgba(255,255,255,0.02) 24px);">
                     <div class="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-3 bg-primary/20 rounded-sm"></div>
                     <p class="text-sm text-muted text-center font-medium tracking-wide">
                         <span class="text-secondary font-bold">Survival</span> is live across
@@ -883,10 +883,10 @@
                 <div class="max-w-5xl mx-auto">
                     <div class="text-center mb-16">
                         <span
-                            data-anim="up" class="scroll-reveal inline-block text-[11px] font-bold tracking-[.2em] uppercase text-accent mb-4">Why Us</span
+                            data-anim="up" class="inline-block text-[11px] font-bold tracking-[.2em] uppercase text-accent mb-4">Why Us</span
                         >
                         <h2
-                            data-anim="up" data-split class="scroll-reveal delay-1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">Why <span class="text-txt">Updraft</span>?
+                            data-anim="up" data-split class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">Why <span class="text-txt">Updraft</span>?
                         </h2>
                     </div>
                     <div class="grid sm:grid-cols-2 gap-x-12 gap-y-8">
@@ -935,18 +935,18 @@
                 <div class="max-w-5xl mx-auto">
                     <div class="text-center mb-16">
                         <span
-                            data-anim="up" class="reveal inline-block text-[11px] font-bold tracking-[.2em] uppercase text-secondary mb-4">Cross-Platform</span
+                            data-anim="up" class="inline-block text-[11px] font-bold tracking-[.2em] uppercase text-secondary mb-4">Cross-Platform</span
                         >
                         <h2
-                            data-anim="up" data-split class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">Play <span class="text-txt">Anywhere</span>
+                            data-anim="up" data-split class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">Play <span class="text-txt">Anywhere</span>
                         </h2>
-                        <p data-anim="up" class="reveal rd2 text-muted mt-4 max-w-lg mx-auto">
+                        <p data-anim="up" class="text-muted mt-4 max-w-lg mx-auto">
                             One network, every platform. No matter how you play
                             Minecraft, you can join the updraft.
                         </p>
                     </div>
                     <div class="flex flex-col gap-4">
-                        <div data-anim="left" data-delay="1" class="reveal rd1 pixel flex items-center gap-5 p-5 bg-bgcard border border-border rounded-xl hover:border-primary/30 transition-all duration-300 hover-lift>
+                        <div data-anim="left" data-delay="1" class="pixel flex items-center gap-5 p-5 bg-bgcard border border-border rounded-xl hover:border-primary/30 transition-all duration-300 hover-lift>
                             <div class="w-12 h-12 flex-shrink-0 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center">
                                 <svg class="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                             </div>
@@ -956,7 +956,7 @@
                             </div>
                             <span class="text-xs font-mono font-bold text-txt bg-black/40 px-3 py-1.5 rounded hidden sm:block">java.updraftnetwork.org</span>
                         </div>
-                        <div data-anim="left" data-delay="2" class="reveal rd2 pixel flex items-center gap-5 p-5 bg-bgcard border border-border rounded-xl hover:border-secondary/30 transition-all duration-300 hover-lift>
+                        <div data-anim="left" data-delay="2" class="pixel flex items-center gap-5 p-5 bg-bgcard border border-border rounded-xl hover:border-secondary/30 transition-all duration-300 hover-lift>
                             <div class="w-12 h-12 flex-shrink-0 bg-secondary/10 border border-secondary/20 rounded-xl flex items-center justify-center">
                                 <svg class="w-6 h-6 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
                             </div>
@@ -966,7 +966,7 @@
                             </div>
                             <span class="text-xs font-mono font-bold text-txt bg-black/40 px-3 py-1.5 rounded hidden sm:block">bedrock.updraftnetwork.org:1201</span>
                         </div>
-                        <div data-anim="left" data-delay="3" class="reveal rd3 pixel flex items-center gap-5 p-5 bg-bgcard border border-border rounded-xl hover:border-accent/30 transition-all duration-300 hover-lift>
+                        <div data-anim="left" data-delay="3" class="pixel flex items-center gap-5 p-5 bg-bgcard border border-border rounded-xl hover:border-accent/30 transition-all duration-300 hover-lift>
                             <div class="w-12 h-12 flex-shrink-0 bg-accent/10 border border-accent/20 rounded-xl flex items-center justify-center">
                                 <svg class="w-6 h-6 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                             </div>
@@ -1196,9 +1196,9 @@
                         <h2 class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
                             Join in <span class="text-txt">Seconds</span>
                         </h2>
-                        <p data-anim="up" class="reveal rd2 text-muted text-sm mt-3 max-w-lg mx-auto>Literally takes a minute. Here's how.</p>
+                        <p data-anim="up" class="text-muted text-sm mt-3 max-w-lg mx-auto>Literally takes a minute. Here's how.</p>
                     </div>
-                    <div data-anim="scale" class="reveal rd3 relative hover-lift>
+                    <div data-anim="scale" class="relative hover-lift>
                         <!-- Windows Desktop Simulation -->
                         <div class="win-desktop">
                             <!-- Desktop Icons -->
@@ -1323,17 +1323,17 @@
             <section id="leaderboards" class="py-24 px-6">
                 <div class="max-w-3xl mx-auto">
                     <div class="text-center mb-12">
-                        <span data-anim="up" class="reveal inline-block text-[11px] font-bold tracking-[.2em] uppercase text-secondary mb-4">Leaderboards</span>
-                        <h2 data-anim="up" data-split class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">Top <span class="text-txt">Players</span>
+                        <span data-anim="up" class="inline-block text-[11px] font-bold tracking-[.2em] uppercase text-secondary mb-4">Leaderboards</span>
+                        <h2 data-anim="up" data-split class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">Top <span class="text-txt">Players</span>
                         </h2>
-                        <p data-anim="up" class="reveal rd2 text-muted text-sm mt-3">Live stats from Survival. Updates every 30 seconds.</p>
+                        <p data-anim="up" class="text-muted text-sm mt-3">Live stats from Survival. Updates every 30 seconds.</p>
                     </div>
-                    <div data-anim="up" class="reveal rd3 flex justify-center gap-2 mb-8>
+                    <div data-anim="up" class="flex justify-center gap-2 mb-8>
                         <button onclick="switchLb('statistic_player_kills', this)" class="lb-tab active px-4 py-2 rounded-lg text-xs font-bold tracking-wider uppercase transition-all bg-secondary/15 text-secondary border border-secondary/20">Kills</button>
                         <button onclick="switchLb('vault_eco_balance', this)" class="lb-tab px-4 py-2 rounded-lg text-xs font-bold tracking-wider uppercase transition-all bg-bgcard border border-border text-muted hover:text-txt">Money</button>
                         <button onclick="switchLb('statistic_time_played', this)" class="lb-tab px-4 py-2 rounded-lg text-xs font-bold tracking-wider uppercase transition-all bg-bgcard border border-border text-muted hover:text-txt">Playtime</button>
                     </div>
-                    <div data-anim="scale" id="leaderboard-list" class="reveal rd4 bg-bgcard border border-border rounded-2xl overflow-hidden hover-lift>
+                    <div data-anim="scale" id="leaderboard-list" class="bg-bgcard border border-border rounded-2xl overflow-hidden hover-lift>
                         <div class="px-6 py-8 text-center text-muted text-sm">Loading leaderboards...</div>
                     </div>
                 </div>
@@ -1345,10 +1345,10 @@
                 <div class="max-w-3xl mx-auto">
                     <div class="text-center mb-16">
                         <span
-                            data-anim="up" class="reveal inline-block text-[11px] font-bold tracking-[.2em] uppercase text-secondary mb-4">Roadmap</span
+                            data-anim="up" class="inline-block text-[11px] font-bold tracking-[.2em] uppercase text-secondary mb-4">Roadmap</span
                         >
                         <h2
-                            data-anim="up" data-split class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">Server <span class="text-txt">Released!</span>
+                            data-anim="up" data-split class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">Server <span class="text-txt">Released!</span>
                         </h2>
                     </div>
                     <div class="relative">
@@ -1356,7 +1356,7 @@
                             class="absolute left-[15px] sm:left-[19px] top-2 bottom-2 w-[2px] timeline-line rounded-full"
                         ></div>
                         <div
-                            data-anim="left" class="reveal rd1 relative flex gap-6 sm:gap-8 mb-10"
+                            data-anim="left" class="relative flex gap-6 sm:gap-8 mb-10"
                         >
                             <div
                                 class="flex-shrink-0 w-[32px] h-[32px] sm:w-[40px] sm:h-[40px] bg-secondary/20 border-2 border-secondary rounded-full flex items-center justify-center z-10"
@@ -1396,7 +1396,7 @@
                             </div>
                         </div>
                         <div
-                            data-anim="left" class="reveal rd1 relative flex gap-6 sm:gap-8 mb-10"
+                            data-anim="left" class="relative flex gap-6 sm:gap-8 mb-10"
                         >
                             <div
                                 class="flex-shrink-0 w-[32px] h-[32px] sm:w-[40px] sm:h-[40px] bg-primary/20 border-2 border-primary rounded-full flex items-center justify-center z-10"
@@ -1423,7 +1423,7 @@
                             </div>
                         </div>
                         <div
-                            data-anim="left" class="reveal rd1 relative flex gap-6 sm:gap-8"
+                            data-anim="left" class="relative flex gap-6 sm:gap-8"
                         >
                             <div
                                 class="flex-shrink-0 w-[32px] h-[32px] sm:w-[40px] sm:h-[40px] bg-border rounded-full flex items-center justify-center z-10 border-2 border-border"
@@ -1539,7 +1539,7 @@
             <section class="py-24 px-6">
                 <div class="max-w-3xl mx-auto">
                     <div
-                        data-anim="scale" class="reveal relative overflow-hidden p-12 sm:p-16 bg-bgcard border border-border rounded-3xl text-center hover-lift glow-pulse
+                        data-anim="scale" class="relative overflow-hidden p-12 sm:p-16 bg-bgcard border border-border rounded-3xl text-center hover-lift glow-pulse
                     >
                     <div
                         class="absolute inset-0 pointer-events-none"
@@ -1632,7 +1632,7 @@
                         </div>
                         <div>
                             <h1
-                                data-anim="up" data-split class="reveal rd1 text-4xl sm:text-5xl font-black tracking-tighter mb-2">SURVIVAL
+                                data-anim="up" data-split class="text-4xl sm:text-5xl font-black tracking-tighter mb-2">SURVIVAL
                             </h1>
                             <div class="reveal rd2 flex items-center gap-2">
                                 <span
@@ -1645,12 +1645,12 @@
                         </div>
                     </div>
                     <p
-                        data-anim="up" class="reveal rd2 text-lg text-muted leading-relaxed mb-12 max-w-xl
+                        data-anim="up" class="text-lg text-muted leading-relaxed mb-12 max-w-xl
                     >
                         Survival, but better. Custom terrain, custom items, economy that actually works, and events that keep things fresh. We built this from the ground up and it shows.
                     </p>
                     <div
-                        data-anim="scale" class="reveal rd3 bg-bgcard border border-border rounded-2xl overflow-hidden mb-12 hover-lift
+                        data-anim="scale" class="bg-bgcard border border-border rounded-2xl overflow-hidden mb-12 hover-lift
                     >
                         <div class="px-6 py-4 border-b border-border">
                             <span
@@ -1877,7 +1877,7 @@
                         </div>
                         <div>
                             <h1
-                                data-anim="up" data-split class="reveal rd1 text-4xl sm:text-5xl font-black tracking-tighter mb-2">LIFESTEAL
+                                data-anim="up" data-split class="text-4xl sm:text-5xl font-black tracking-tighter mb-2">LIFESTEAL
                             </h1>
                             <div class="reveal rd2 flex items-center gap-2">
                                 <span
@@ -1890,12 +1890,12 @@
                         </div>
                     </div>
                     <p
-                        data-anim="up" class="reveal rd2 text-lg text-muted leading-relaxed mb-12 max-w-xl
+                        data-anim="up" class="text-lg text-muted leading-relaxed mb-12 max-w-xl
                     >
                         Hearts are everything. Steal them from your enemies, form alliances to survive, and build a competitive economy around the rarest resource in the game.
                     </p>
                     <div
-                        data-anim="scale" class="reveal rd3 bg-bgcard border border-border rounded-2xl overflow-hidden mb-12 hover-lift
+                        data-anim="scale" class="bg-bgcard border border-border rounded-2xl overflow-hidden mb-12 hover-lift
                     >
                         <div class="px-6 py-4 border-b border-border">
                             <span
@@ -2120,7 +2120,7 @@
                         </div>
                         <div>
                             <h1
-                                data-anim="up" data-split class="reveal rd1 text-4xl sm:text-5xl font-black tracking-tighter mb-2">PRACTICE
+                                data-anim="up" data-split class="text-4xl sm:text-5xl font-black tracking-tighter mb-2">PRACTICE
                             </h1>
                             <div class="reveal rd2 flex items-center gap-2">
                                 <span
@@ -2133,14 +2133,14 @@
                         </div>
                     </div>
                     <p
-                        data-anim="up" class="reveal rd2 text-lg text-muted leading-relaxed mb-12 max-w-xl
+                        data-anim="up" class="text-lg text-muted leading-relaxed mb-12 max-w-xl
                     >
                         Competitive PvP at its finest. Ranked and unranked
                         queues, custom kits, arena selection, and an Elo rating
                         system.
                     </p>
                     <div
-                        data-anim="scale" class="reveal rd3 bg-bgcard border border-border rounded-2xl overflow-hidden mb-12 hover-lift
+                        data-anim="scale" class="bg-bgcard border border-border rounded-2xl overflow-hidden mb-12 hover-lift
                     >
                         <div class="px-6 py-4 border-b border-border">
                             <span
@@ -2298,7 +2298,7 @@
                 <div class="max-w-3xl mx-auto w-full relative z-10 py-12">
                     <div class="text-center mb-12">
                         <span class="inline-block text-[11px] font-bold tracking-[.2em] uppercase text-primary mb-4 reveal">Updates</span>
-                        <h2 data-anim="up" data-split class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight reveal rd1">Latest <span class="text-txt">News</span></h2>
+                        <h2 data-anim="up" data-split class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight ">Latest <span class="text-txt">News</span></h2>
                         <p class="text-muted text-sm mt-3 reveal rd2">Synced live from our Discord server.</p>
                     </div>
                     <div id="updates-feed" class="flex flex-col gap-4">
@@ -2876,7 +2876,7 @@
 
             function observeReveals() {
                 const els = document.querySelectorAll(
-                    ".page.active .reveal:not(.visible)",
+".page.active .reveal:not(.visible)",
                 );
                 const obs = new IntersectionObserver(
                     (entries) => {
