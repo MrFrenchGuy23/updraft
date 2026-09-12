@@ -104,7 +104,110 @@
             .page.active { display: block; animation: pageIn 0.35s ease-out forwards; }
             @keyframes pageIn { to { opacity: 1; transform: translateY(0); } }
 
-            /* -- Reveal -- */
+            /* ── ANIMATION ENGINE ── */
+            [data-anim] { opacity: 0; will-change: transform, opacity; }
+
+            /* Types */
+            [data-anim="up"]    { transform: translateY(60px); }
+            [data-anim="down"]  { transform: translateY(-60px); }
+            [data-anim="left"]  { transform: translateX(60px); }
+            [data-anim="right"] { transform: translateX(-60px); }
+            [data-anim="scale"] { transform: scale(0.9); }
+            [data-anim="fade"]  { transform: none; }
+            [data-anim="blur"]  { transform: scale(1.02); filter: blur(8px); }
+
+            /* Revealed state */
+            [data-anim].in {
+                opacity: 1;
+                transform: translate3d(0,0,0) scale(1);
+                filter: blur(0);
+                transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                            transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                            filter 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            /* Stagger delays */
+            [data-anim].d0 { transition-delay: 0.00s; }
+            [data-anim].d1 { transition-delay: 0.06s; }
+            [data-anim].d2 { transition-delay: 0.12s; }
+            [data-anim].d3 { transition-delay: 0.18s; }
+            [data-anim].d4 { transition-delay: 0.24s; }
+            [data-anim].d5 { transition-delay: 0.30s; }
+            [data-anim].d6 { transition-delay: 0.36s; }
+            [data-anim].d7 { transition-delay: 0.42s; }
+            [data-anim].d8 { transition-delay: 0.48s; }
+            [data-anim].d9 { transition-delay: 0.54s; }
+
+            /* ── Split text reveal ── */
+            .split-text { display: inline; }
+            .split-text .word {
+                display: inline-block;
+                overflow: hidden;
+                vertical-align: top;
+                padding-bottom: 0.05em;
+            }
+            .split-text .word .word-inner {
+                display: inline-block;
+                will-change: transform, opacity;
+                transform: translate3d(0, 1.2em, 0) rotate(10deg);
+                opacity: 0;
+                transition: transform 0.95s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .split-text.revealed .word .word-inner {
+                transform: translate3d(0, 0, 0) rotate(0deg);
+                opacity: 1;
+            }
+
+            /* ── Scroll progress ── */
+            .scroll-progress {
+                position: fixed; top: 0; right: 0;
+                width: 3px; height: 0%; background: var(--accent);
+                z-index: 100; transition: height 0.1s linear;
+                border-radius: 0 0 2px 2px;
+            }
+
+            /* ── CTA dot expand ── */
+            .cta-dot { position: relative; overflow: hidden; z-index: 1; }
+            .cta-dot::before {
+                content: ""; position: absolute; top: 50%; left: 50%;
+                width: 20px; height: 20px;
+                background: rgba(255,255,255,0.15);
+                border-radius: 50%;
+                transform: translate(-50%, -50%) scale(0);
+                transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+                z-index: -1;
+            }
+            .cta-dot:hover::before { transform: translate(-50%, -50%) scale(25); }
+
+            /* ── Float ── */
+            @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+            .float { animation: float 4s ease-in-out infinite; }
+
+            /* ── Pulse ── */
+            @keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+            .pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+
+            /* ── Glow pulse ── */
+            @keyframes glow-pulse {
+                0%, 100% { box-shadow: 0 0 20px rgba(var(--accent-rgb, 41,151,255), 0.15); }
+                50% { box-shadow: 0 0 40px rgba(var(--accent-rgb, 41,151,255), 0.3); }
+            }
+            .glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
+
+            /* ── Card hover lift ── */
+            .hover-lift {
+                transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                            box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .hover-lift:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+            }
+
+            /* ── Count up ── */
+            .count-up { font-variant-numeric: tabular-nums; }
+
+            /* ── Old reveal compat ── */
             .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
             .reveal.visible { opacity: 1; transform: translateY(0); }
             .rd1 { transition-delay: 0.06s; }
@@ -116,11 +219,7 @@
             .rd7 { transition-delay: 0.42s; }
             .rd8 { transition-delay: 0.48s; }
 
-            /* -- Pulse dot -- */
-            @keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-            .pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
-
-            /* -- Pixel cards (Minecraft feel) -- */
+            /* ── Pixel cards ── */
             .pixel { border-radius: 8px !important; }
             .reveal.visible.pixel {
                 transform: translate(0, 0);
@@ -421,98 +520,6 @@
             }
             [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
             [data-theme="light"] .theme-toggle .icon-moon { display: block; }
-
-            /* -- Lusion-style animations -- */
-            .lusion-ease { transition-timing-function: cubic-bezier(0.35, 0, 0, 1); }
-            .lusion-ease-out { transition-timing-function: cubic-bezier(0.0, 0, 0.2, 1); }
-
-            /* Word split reveal */
-            .split-text { display: inline; }
-            .split-text .word {
-                display: inline-block;
-                overflow: hidden;
-                vertical-align: top;
-                padding-bottom: 0.05em;
-            }
-            .split-text .word .word-inner {
-                display: inline-block;
-                will-change: transform, opacity;
-                transform: translate3d(0, 1.15em, 0) rotate(8deg);
-                opacity: 0;
-                transition: transform 0.9s cubic-bezier(0.35, 0, 0, 1), opacity 0.7s cubic-bezier(0.35, 0, 0, 1);
-            }
-            .split-text.revealed .word .word-inner {
-                transform: translate3d(0, 0, 0) rotate(0deg);
-                opacity: 1;
-            }
-
-            /* Scroll progress indicator */
-            .scroll-progress {
-                position: fixed;
-                top: 0;
-                right: 0;
-                width: 3px;
-                height: 0%;
-                background: var(--accent);
-                z-index: 100;
-                transition: height 0.1s linear;
-                border-radius: 0 0 2px 2px;
-            }
-
-            /* CTA dot expand hover */
-            .cta-dot {
-                position: relative;
-                overflow: hidden;
-                z-index: 1;
-            }
-            .cta-dot::before {
-                content: "";
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                width: 20px;
-                height: 20px;
-                background: rgba(255,255,255,0.15);
-                border-radius: 50%;
-                transform: translate(-50%, -50%) scale(0);
-                transition: transform 0.5s cubic-bezier(0.35, 0, 0, 1);
-                z-index: -1;
-            }
-            .cta-dot:hover::before {
-                transform: translate(-50%, -50%) scale(25);
-            }
-
-            /* Section reveal on scroll � slide up + fade */
-            .scroll-reveal {
-                opacity: 0;
-                transform: translateY(40px);
-                transition: opacity 0.8s cubic-bezier(0.35, 0, 0, 1), transform 0.8s cubic-bezier(0.35, 0, 0, 1);
-            }
-            .scroll-reveal.visible {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            .scroll-reveal.delay-1 { transition-delay: 0.08s; }
-            .scroll-reveal.delay-2 { transition-delay: 0.16s; }
-            .scroll-reveal.delay-3 { transition-delay: 0.24s; }
-            .scroll-reveal.delay-4 { transition-delay: 0.32s; }
-            .scroll-reveal.delay-5 { transition-delay: 0.40s; }
-            .scroll-reveal.delay-6 { transition-delay: 0.48s; }
-
-            /* Parallax float for decorative elements */
-            @keyframes float {
-                0%, 100% { transform: translateY(0); }
-                50% { transform: translateY(-8px); }
-            }
-            .float { animation: float 4s ease-in-out infinite; }
-
-            /* Smooth line draw */
-            .line-draw {
-                stroke-dasharray: 1000;
-                stroke-dashoffset: 1000;
-                transition: stroke-dashoffset 1.5s cubic-bezier(0.35, 0, 0, 1);
-            }
-            .visible .line-draw { stroke-dashoffset: 0; }
 
         </style>
     </head>
@@ -860,7 +867,7 @@
 
 <!-- Stats -->
             <section class="py-12 px-6 flex justify-center">
-                <div class="reveal relative bg-bgcard border border-border rounded-sm px-8 py-5 shadow-lg shadow-black/30 -rotate-1 hover:rotate-0 transition-transform duration-300" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 23px, rgba(255,255,255,0.02) 23px, rgba(255,255,255,0.02) 24px);">
+                <div data-anim="scale" class="reveal relative bg-bgcard border border-border rounded-sm hover-lift glow-pulse px-8 py-5 shadow-lg shadow-black/30 -rotate-1 hover:rotate-0 transition-transform duration-300" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 23px, rgba(255,255,255,0.02) 23px, rgba(255,255,255,0.02) 24px);">
                     <div class="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-3 bg-primary/20 rounded-sm"></div>
                     <p class="text-sm text-muted text-center font-medium tracking-wide">
                         <span class="text-secondary font-bold">Survival</span> is live across
@@ -876,17 +883,14 @@
                 <div class="max-w-5xl mx-auto">
                     <div class="text-center mb-16">
                         <span
-                            class="scroll-reveal inline-block text-[11px] font-bold tracking-[.2em] uppercase text-accent mb-4"
-                            >Why Us</span
+                            data-anim="up" class="scroll-reveal inline-block text-[11px] font-bold tracking-[.2em] uppercase text-accent mb-4">Why Us</span
                         >
                         <h2
-                            class="scroll-reveal delay-1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight"
-                        >
-                            Why <span class="text-txt">Updraft</span>?
+                            data-anim="up" data-split class="scroll-reveal delay-1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">Why <span class="text-txt">Updraft</span>?
                         </h2>
                     </div>
                     <div class="grid sm:grid-cols-2 gap-x-12 gap-y-8">
-                        <div class="scroll-reveal delay-2 flex items-start gap-4">
+                        <div data-anim="up" data-delay="1" class="flex items-start gap-4">
                             <div class="w-10 h-10 flex-shrink-0 bg-primary/10 rounded-xl flex items-center justify-center">
                                 <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
                             </div>
@@ -895,7 +899,7 @@
                                 <p class="text-sm text-muted leading-relaxed">We built everything from scratch. No pre-made templates, no copy-paste jobs.</p>
                             </div>
                         </div>
-                        <div class="scroll-reveal delay-3 flex items-start gap-4">
+                        <div data-anim="up" data-delay="2" class="flex items-start gap-4">
                             <div class="w-10 h-10 flex-shrink-0 bg-secondary/10 rounded-xl flex items-center justify-center">
                                 <svg class="w-5 h-5 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                             </div>
@@ -904,7 +908,7 @@
                                 <p class="text-sm text-muted leading-relaxed">Cosmetics only. Your wallet doesn't make you better here.</p>
                             </div>
                         </div>
-                        <div class="scroll-reveal delay-4 flex items-start gap-4">
+                        <div data-anim="up" data-delay="3" class="flex items-start gap-4">
                             <div class="w-10 h-10 flex-shrink-0 bg-accent/10 rounded-xl flex items-center justify-center">
                                 <svg class="w-5 h-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                             </div>
@@ -913,7 +917,7 @@
                                 <p class="text-sm text-muted leading-relaxed">You tell us what sucks, we fix it. Simple as that.</p>
                             </div>
                         </div>
-                        <div class="scroll-reveal delay-5 flex items-start gap-4">
+                        <div data-anim="up" data-delay="4" class="flex items-start gap-4">
                             <div class="w-10 h-10 flex-shrink-0 bg-primary/10 rounded-xl flex items-center justify-center">
                                 <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                             </div>
@@ -931,21 +935,18 @@
                 <div class="max-w-5xl mx-auto">
                     <div class="text-center mb-16">
                         <span
-                            class="reveal inline-block text-[11px] font-bold tracking-[.2em] uppercase text-secondary mb-4"
-                            >Cross-Platform</span
+                            data-anim="up" class="reveal inline-block text-[11px] font-bold tracking-[.2em] uppercase text-secondary mb-4">Cross-Platform</span
                         >
                         <h2
-                            class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight"
-                        >
-                            Play <span class="text-txt">Anywhere</span>
+                            data-anim="up" data-split class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">Play <span class="text-txt">Anywhere</span>
                         </h2>
-                        <p class="reveal rd2 text-muted mt-4 max-w-lg mx-auto">
+                        <p data-anim="up" class="reveal rd2 text-muted mt-4 max-w-lg mx-auto">
                             One network, every platform. No matter how you play
                             Minecraft, you can join the updraft.
                         </p>
                     </div>
                     <div class="flex flex-col gap-4">
-                        <div class="reveal rd1 pixel flex items-center gap-5 p-5 bg-bgcard border border-border rounded-xl hover:border-primary/30 transition-all duration-300">
+                        <div data-anim="left" data-delay="1" class="reveal rd1 pixel flex items-center gap-5 p-5 bg-bgcard border border-border rounded-xl hover:border-primary/30 transition-all duration-300 hover-lift>
                             <div class="w-12 h-12 flex-shrink-0 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center">
                                 <svg class="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                             </div>
@@ -955,7 +956,7 @@
                             </div>
                             <span class="text-xs font-mono font-bold text-txt bg-black/40 px-3 py-1.5 rounded hidden sm:block">java.updraftnetwork.org</span>
                         </div>
-                        <div class="reveal rd2 pixel flex items-center gap-5 p-5 bg-bgcard border border-border rounded-xl hover:border-secondary/30 transition-all duration-300">
+                        <div data-anim="left" data-delay="2" class="reveal rd2 pixel flex items-center gap-5 p-5 bg-bgcard border border-border rounded-xl hover:border-secondary/30 transition-all duration-300 hover-lift>
                             <div class="w-12 h-12 flex-shrink-0 bg-secondary/10 border border-secondary/20 rounded-xl flex items-center justify-center">
                                 <svg class="w-6 h-6 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
                             </div>
@@ -965,7 +966,7 @@
                             </div>
                             <span class="text-xs font-mono font-bold text-txt bg-black/40 px-3 py-1.5 rounded hidden sm:block">bedrock.updraftnetwork.org:1201</span>
                         </div>
-                        <div class="reveal rd3 pixel flex items-center gap-5 p-5 bg-bgcard border border-border rounded-xl hover:border-accent/30 transition-all duration-300">
+                        <div data-anim="left" data-delay="3" class="reveal rd3 pixel flex items-center gap-5 p-5 bg-bgcard border border-border rounded-xl hover:border-accent/30 transition-all duration-300 hover-lift>
                             <div class="w-12 h-12 flex-shrink-0 bg-accent/10 border border-accent/20 rounded-xl flex items-center justify-center">
                                 <svg class="w-6 h-6 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                             </div>
@@ -1195,9 +1196,9 @@
                         <h2 class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
                             Join in <span class="text-txt">Seconds</span>
                         </h2>
-                        <p class="reveal rd2 text-muted text-sm mt-3 max-w-lg mx-auto">Literally takes a minute. Here's how.</p>
+                        <p data-anim="up" class="reveal rd2 text-muted text-sm mt-3 max-w-lg mx-auto>Literally takes a minute. Here's how.</p>
                     </div>
-                    <div class="reveal rd3 relative">
+                    <div data-anim="scale" class="reveal rd3 relative hover-lift>
                         <!-- Windows Desktop Simulation -->
                         <div class="win-desktop">
                             <!-- Desktop Icons -->
@@ -1322,18 +1323,17 @@
             <section id="leaderboards" class="py-24 px-6">
                 <div class="max-w-3xl mx-auto">
                     <div class="text-center mb-12">
-                        <span class="reveal inline-block text-[11px] font-bold tracking-[.2em] uppercase text-secondary mb-4">Leaderboards</span>
-                        <h2 class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
-                            Top <span class="text-txt">Players</span>
+                        <span data-anim="up" class="reveal inline-block text-[11px] font-bold tracking-[.2em] uppercase text-secondary mb-4">Leaderboards</span>
+                        <h2 data-anim="up" data-split class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">Top <span class="text-txt">Players</span>
                         </h2>
-                        <p class="reveal rd2 text-muted text-sm mt-3">Live stats from Survival. Updates every 30 seconds.</p>
+                        <p data-anim="up" class="reveal rd2 text-muted text-sm mt-3">Live stats from Survival. Updates every 30 seconds.</p>
                     </div>
-                    <div class="reveal rd3 flex justify-center gap-2 mb-8">
+                    <div data-anim="up" class="reveal rd3 flex justify-center gap-2 mb-8>
                         <button onclick="switchLb('statistic_player_kills', this)" class="lb-tab active px-4 py-2 rounded-lg text-xs font-bold tracking-wider uppercase transition-all bg-secondary/15 text-secondary border border-secondary/20">Kills</button>
                         <button onclick="switchLb('vault_eco_balance', this)" class="lb-tab px-4 py-2 rounded-lg text-xs font-bold tracking-wider uppercase transition-all bg-bgcard border border-border text-muted hover:text-txt">Money</button>
                         <button onclick="switchLb('statistic_time_played', this)" class="lb-tab px-4 py-2 rounded-lg text-xs font-bold tracking-wider uppercase transition-all bg-bgcard border border-border text-muted hover:text-txt">Playtime</button>
                     </div>
-                    <div id="leaderboard-list" class="reveal rd4 bg-bgcard border border-border rounded-2xl overflow-hidden">
+                    <div data-anim="scale" id="leaderboard-list" class="reveal rd4 bg-bgcard border border-border rounded-2xl overflow-hidden hover-lift>
                         <div class="px-6 py-8 text-center text-muted text-sm">Loading leaderboards...</div>
                     </div>
                 </div>
@@ -1345,14 +1345,10 @@
                 <div class="max-w-3xl mx-auto">
                     <div class="text-center mb-16">
                         <span
-                            class="reveal inline-block text-[11px] font-bold tracking-[.2em] uppercase text-secondary mb-4"
-                            >Roadmap</span
+                            data-anim="up" class="reveal inline-block text-[11px] font-bold tracking-[.2em] uppercase text-secondary mb-4">Roadmap</span
                         >
                         <h2
-                            class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight"
-                        >
-                            Server
-                            <span class="text-txt">Released!</span>
+                            data-anim="up" data-split class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">Server <span class="text-txt">Released!</span>
                         </h2>
                     </div>
                     <div class="relative">
@@ -1360,7 +1356,7 @@
                             class="absolute left-[15px] sm:left-[19px] top-2 bottom-2 w-[2px] timeline-line rounded-full"
                         ></div>
                         <div
-                            class="reveal rd1 relative flex gap-6 sm:gap-8 mb-10"
+                            data-anim="left" class="reveal rd1 relative flex gap-6 sm:gap-8 mb-10"
                         >
                             <div
                                 class="flex-shrink-0 w-[32px] h-[32px] sm:w-[40px] sm:h-[40px] bg-secondary/20 border-2 border-secondary rounded-full flex items-center justify-center z-10"
@@ -1400,7 +1396,7 @@
                             </div>
                         </div>
                         <div
-                            class="reveal rd2 relative flex gap-6 sm:gap-8 mb-10"
+                            data-anim="left" class="reveal rd1 relative flex gap-6 sm:gap-8 mb-10"
                         >
                             <div
                                 class="flex-shrink-0 w-[32px] h-[32px] sm:w-[40px] sm:h-[40px] bg-primary/20 border-2 border-primary rounded-full flex items-center justify-center z-10"
@@ -1427,7 +1423,7 @@
                             </div>
                         </div>
                         <div
-                            class="reveal rd3 relative flex gap-6 sm:gap-8"
+                            data-anim="left" class="reveal rd1 relative flex gap-6 sm:gap-8"
                         >
                             <div
                                 class="flex-shrink-0 w-[32px] h-[32px] sm:w-[40px] sm:h-[40px] bg-border rounded-full flex items-center justify-center z-10 border-2 border-border"
@@ -1543,7 +1539,7 @@
             <section class="py-24 px-6">
                 <div class="max-w-3xl mx-auto">
                     <div
-                        class="reveal relative overflow-hidden p-12 sm:p-16 bg-bgcard border border-border rounded-3xl text-center"
+                        data-anim="scale" class="reveal relative overflow-hidden p-12 sm:p-16 bg-bgcard border border-border rounded-3xl text-center hover-lift glow-pulse
                     >
                     <div
                         class="absolute inset-0 pointer-events-none"
@@ -1636,9 +1632,7 @@
                         </div>
                         <div>
                             <h1
-                                class="reveal rd1 text-4xl sm:text-5xl font-black tracking-tighter mb-2"
-                            >
-                                SURVIVAL
+                                data-anim="up" data-split class="reveal rd1 text-4xl sm:text-5xl font-black tracking-tighter mb-2">SURVIVAL
                             </h1>
                             <div class="reveal rd2 flex items-center gap-2">
                                 <span
@@ -1651,12 +1645,12 @@
                         </div>
                     </div>
                     <p
-                        class="reveal rd2 text-lg text-muted leading-relaxed mb-12 max-w-xl"
+                        data-anim="up" class="reveal rd2 text-lg text-muted leading-relaxed mb-12 max-w-xl
                     >
                         Survival, but better. Custom terrain, custom items, economy that actually works, and events that keep things fresh. We built this from the ground up and it shows.
                     </p>
                     <div
-                        class="reveal rd3 bg-bgcard border border-border rounded-2xl overflow-hidden mb-12"
+                        data-anim="scale" class="reveal rd3 bg-bgcard border border-border rounded-2xl overflow-hidden mb-12 hover-lift
                     >
                         <div class="px-6 py-4 border-b border-border">
                             <span
@@ -1883,9 +1877,7 @@
                         </div>
                         <div>
                             <h1
-                                class="reveal rd1 text-4xl sm:text-5xl font-black tracking-tighter mb-2"
-                            >
-                                LIFESTEAL
+                                data-anim="up" data-split class="reveal rd1 text-4xl sm:text-5xl font-black tracking-tighter mb-2">LIFESTEAL
                             </h1>
                             <div class="reveal rd2 flex items-center gap-2">
                                 <span
@@ -1898,12 +1890,12 @@
                         </div>
                     </div>
                     <p
-                        class="reveal rd2 text-lg text-muted leading-relaxed mb-12 max-w-xl"
+                        data-anim="up" class="reveal rd2 text-lg text-muted leading-relaxed mb-12 max-w-xl
                     >
                         Hearts are everything. Steal them from your enemies, form alliances to survive, and build a competitive economy around the rarest resource in the game.
                     </p>
                     <div
-                        class="reveal rd3 bg-bgcard border border-border rounded-2xl overflow-hidden mb-12"
+                        data-anim="scale" class="reveal rd3 bg-bgcard border border-border rounded-2xl overflow-hidden mb-12 hover-lift
                     >
                         <div class="px-6 py-4 border-b border-border">
                             <span
@@ -2128,9 +2120,7 @@
                         </div>
                         <div>
                             <h1
-                                class="reveal rd1 text-4xl sm:text-5xl font-black tracking-tighter mb-2"
-                            >
-                                PRACTICE
+                                data-anim="up" data-split class="reveal rd1 text-4xl sm:text-5xl font-black tracking-tighter mb-2">PRACTICE
                             </h1>
                             <div class="reveal rd2 flex items-center gap-2">
                                 <span
@@ -2143,14 +2133,14 @@
                         </div>
                     </div>
                     <p
-                        class="reveal rd2 text-lg text-muted leading-relaxed mb-12 max-w-xl"
+                        data-anim="up" class="reveal rd2 text-lg text-muted leading-relaxed mb-12 max-w-xl
                     >
                         Competitive PvP at its finest. Ranked and unranked
                         queues, custom kits, arena selection, and an Elo rating
                         system.
                     </p>
                     <div
-                        class="reveal rd3 bg-bgcard border border-border rounded-2xl overflow-hidden mb-12"
+                        data-anim="scale" class="reveal rd3 bg-bgcard border border-border rounded-2xl overflow-hidden mb-12 hover-lift
                     >
                         <div class="px-6 py-4 border-b border-border">
                             <span
@@ -2308,7 +2298,7 @@
                 <div class="max-w-3xl mx-auto w-full relative z-10 py-12">
                     <div class="text-center mb-12">
                         <span class="inline-block text-[11px] font-bold tracking-[.2em] uppercase text-primary mb-4 reveal">Updates</span>
-                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight reveal rd1">Latest <span class="text-txt">News</span></h2>
+                        <h2 data-anim="up" data-split class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight reveal rd1">Latest <span class="text-txt">News</span></h2>
                         <p class="text-muted text-sm mt-3 reveal rd2">Synced live from our Discord server.</p>
                     </div>
                     <div id="updates-feed" class="flex flex-col gap-4">
@@ -2735,21 +2725,35 @@
         </div>
 
         <script>
-            /* -- Lusion-style animation engine -- */
+            /* ── ANIMATION ENGINE ── */
+            function initAnimations() {
+                const els = document.querySelectorAll('.page.active [data-anim]:not(.in)');
+                const obs = new IntersectionObserver((entries) => {
+                    entries.forEach(e => {
+                        if (e.isIntersecting) {
+                            e.target.classList.add('in');
+                            obs.unobserve(e.target);
+                        }
+                    });
+                }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
+                els.forEach(el => {
+                    const delay = el.dataset.delay;
+                    if (delay) el.classList.add('d' + delay);
+                    obs.observe(el);
+                });
+            }
+
             function splitTextIntoWords(el) {
                 const children = Array.from(el.childNodes);
                 let html = '';
-                children.forEach((node, idx) => {
+                children.forEach(node => {
                     if (node.nodeType === 3) {
                         const words = node.textContent.split(/\s+/).filter(Boolean);
                         html += words.map(w =>
                             `<span class="word"><span class="word-inner">${w}</span></span>`
                         ).join(' ');
                     } else if (node.nodeType === 1) {
-                        if (node.tagName === 'BR') {
-                            html += '<br>';
-                            return;
-                        }
+                        if (node.tagName === 'BR') { html += '<br>'; return; }
                         const inner = node.textContent.trim();
                         const words = inner.split(/\s+/).filter(Boolean);
                         const cls = node.className || '';
@@ -2760,68 +2764,75 @@
                 });
                 el.innerHTML = html;
                 el.classList.add('split-text');
-                // Set stagger delays per word
-                const words = el.querySelectorAll('.word-inner');
-                words.forEach((w, i) => {
-                    w.style.transitionDelay = (i * 0.05) + 's';
+                el.querySelectorAll('.word-inner').forEach((w, i) => {
+                    w.style.transitionDelay = (i * 0.04) + 's';
                 });
             }
 
             function initSplitTexts() {
-                document.querySelectorAll('.split-target').forEach(el => {
-                    if (!el.classList.contains('split-text')) {
-                        splitTextIntoWords(el);
-                    }
-                });
+                document.querySelectorAll('.split-target:not(.split-text)').forEach(splitTextIntoWords);
+            }
+
+            function revealHero() {
+                setTimeout(() => {
+                    document.querySelectorAll('.hero-split').forEach(el => el.classList.add('revealed'));
+                }, 200);
             }
 
             function updateScrollProgress() {
                 const bar = document.querySelector('.scroll-progress');
                 if (!bar) return;
-                const scrollTop = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-                bar.style.height = progress + '%';
-            }
-
-            function initScrollReveals() {
-                const els = document.querySelectorAll('.page.active .scroll-reveal:not(.visible)');
-                const obs = new IntersectionObserver((entries) => {
-                    entries.forEach(e => {
-                        if (e.isIntersecting) {
-                            e.target.classList.add('visible');
-                            obs.unobserve(e.target);
-                        }
-                    });
-                }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
-                els.forEach(el => obs.observe(el));
-            }
-
-            function revealHero() {
-                setTimeout(() => {
-                    document.querySelectorAll('.hero-split').forEach(el => {
-                        el.classList.add('revealed');
-                    });
-                }, 300);
+                const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                bar.style.height = Math.min(pct || 0, 100) + '%';
             }
 
             function initParallax() {
                 const els = document.querySelectorAll('[data-parallax]');
                 if (!els.length) return;
+                let ticking = false;
                 window.addEventListener('scroll', () => {
-                    els.forEach(el => {
-                        const factor = parseFloat(el.dataset.parallax) || 0.15;
-                        const rect = el.getBoundingClientRect();
-                        const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * factor;
-                        el.style.transform = `translate3d(0, ${offset}px, 0)`;
-                    });
+                    if (!ticking) {
+                        requestAnimationFrame(() => {
+                            els.forEach(el => {
+                                const f = parseFloat(el.dataset.parallax) || 0.15;
+                                const r = el.getBoundingClientRect();
+                                const off = (r.top + r.height / 2 - window.innerHeight / 2) * f;
+                                el.style.transform = `translate3d(0, ${off}px, 0)`;
+                            });
+                            ticking = false;
+                        });
+                        ticking = true;
+                    }
                 }, { passive: true });
             }
 
-            function runLusionInit() {
+            function initCountUp() {
+                document.querySelectorAll('[data-count]').forEach(el => {
+                    const target = parseInt(el.dataset.count);
+                    const suffix = el.dataset.suffix || '';
+                    let start = null;
+                    const obs = new IntersectionObserver(([e]) => {
+                        if (e.isIntersecting) {
+                            obs.disconnect();
+                            const animate = (ts) => {
+                                if (!start) start = ts;
+                                const p = Math.min((ts - start) / 1500, 1);
+                                const eased = 1 - Math.pow(1 - p, 3);
+                                el.textContent = Math.floor(eased * target) + suffix;
+                                if (p < 1) requestAnimationFrame(animate);
+                            };
+                            requestAnimationFrame(animate);
+                        }
+                    }, { threshold: 0.5 });
+                    obs.observe(el);
+                });
+            }
+
+            function runAnimInit() {
                 initSplitTexts();
-                initScrollReveals();
+                initAnimations();
                 revealHero();
+                initCountUp();
             }
 
             window.addEventListener('scroll', updateScrollProgress, { passive: true });
@@ -2854,7 +2865,7 @@
                 });
                 window.location.hash = page === "home" ? "" : page;
                 window.scrollTo({ top: 0, behavior: "smooth" });
-                setTimeout(() => { observeReveals(); runLusionInit(); }, 80);
+                setTimeout(() => { observeReveals(); runAnimInit(); }, 80);
             }
             function handleHash() {
                 const h = window.location.hash.replace("#", "") || "home";
@@ -2936,7 +2947,7 @@
             document.addEventListener("DOMContentLoaded", () => {
                 handleHash();
                 observeReveals();
-                runLusionInit();
+                runAnimInit();
                 initParallax();
             });
 
