@@ -388,9 +388,105 @@
             }
             [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
             [data-theme="light"] .theme-toggle .icon-moon { display: block; }
+
+            /* ── Lusion-style animations ── */
+            .lusion-ease { transition-timing-function: cubic-bezier(0.35, 0, 0, 1); }
+            .lusion-ease-out { transition-timing-function: cubic-bezier(0.0, 0, 0.2, 1); }
+
+            /* Word split reveal */
+            .split-text { display: inline; }
+            .split-text .word {
+                display: inline-block;
+                overflow: hidden;
+                vertical-align: top;
+                padding-bottom: 0.05em;
+            }
+            .split-text .word .word-inner {
+                display: inline-block;
+                will-change: transform, opacity;
+                transform: translate3d(0, 1.15em, 0) rotate(8deg);
+                opacity: 0;
+                transition: transform 0.9s cubic-bezier(0.35, 0, 0, 1), opacity 0.7s cubic-bezier(0.35, 0, 0, 1);
+            }
+            .split-text.revealed .word .word-inner {
+                transform: translate3d(0, 0, 0) rotate(0deg);
+                opacity: 1;
+            }
+
+            /* Scroll progress indicator */
+            .scroll-progress {
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 3px;
+                height: 0%;
+                background: var(--accent);
+                z-index: 100;
+                transition: height 0.1s linear;
+                border-radius: 0 0 2px 2px;
+            }
+
+            /* CTA dot expand hover */
+            .cta-dot {
+                position: relative;
+                overflow: hidden;
+                z-index: 1;
+            }
+            .cta-dot::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 20px;
+                height: 20px;
+                background: rgba(255,255,255,0.15);
+                border-radius: 50%;
+                transform: translate(-50%, -50%) scale(0);
+                transition: transform 0.5s cubic-bezier(0.35, 0, 0, 1);
+                z-index: -1;
+            }
+            .cta-dot:hover::before {
+                transform: translate(-50%, -50%) scale(25);
+            }
+
+            /* Section reveal on scroll — slide up + fade */
+            .scroll-reveal {
+                opacity: 0;
+                transform: translateY(40px);
+                transition: opacity 0.8s cubic-bezier(0.35, 0, 0, 1), transform 0.8s cubic-bezier(0.35, 0, 0, 1);
+            }
+            .scroll-reveal.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .scroll-reveal.delay-1 { transition-delay: 0.08s; }
+            .scroll-reveal.delay-2 { transition-delay: 0.16s; }
+            .scroll-reveal.delay-3 { transition-delay: 0.24s; }
+            .scroll-reveal.delay-4 { transition-delay: 0.32s; }
+            .scroll-reveal.delay-5 { transition-delay: 0.40s; }
+            .scroll-reveal.delay-6 { transition-delay: 0.48s; }
+
+            /* Parallax float for decorative elements */
+            @keyframes float {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-8px); }
+            }
+            .float { animation: float 4s ease-in-out infinite; }
+
+            /* Smooth line draw */
+            .line-draw {
+                stroke-dasharray: 1000;
+                stroke-dashoffset: 1000;
+                transition: stroke-dashoffset 1.5s cubic-bezier(0.35, 0, 0, 1);
+            }
+            .visible .line-draw { stroke-dashoffset: 0; }
+
         </style>
     </head>
     <body>
+        <!-- Scroll progress -->
+        <div class="scroll-progress"></div>
+
         <!-- Navigation -->
         <nav
             id="navbar"
@@ -634,7 +730,7 @@
                 class="min-h-screen flex flex-col items-start justify-center px-6 sm:px-12 lg:px-24 pt-16 relative overflow-hidden"
             >
                 <div class="max-w-2xl relative z-10">
-                    <div class="reveal mb-10">
+                    <div class="reveal mb-10" data-parallax="0.08">
                         <svg
                             class="w-20 h-20 sm:w-28 sm:h-28"
                             viewBox="0 0 512 512"
@@ -681,7 +777,7 @@
                     </div>
 
                     <h1
-                        class="reveal rd1 text-5xl sm:text-6xl lg:text-8xl font-black tracking-tighter leading-[1.02] mb-5"
+                        class="reveal rd1 text-5xl sm:text-6xl lg:text-8xl font-black tracking-tighter leading-[1.02] mb-5 split-target hero-split"
                     >
                         <span class="text-gradient">UPDRAFT</span><br /><span
                             class="text-gradient-r"
@@ -700,7 +796,7 @@
                             href="https://discord.gg/B4u9ap3VRb"
                             target="_blank"
                             rel="noopener"
-                            class="group flex items-center gap-3 px-8 py-4 bg-[#5865F2] rounded-xl text-white font-bold text-sm tracking-wider uppercase hover:bg-[#4752C4] transition-all duration-300"
+                            class="group cta-dot flex items-center gap-3 px-8 py-4 bg-[#5865F2] rounded-xl text-white font-bold text-sm tracking-wider uppercase hover:bg-[#4752C4] transition-all duration-300"
                         >
                             <svg
                                 class="w-5 h-5"
@@ -754,22 +850,22 @@
                 </div>
             </section>
 
-<!-- Why Updraft -->
+            <!-- Why Updraft -->
             <section class="py-24 px-6 relative overflow-hidden">
                 <div class="max-w-5xl mx-auto">
                     <div class="text-center mb-16">
                         <span
-                            class="reveal inline-block text-[11px] font-bold tracking-[.2em] uppercase text-accent mb-4"
+                            class="scroll-reveal inline-block text-[11px] font-bold tracking-[.2em] uppercase text-accent mb-4"
                             >Why Us</span
                         >
                         <h2
-                            class="reveal rd1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight"
+                            class="scroll-reveal delay-1 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight"
                         >
                             Why <span class="text-txt">Updraft</span>?
                         </h2>
                     </div>
                     <div class="grid sm:grid-cols-2 gap-x-12 gap-y-8">
-                        <div class="reveal rd1 flex items-start gap-4">
+                        <div class="scroll-reveal delay-2 flex items-start gap-4">
                             <div class="w-10 h-10 flex-shrink-0 bg-primary/10 rounded-xl flex items-center justify-center">
                                 <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
                             </div>
@@ -778,7 +874,7 @@
                                 <p class="text-sm text-muted leading-relaxed">We built everything from scratch. No pre-made templates, no copy-paste jobs.</p>
                             </div>
                         </div>
-                        <div class="reveal rd2 flex items-start gap-4">
+                        <div class="scroll-reveal delay-3 flex items-start gap-4">
                             <div class="w-10 h-10 flex-shrink-0 bg-secondary/10 rounded-xl flex items-center justify-center">
                                 <svg class="w-5 h-5 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                             </div>
@@ -787,7 +883,7 @@
                                 <p class="text-sm text-muted leading-relaxed">Cosmetics only. Your wallet doesn't make you better here.</p>
                             </div>
                         </div>
-                        <div class="reveal rd3 flex items-start gap-4">
+                        <div class="scroll-reveal delay-4 flex items-start gap-4">
                             <div class="w-10 h-10 flex-shrink-0 bg-accent/10 rounded-xl flex items-center justify-center">
                                 <svg class="w-5 h-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                             </div>
@@ -796,7 +892,7 @@
                                 <p class="text-sm text-muted leading-relaxed">You tell us what sucks, we fix it. Simple as that.</p>
                             </div>
                         </div>
-                        <div class="reveal rd4 flex items-start gap-4">
+                        <div class="scroll-reveal delay-5 flex items-start gap-4">
                             <div class="w-10 h-10 flex-shrink-0 bg-primary/10 rounded-xl flex items-center justify-center">
                                 <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                             </div>
@@ -2813,6 +2909,98 @@
         </div>
 
         <script>
+            /* ── Lusion-style animation engine ── */
+            function splitTextIntoWords(el) {
+                const children = Array.from(el.childNodes);
+                let html = '';
+                children.forEach((node, idx) => {
+                    if (node.nodeType === 3) {
+                        const words = node.textContent.split(/\s+/).filter(Boolean);
+                        html += words.map(w =>
+                            `<span class="word"><span class="word-inner">${w}</span></span>`
+                        ).join(' ');
+                    } else if (node.nodeType === 1) {
+                        if (node.tagName === 'BR') {
+                            html += '<br>';
+                            return;
+                        }
+                        const inner = node.textContent.trim();
+                        const words = inner.split(/\s+/).filter(Boolean);
+                        const cls = node.className || '';
+                        html += `<span class="${cls}">${words.map(w =>
+                            `<span class="word"><span class="word-inner">${w}</span></span>`
+                        ).join(' ')}</span>`;
+                    }
+                });
+                el.innerHTML = html;
+                el.classList.add('split-text');
+                // Set stagger delays per word
+                const words = el.querySelectorAll('.word-inner');
+                words.forEach((w, i) => {
+                    w.style.transitionDelay = (i * 0.05) + 's';
+                });
+            }
+
+            function initSplitTexts() {
+                document.querySelectorAll('.split-target').forEach(el => {
+                    if (!el.classList.contains('split-text')) {
+                        splitTextIntoWords(el);
+                    }
+                });
+            }
+
+            function updateScrollProgress() {
+                const bar = document.querySelector('.scroll-progress');
+                if (!bar) return;
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                bar.style.height = progress + '%';
+            }
+
+            function initScrollReveals() {
+                const els = document.querySelectorAll('.page.active .scroll-reveal:not(.visible)');
+                const obs = new IntersectionObserver((entries) => {
+                    entries.forEach(e => {
+                        if (e.isIntersecting) {
+                            e.target.classList.add('visible');
+                            obs.unobserve(e.target);
+                        }
+                    });
+                }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+                els.forEach(el => obs.observe(el));
+            }
+
+            function revealHero() {
+                setTimeout(() => {
+                    document.querySelectorAll('.hero-split').forEach(el => {
+                        el.classList.add('revealed');
+                    });
+                }, 300);
+            }
+
+            function initParallax() {
+                const els = document.querySelectorAll('[data-parallax]');
+                if (!els.length) return;
+                window.addEventListener('scroll', () => {
+                    els.forEach(el => {
+                        const factor = parseFloat(el.dataset.parallax) || 0.15;
+                        const rect = el.getBoundingClientRect();
+                        const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * factor;
+                        el.style.transform = `translate3d(0, ${offset}px, 0)`;
+                    });
+                }, { passive: true });
+            }
+
+            function runLusionInit() {
+                initSplitTexts();
+                initScrollReveals();
+                revealHero();
+            }
+
+            window.addEventListener('scroll', updateScrollProgress, { passive: true });
+            updateScrollProgress();
+
             (function () {
                 var saved = localStorage.getItem("theme");
                 if (saved) {
@@ -2840,7 +3028,7 @@
                 });
                 window.location.hash = page === "home" ? "" : page;
                 window.scrollTo({ top: 0, behavior: "smooth" });
-                setTimeout(observeReveals, 50);
+                setTimeout(() => { observeReveals(); runLusionInit(); }, 80);
             }
             function handleHash() {
                 const h = window.location.hash.replace("#", "") || "home";
@@ -2938,6 +3126,8 @@
             document.addEventListener("DOMContentLoaded", () => {
                 handleHash();
                 observeReveals();
+                runLusionInit();
+                initParallax();
             });
 
             setInterval(()=>{const c=document.getElementById('win-clock');if(c)c.textContent=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});},1000);
