@@ -600,6 +600,396 @@
             [data-theme="light"] .split-text .word .word-inner { color: #1d1d1f; }
             [data-theme="light"] .cta-dot { box-shadow: 0 14px 40px -14px rgba(88,101,242,0.5); }
 
+
+
+            /* ═══════════════════════════════════════════════════
+               M O T I O N   O V E R D R I V E
+               Everything animated. Everything alive.
+               ═══════════════════════════════════════════════════ */
+
+            /* ── 3D TILT ── */
+            [data-tilt] {
+                transform-style: preserve-3d;
+                transition: transform .5s cubic-bezier(.16,1,.3,1), box-shadow .5s var(--ease);
+                will-change: transform;
+            }
+            .hover-lift[data-tilt],
+            .ucard[data-tilt],
+            .win-desktop[data-tilt],
+            .pixel[data-tilt] {
+                transform: perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,0px));
+            }
+            .hover-lift[data-tilt]:hover,
+            .ucard[data-tilt]:hover,
+            .win-desktop[data-tilt]:hover,
+            .pixel[data-tilt]:hover {
+                --ty: -8px;
+                box-shadow: 0 36px 80px -24px rgba(0,0,0,0.7);
+            }
+            [data-theme="light"] [data-tilt]:hover { box-shadow: 0 28px 64px -28px rgba(0,0,0,0.26); }
+
+            /* ── SPOTLIGHT CURSOR TRACKING ── */
+            [data-spot]::after {
+                content: ""; position: absolute; inset: 0; border-radius: inherit;
+                pointer-events: none; z-index: 1;
+                background: radial-gradient(320px circle at var(--mx,50%) var(--my,50%),
+                    rgba(var(--accent-rgb),0.14), transparent 60%);
+                opacity: 0; transition: opacity .4s var(--ease);
+            }
+            [data-spot]:hover::after { opacity: 1; }
+
+            /* ── SHINE SWEEP ON BUTTONS ── */
+            .shine { position: relative; overflow: hidden; }
+            .shine::before {
+                content: ""; position: absolute; top: -4px; bottom: -4px;
+                left: -180%; width: 50%;
+                background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,0.35) 50%, transparent 80%);
+                transform: skewX(-22deg);
+                transition: left .7s var(--ease);
+                z-index: 2; pointer-events: none;
+            }
+            .shine:hover::before { left: 180%; }
+
+            /* ── ICON TILE BOB ── */
+            @keyframes iconBob {
+                0%, 100% { transform: translateY(0) rotate(0deg); }
+                35%      { transform: translateY(-5px) rotate(-3deg); }
+                65%      { transform: translateY(-2px) rotate(2deg); }
+            }
+            .icon-tile {
+                animation: iconBob 3.4s ease-in-out infinite;
+                transition: transform .3s var(--ease);
+            }
+            .icon-tile:nth-child(odd) { animation-delay: -0.6s; }
+
+            /* ── WIN ICON BOUNCE ── */
+            .win-icon-img { animation: iconBob 3s ease-in-out infinite; }
+            .win-icon:nth-child(2) .win-icon-img { animation-delay: -0.4s; }
+            .win-icon:nth-child(3) .win-icon-img { animation-delay: -0.8s; }
+            .win-icon:nth-child(4) .win-icon-img { animation-delay: -1.2s; }
+
+            /* ── LEADERBOARD ROW ENTRANCE ── */
+.lb-row {
+                animation: lbSlide .55s var(--ease) backwards;
+                animation-delay: calc(var(--i,0) * 50ms);
+            }
+            @keyframes lbSlide {
+                from { opacity: 0; transform: translateX(20px); }
+                to   { opacity: 1; transform: none; }
+            }
+
+            /* ── UPDATE CARD ENTRANCE ── */
+.ucard {
+                animation: ucardRise .7s var(--ease) backwards;
+                animation-delay: calc(var(--i,0) * 65ms);
+            }
+            @keyframes ucardRise {
+                from { opacity: 0; transform: translateY(28px) scale(0.97); }
+                to   { opacity: 1; transform: none; }
+            }
+
+            /* ── STORE CARD ENTRANCE ── */
+.store-appear {
+                animation: storePop .6s var(--ease) backwards;
+                animation-delay: calc(var(--i,0) * 90ms);
+            }
+            @keyframes storePop {
+                from { opacity: 0; transform: translateY(20px) scale(0.94); }
+                to   { opacity: 1; transform: none; }
+            }
+
+            /* ── HEADLINE SHIMMER ── */
+            .shimmer-heading {
+                background: linear-gradient(90deg, var(--text-primary), var(--accent), var(--teal), var(--text-primary));
+                background-size: 300% 100%;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                animation: shimmerText 8s linear infinite;
+            }
+            @keyframes shimmerText {
+                0%   { background-position: 0% 50%; }
+                100% { background-position: 300% 50%; }
+            }
+
+            /* ── PROGRESS BAR GLOW PULSE ── */
+            .progress {
+                animation: progressGlow 3s ease-in-out infinite;
+            }
+            @keyframes progressGlow {
+                0%, 100% { box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.5); }
+                50%      { box-shadow: 0 0 28px rgba(var(--accent-rgb), 0.85); }
+            }
+
+            /* ── NAV ACTIVE LINK GLOW ── */
+            .nav-link.active::before {
+                content: ""; position: absolute; bottom: -1px; left: 0; right: 0;
+                height: 1px; border-radius: 1px;
+                background: linear-gradient(90deg, var(--accent), var(--teal));
+                animation: navGlow 2.5s ease-in-out infinite;
+            }
+            @keyframes navGlow {
+                0%, 100% { opacity: 0.6; filter: blur(0px); }
+                50%      { opacity: 1;   filter: blur(1px); }
+            }
+
+            /* ── CTA PULSE RING ── */
+            .cta-dot { animation: ctaPulseRing 3.2s ease-in-out infinite; }
+            @keyframes ctaPulseRing {
+                0%, 100% { box-shadow: 0 10px 34px -12px rgba(88,101,242,0.55); }
+                50%      { box-shadow: 0 10px 44px -8px rgba(88,101,242,0.8), 0 0 60px -16px rgba(88,101,242,0.4); }
+            }
+
+            /* ── FLOATING PARTICLES ORB (injected by JS) ── */
+.fx-field {
+                position: fixed; inset: 0; overflow: hidden;
+                pointer-events: none; z-index: -1;
+            }
+            .spark {
+                z-index: 9996;
+            }
+            .orb {
+                position: absolute; border-radius: 50%;
+                filter: blur(70px); opacity: 0.28;
+                will-change: transform;
+                animation: orbFloat linear infinite;
+            }
+            @keyframes orbFloat {
+                0%   { transform: translate(0,0) scale(1); }
+                25%  { transform: translate(40px,-60px) scale(1.08); }
+                50%  { transform: translate(-20px,-30px) scale(0.95); }
+                75%  { transform: translate(50px,40px) scale(1.1); }
+                100% { transform: translate(0,0) scale(1); }
+            }
+            [data-theme="light"] .orb { opacity: 0.12; filter: blur(90px); }
+
+            /* ── SHOOTING STAR (injected by JS) ── */
+            .shoot {
+                position: absolute; height: 2px; border-radius: 2px;
+                background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb),0.85), #fff);
+                opacity: 0;
+                animation: shootFly 5s ease-in infinite;
+                pointer-events: none;
+            }
+            .shoot::after {
+                content: ""; position: absolute; right: -2px; top: -2px;
+                width: 6px; height: 6px; border-radius: 50%;
+                background: #fff;
+                box-shadow: 0 0 12px 2px rgba(var(--accent-rgb),0.9);
+            }
+            @keyframes shootFly {
+                0%   { opacity: 0; transform: translate3d(0,0,0) rotate(-35deg); }
+                5%   { opacity: 1; }
+                25%  { opacity: 0; transform: translate3d(-55vw, 25vh, 0) rotate(-35deg); }
+                100% { opacity: 0; }
+            }
+            [data-theme="light"] .shoot { opacity: 0; }
+
+            /* ── SPARKLE TRAIL (cursor sparks, injected by JS) ── */
+            .spark {
+                position: fixed; pointer-events: none; z-index: 9996;
+                width: 5px; height: 5px; border-radius: 50%;
+                background: radial-gradient(circle, rgba(var(--accent-rgb),1), transparent 70%);
+                transform: translate(-50%,-50%);
+                animation: sparkPop .75s var(--ease) forwards;
+            }
+            @keyframes sparkPop {
+                0%   { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+                100% { opacity: 0; transform: translate(
+                    calc(-50% + var(--sx,10px)),
+                    calc(-50% + var(--sy,-14px))
+                ) scale(0.15); }
+            }
+
+            /* ── PAGE TRANSITION ENHANCE ── */
+            .page.active {
+                animation: pageIn .55s var(--ease) both;
+            }
+            @keyframes pageIn {
+                from { opacity: 0; transform: translateY(18px) scale(0.99); filter: blur(4px); }
+                to   { opacity: 1; transform: none; filter: none; }
+            }
+
+            /* ── SECTION DIVIDER LINE GLOW ── */
+            .section-glow {
+                height: 1px; border: none;
+                background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb),0.4), var(--teal), rgba(var(--accent-rgb),0.4), transparent);
+                animation: sectionGlowPulse 4s ease-in-out infinite;
+            }
+            @keyframes sectionGlowPulse {
+                0%, 100% { opacity: 0.4; }
+                50%      { opacity: 0.9; }
+            }
+
+            /* ── FEATURE ICON BADGE PULSE ── */
+            .pulse-badge {
+                position: relative;
+            }
+            .pulse-badge::after {
+                content: ""; position: absolute; inset: -3px;
+                border-radius: inherit; border: 2px solid rgba(var(--accent-rgb),0.3);
+                animation: badgePulse 2.5s ease-in-out infinite;
+            }
+            @keyframes badgePulse {
+                0%, 100% { transform: scale(1); opacity: 0.4; }
+                50%      { transform: scale(1.08); opacity: 0.15; }
+            }
+
+            /* ── TOAST ENHANCED ── */
+            .toast {
+                transition: all .45s cubic-bezier(.16,1,.3,1);
+            }
+            .toast.show {
+                animation: toastBounceIn .55s cubic-bezier(.16,1,.3,1) both;
+            }
+            @keyframes toastBounceIn {
+                0%   { transform: translateX(-50%) translateY(80px) scale(0.8); opacity: 0; }
+                60%  { transform: translateX(-50%) translateY(-8px) scale(1.03); opacity: 1; }
+                100% { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
+            }
+
+            /* ── PLATFORM BADGE ENHANCED ── */
+.platform-badge {
+                animation: badgePop .4s var(--ease) backwards;
+                animation-delay: calc(var(--i,0) * 100ms);
+            }
+            @keyframes badgePop {
+                from { opacity: 0; transform: translateY(8px) scale(0.9); }
+                to   { opacity: 1; transform: none; }
+            }
+
+            /* ── MARQUEE ENHANCED ── */
+            .marquee-track {
+                animation: marqueeMove 28s linear infinite;
+            }
+
+            /* ── WIN-STEP TRANSITION ── */
+            .win-step.active {
+                animation: winStepIn .4s var(--ease) both;
+            }
+            @keyframes winStepIn {
+                from { opacity: 0; transform: translateX(-50%) scale(0.96) translateY(10px); }
+                to   { opacity: 1; transform: translateX(-50%) scale(1) translateY(0); }
+            }
+
+            /* ── COPIED BUTTON FLASH ── */
+            .copy-ip-btn.flash {
+                animation: copyFlash .6s var(--ease);
+            }
+            @keyframes copyFlash {
+                0%   { background: rgba(var(--accent-rgb),0.3); transform: scale(1.08); }
+                100% { background: rgba(255,255,255,0.08); transform: scale(1); }
+            }
+
+            /* ── HOVER GRADIENT SHIFT ON CARDS ── */
+            .hover-lift[data-tilt]::before {
+                transition: opacity .4s var(--ease);
+            }
+
+            /* ── LOGO/BRAND GLOW ── */
+            .brand-glow {
+                animation: brandPulse 4s ease-in-out infinite;
+            }
+            @keyframes brandPulse {
+                0%, 100% { filter: drop-shadow(0 0 8px rgba(var(--accent-rgb),0.3)); }
+                50%      { filter: drop-shadow(0 0 20px rgba(var(--accent-rgb),0.6)); }
+            }
+
+            /* ── MC DOT ANIMATED PULSE ── */
+            .mc-dot {
+                animation: mcPulse 1.8s ease-in-out infinite;
+            }
+            @keyframes mcPulse {
+                0%, 100% { box-shadow: 0 0 8px rgba(48,209,88,0.8); transform: scale(1); }
+                50%      { box-shadow: 0 0 16px rgba(48,209,88,1); transform: scale(1.2); }
+            }
+
+            /* ── MC SERVER ROW ENTRANCE ── */
+.mc-server {
+                animation: mcRowIn .5s var(--ease) backwards;
+            }
+            @keyframes mcRowIn {
+                from { opacity: 0; transform: translateX(-16px); }
+                to   { opacity: 1; transform: none; }
+            }
+
+            /* ── COPY BTN TINY BOUNCE ── */
+            .copy-ip-btn:active {
+                animation: copyBounce .3s var(--ease);
+            }
+            @keyframes copyBounce {
+                0%   { transform: scale(1); }
+                40%  { transform: scale(0.92); }
+                100% { transform: scale(1); }
+            }
+
+            /* ── LAUNCHER CARD GLOW ── */
+            .launcher-card.selected {
+                animation: launcherGlow 2.5s ease-in-out infinite;
+            }
+            @keyframes launcherGlow {
+                0%, 100% { box-shadow: inset 0 0 0 1px rgba(41,151,255,0.3); }
+                50%      { box-shadow: inset 0 0 0 1px rgba(41,151,255,0.5), 0 0 20px -6px rgba(41,151,255,0.3); }
+            }
+
+            /* ── JOINING SPINNER ENHANCED ── */
+            .joining-spinner {
+                animation: winSpin .7s linear infinite, joinPulse 2s ease-in-out infinite;
+            }
+            @keyframes joinPulse {
+                0%, 100% { box-shadow: 0 0 24px -6px rgba(41,151,255,0.6); }
+                50%      { box-shadow: 0 0 40px -2px rgba(41,151,255,0.9); }
+            }
+
+            /* ── TIMELINE DOT ENHANCED ── */
+            .pulse-dot {
+                animation: pulseDot 2s ease-in-out infinite, timelinePulse 2.5s ease-in-out infinite;
+            }
+            @keyframes timelinePulse {
+                0%, 100% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb),0.5); }
+                50%      { box-shadow: 0 0 0 6px rgba(var(--accent-rgb),0); }
+            }
+
+            /* ── GRID GLOW LINE (decorative) ── */
+            .glow-line {
+                height: 1px; border: none; margin: 0 auto;
+                background: linear-gradient(90deg, transparent, var(--accent), transparent);
+                opacity: 0.3;
+                animation: glowLineBreathe 3s ease-in-out infinite;
+            }
+            @keyframes glowLineBreathe {
+                0%, 100% { width: 40%; opacity: 0.2; }
+                50%      { width: 70%; opacity: 0.5; }
+            }
+
+            /* ── PRELOADER ENHANCED ── */
+            #preloader {
+                background: radial-gradient(ellipse at 50% 40%, rgba(var(--accent-rgb),0.06), var(--bg-body) 70%);
+            }
+            .pre-ring::before {
+                animation: winSpin .85s linear infinite;
+            }
+
+            /* ── STAT CARD BADGE ── */
+.stat-card {
+                animation: statCardIn .6s var(--ease) backwards;
+            }
+            @keyframes statCardIn {
+                from { opacity: 0; transform: translateY(12px) scale(0.95); }
+                to   { opacity: 1; transform: none; }
+            }
+
+            /* ── REDUCED MOTION SAFETY ── */
+            @media (prefers-reduced-motion: reduce) {
+                [data-tilt] { transform: none !important; }
+                .fx-field, .spark, .shoot { display: none !important; }
+                .icon-tile, .win-icon-img, .mc-dot, .pulse-dot,
+                .cta-dot, .launcher-card.selected, .joining-spinner { animation: none !important; }
+                .toast.show { animation: none !important; }
+                .shimmer-heading { animation: none !important; }
+                .lb-row, .ucard, .store-appear, .mc-server,
+                .platform-badge, .stat-card { animation: none !important; opacity: 1 !important; transform: none !important; }
+            }
             /* ══ Motion safety ══ */
             @media (prefers-reduced-motion: reduce) {
                 *, *::before, *::after {
@@ -3067,8 +3457,11 @@
                 const orig = btn.innerHTML;
                 btn.textContent = 'Copied!';
                 showToast('IP copied to clipboard');
+                btn.classList.remove('flash');
+                void btn.offsetWidth;
+                btn.classList.add('flash');
                 clearTimeout(btn._t);
-                btn._t = setTimeout(() => { btn.innerHTML = orig; }, 1500);
+                btn._t = setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('flash'); }, 1500);
             }
 
             /* ── Win Clock ── */
@@ -3147,12 +3540,12 @@
                         feed.innerHTML = '<div class="text-center text-muted text-sm py-12">No updates yet.</div>';
                         return;
                     }
-                    feed.innerHTML = messages.map(m => {
+                    feed.innerHTML = messages.map((m, i) => {
                         const avatar = esc(m.author.avatar_url || '');
                         const name = esc(m.author.global_name || m.author.username || 'Unknown');
                         const body = renderMarkdown(m.content);
                         const date = fmtDate(m.timestamp);
-                        return '<div class="ucard">' +
+                        return '<div class="ucard" style="--i:' + i + '">' +
                             '<div class="ucard-head">' +
                             '<img class="ucard-avatar" src="' + avatar + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">' +
                             '<div><div class="ucard-name">' + name + '</div>' +
@@ -3191,7 +3584,7 @@
                     const medal = i === 0 ? '<span class="mr-1" style="color:#FFD700;">🥇</span>' :
                                   i === 1 ? '<span class="mr-1" style="color:#C0C0C0;">🥈</span>' :
                                   i === 2 ? '<span class="mr-1" style="color:#CD7F32;">🥉</span>' : '';
-                    return '<div class="flex items-center gap-4 px-6 py-3 border-b border-border last:border-0 hover:bg-white/[.02] transition-colors">' +
+                    return '<div class="lb-row flex items-center gap-4 px-6 py-3 border-b border-border last:border-0 hover:bg-white/[.02] transition-colors" style="--i:' + i + '">' +
                         '<span class="w-8 text-center font-bold text-sm ' + (i < 3 ? 'text-secondary' : 'text-muted') + '">' + medal + '#' + (e.position || i + 1) + '</span>' +
                         '<span class="flex-1 font-semibold text-sm text-txt truncate">' + esc(e.name) + '</span>' +
                         '<span class="text-sm font-mono text-muted">' + (currentLb === 'statistic_time_played' && e.scoreTime ? e.scoreTime : e.score) + '</span>' +
@@ -3329,6 +3722,187 @@
             fetchLeaderboard();
             setInterval(fetchLeaderboard, 30000);
             setInterval(loadStatus, 30000);
+
+            /* ═══════════════════════════════════════════════════
+               M O T I O N   O V E R D R I V E   J S
+               ═══════════════════════════════════════════════════ */
+
+            /* ── 3D TILT ── */
+            function initTilt() {
+                if (window.matchMedia('(pointer: coarse)').matches) return;
+                const targets = $$('.hover-lift, .ucard, .win-desktop, .pixel');
+                targets.forEach(el => {
+                    if (el._tilted) return;
+                    el._tilted = true;
+                    el.setAttribute('data-tilt', '');
+                    el.addEventListener('pointermove', e => {
+                        const r = el.getBoundingClientRect();
+                        const px = (e.clientX - r.left) / r.width;
+                        const py = (e.clientY - r.top) / r.height;
+                        el.style.setProperty('--rx', ((0.5 - py) * 10).toFixed(1) + 'deg');
+                        el.style.setProperty('--ry', ((px - 0.5) * 12).toFixed(1) + 'deg');
+                        el.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
+                        el.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+                    });
+                    el.addEventListener('pointerleave', () => {
+                        el.style.setProperty('--rx', '0deg');
+                        el.style.setProperty('--ry', '0deg');
+                    }, { passive: true });
+                });
+            }
+
+            /* ── SPOTLIGHT ── */
+            function initSpotlight() {
+                if (window.matchMedia('(pointer: coarse)').matches) return;
+                $$('.hover-lift, .ucard, .win-desktop, .pixel').forEach(el => {
+                    if (el._spotted) return;
+                    el._spotted = true;
+                    el.setAttribute('data-spot', '');
+                });
+            }
+
+            /* ── BACKGROUND FX: ORBS + SHOOTING STARS ── */
+            function injectFXField() {
+                if (document.getElementById('fx-field')) return;
+                const field = document.createElement('div');
+                field.id = 'fx-field';
+                field.className = 'fx-field';
+                const orbDefs = [
+                    { s: 260, x: '10%', y: '8%',  dur: 28, color: 'rgba(41,151,255,0.25)' },
+                    { s: 320, x: '82%', y: '15%', dur: 34, color: 'rgba(16,185,129,0.22)' },
+                    { s: 180, x: '25%', y: '72%', dur: 22, color: 'rgba(191,90,242,0.18)' },
+                    { s: 280, x: '70%', y: '78%', dur: 30, color: 'rgba(100,210,255,0.20)' },
+                    { s: 140, x: '48%', y: '35%', dur: 20, color: 'rgba(14,165,233,0.16)' },
+                    { s: 200, x: '5%',  y: '50%', dur: 25, color: 'rgba(48,209,88,0.14)' },
+                ];
+                orbDefs.forEach(d => {
+                    const o = document.createElement('div');
+                    o.className = 'orb';
+                    o.style.width = o.style.height = d.s + 'px';
+                    o.style.left = d.x; o.style.top = d.y;
+                    o.style.background = d.color;
+                    o.style.animationDuration = d.dur + 's';
+                    o.style.animationDelay = (Math.random() * d.dur) + 's';
+                    field.appendChild(o);
+                });
+                for (let i = 0; i < 3; i++) {
+                    const s = document.createElement('div');
+                    s.className = 'shoot';
+                    s.style.top = (4 + i * 30) + '%';
+                    s.style.left = (20 + Math.random() * 60) + '%';
+                    s.style.width = (80 + Math.random() * 80) + 'px';
+                    s.style.animationDelay = (i * 3.5 + Math.random() * 2) + 's';
+                    s.style.animationDuration = (4 + i * 0.9) + 's';
+                    field.appendChild(s);
+                }
+                document.body.appendChild(field);
+            }
+
+            /* ── CURSOR SPARKLE TRAIL ── */
+            function initSparkles() {
+                if (window.matchMedia('(pointer: coarse)').matches) return;
+                let last = 0;
+                document.addEventListener('pointermove', e => {
+                    const now = performance.now();
+                    if (now - last < 55) return;
+                    if (document.querySelectorAll('.spark').length > 80) return;
+                    last = now;
+                    const sp = document.createElement('span');
+                    sp.className = 'spark';
+                    sp.style.left = e.clientX + 'px';
+                    sp.style.top = e.clientY + 'px';
+                    sp.style.setProperty('--sx', (Math.random() * 24 - 12) + 'px');
+                    sp.style.setProperty('--sy', (Math.random() * -28 - 6) + 'px');
+                    sp.style.width = sp.style.height = (3 + Math.random() * 3) + 'px';
+                    sp.style.opacity = 0.5 + Math.random() * 0.5;
+                    document.body.appendChild(sp);
+                    sp.addEventListener('animationend', () => sp.remove());
+                }, { passive: true });
+            }
+
+            /* ── DECORATE ICON TILES ── */
+            function decorateIcons() {
+                $$('.page.active .flex.items-start.gap-4, .page.active .flex.items-center.gap-5, .page.active .flex.gap-6').forEach(row => {
+                    const ic = row.querySelector(':scope > div:first-child');
+                    if (ic && !ic.classList.contains('icon-tile') && ic.querySelector('svg')) ic.classList.add('icon-tile');
+                });
+            }
+
+            /* ── TAG SHINE ON BUTTONS ── */
+            function tagShine() {
+                $$('.mc-btn.primary, .launch-btn, .apple-btn-primary, .copy-ip-btn, .win-btn, .lb-tab.active').forEach(b => {
+                    if (!b.classList.contains('shine')) b.classList.add('shine');
+                });
+            }
+
+            /* ── MAGNETIC PULL ── */
+            function initMagnetic() {
+                if (window.matchMedia('(pointer: coarse)').matches) return;
+                $$('.cta-dot, .apple-btn-primary').forEach(btn => {
+                    if (btn._magneted) return;
+                    btn._magneted = true;
+                    btn.style.transition = 'transform .35s cubic-bezier(.16,1,.3,1), box-shadow .4s var(--ease)';
+                    btn.addEventListener('pointermove', e => {
+                        const r = btn.getBoundingClientRect();
+                        const dx = e.clientX - (r.left + r.width / 2);
+                        const dy = e.clientY - (r.top + r.height / 2);
+                        btn.style.transform = 'translate(' + (dx * 0.15).toFixed(1) + 'px,' + (dy * 0.15).toFixed(1) + 'px) scale(1.02)';
+                    });
+                    btn.addEventListener('pointerleave', () => { btn.style.transform = ''; }, { passive: true });
+                });
+            }
+
+            /* ── ENHANCED NAVIGATE (re-decorate on page change) ── */
+            var _origNavigate = typeof navigate === 'function' ? navigate : null;
+            if (_origNavigate) {
+                navigate = function (page) {
+                    _origNavigate(page);
+                    setTimeout(() => {
+                        initTilt(); initSpotlight(); decorateIcons();
+                        tagShine(); initMagnetic();
+                    }, 120);
+                };
+            }
+
+            /* ── BRAND GLOW ── */
+            function brandGlow() {
+                const logo = document.querySelector('.hero-split svg, .hero-split [class*="text-gradient"]');
+                if (logo && !logo.classList.contains('brand-glow')) logo.classList.add('brand-glow');
+            }
+
+            /* ── GLOW LINES BETWEEN SECTIONS ── */
+            function insertGlowLines() {
+                $$('.page > section + section').forEach(sec => {
+                    if (sec.previousElementSibling && !sec.previousElementSibling.classList.contains('glow-line')) {
+                        const line = document.createElement('div');
+                        line.className = 'glow-line';
+                        sec.parentNode.insertBefore(line, sec);
+                    }
+                });
+            }
+
+            /* ── STORE CARDS ENTRANCE ── */
+            function decorateStoreCards() {
+                $$('#page-store .grid > div').forEach((card, i) => {
+                    card.classList.add('store-appear');
+                    card.style.setProperty('--i', i);
+                });
+            }
+
+            /* ══ BOOT MOTION OVERDRIVE ══ */
+            document.addEventListener('DOMContentLoaded', function () {
+                injectFXField(); initTilt(); initSpotlight(); initSparkles();
+                decorateIcons(); tagShine(); initMagnetic(); brandGlow();
+                insertGlowLines(); decorateStoreCards();
+            });
+
+            var _motionScrollThrottle = false;
+            window.addEventListener('scroll', () => {
+                if (!_motionScrollThrottle) {
+                    requestAnimationFrame(() => { decorateIcons(); _motionScrollThrottle = false; });
+                    _motionScrollThrottle = true;
+                }
+            }, { passive: true });
         </script>
     </body>
 </html>
