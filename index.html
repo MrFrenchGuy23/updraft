@@ -25,6 +25,7 @@
             rel="icon"
             href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='g' x1='0%25' y1='100%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%2310B981'/><stop offset='100%25' stop-color='%230EA5E9'/></linearGradient></defs><circle cx='256' cy='256' r='256' fill='%23040810'/><path d='M130 450 A126 30 0 0 1 382 450' stroke='url(%23g)' stroke-width='12' fill='none' stroke-linecap='round'/><path d='M170 385 A86 25 0 0 0 342 385' stroke='url(%23g)' stroke-width='10' fill='none' stroke-linecap='round'/><path d='M205 325 A51 18 0 0 1 307 325' stroke='url(%23g)' stroke-width='9' fill='none' stroke-linecap='round'/><path d='M228 275 A28 12 0 0 0 284 275' stroke='url(%23g)' stroke-width='7' fill='none' stroke-linecap='round'/></svg>"
         />
+        <link rel="preload" as="image" href="background.png" fetchpriority="high" />
         <script src="https://cdn.tailwindcss.com"></script>
         <script>
             tailwind.config = {
@@ -149,6 +150,111 @@
             .page { display: none; }
             .page.active { display: block; animation: pageIn 0.5s var(--ease); }
             @keyframes pageIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+            /* ══ Hero background ══ */
+            .hero {
+                position: relative;
+                isolation: isolate;
+            }
+            .hero-bg {
+                position: absolute;
+                inset: 0;
+                z-index: -1;
+                overflow: hidden;
+            }
+            .hero-bg__img {
+                position: absolute;
+                inset: -6% 0;
+                background-image: url("background.png");
+                background-size: cover;
+                background-position: center 42%;
+                background-repeat: no-repeat;
+                transform: scale(1.08);
+                will-change: transform;
+                animation: heroDrift 26s ease-in-out infinite alternate;
+            }
+            @keyframes heroDrift {
+                from { transform: scale(1.08) translate3d(0, 0, 0); }
+                to   { transform: scale(1.14) translate3d(0, -2.2%, 0); }
+            }
+            /* Scrim keeps the headline readable over the scene */
+            .hero-bg__scrim {
+                position: absolute;
+                inset: 0;
+                background:
+                    radial-gradient(72% 60% at 22% 52%, rgba(5,5,7,0.90), rgba(5,5,7,0.45) 55%, transparent 78%),
+                    linear-gradient(180deg, rgba(5,5,7,0.78) 0%, rgba(5,5,7,0.30) 34%, rgba(5,5,7,0.62) 78%, var(--bg-body) 100%);
+            }
+            [data-theme="light"] .hero-bg__scrim {
+                background:
+                    radial-gradient(72% 60% at 22% 52%, rgba(251,251,253,0.94), rgba(251,251,253,0.55) 55%, transparent 80%),
+                    linear-gradient(180deg, rgba(251,251,253,0.85) 0%, rgba(251,251,253,0.35) 34%, rgba(251,251,253,0.68) 78%, var(--bg-body) 100%);
+            }
+            /* Subtle vignette to focus the eye */
+            .hero-bg__vignette {
+                position: absolute;
+                inset: 0;
+                box-shadow: inset 0 0 220px 60px rgba(0,0,0,0.55);
+            }
+            [data-theme="light"] .hero-bg__vignette { box-shadow: inset 0 0 220px 60px rgba(0,0,0,0.18); }
+            @media (prefers-reduced-motion: reduce) {
+                .hero-bg__img { animation: none; }
+            }
+            .hero-eyebrow {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.6rem;
+                padding: 0.4rem 0.95rem;
+                margin-bottom: 1.5rem;
+                border: 1px solid var(--border-color);
+                border-radius: 999px;
+                background: rgba(var(--accent-rgb), 0.08);
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--text-muted);
+            }
+            .hero-eyebrow::before {
+                content: "";
+                width: 7px; height: 7px;
+                border-radius: 50%;
+                background: var(--green);
+                box-shadow: 0 0 0 3px rgba(48, 209, 88, 0.18);
+                animation: pulseDot 2.2s ease-in-out infinite;
+            }
+            @keyframes pulseDot {
+                0%, 100% { box-shadow: 0 0 0 3px rgba(48, 209, 88, 0.18); }
+                50%      { box-shadow: 0 0 0 7px rgba(48, 209, 88, 0.05); }
+            }
+            .hero-btn {
+                position: relative;
+                overflow: hidden;
+                isolation: isolate;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.75rem;
+                padding: 1rem 2rem;
+                border-radius: 0.75rem;
+                font-size: 0.875rem;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: #fff;
+                background: linear-gradient(135deg, #10B981, #0EA5E9);
+                box-shadow: 0 14px 38px -14px rgba(14, 165, 233, 0.75);
+                transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), filter 0.35s var(--ease);
+            }
+            .hero-btn:hover { transform: translateY(-2px); filter: brightness(1.07); box-shadow: 0 20px 48px -14px rgba(14, 165, 233, 0.9); }
+            .hero-btn--ghost {
+                color: var(--text-primary);
+                background: rgba(var(--bg-body-rgb), 0.42);
+                border: 1px solid var(--border-color);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                box-shadow: none;
+            }
+            .hero-btn--ghost:hover { background: rgba(var(--accent-rgb), 0.14); border-color: var(--accent); filter: none; box-shadow: none; }
 
             /* ══ ANIMATION ENGINE ══ */
             [data-anim] { opacity: 0; will-change: transform, opacity; }
@@ -1245,103 +1351,91 @@
         <div id="page-home" class="page active">
             <!-- Hero -->
             <section
-                class="min-h-screen flex flex-col items-start justify-center px-6 sm:px-12 lg:px-24 pt-16 relative overflow-hidden"
-            >
-                <div class="max-w-2xl relative z-10">
-                    <div class="reveal mb-10" data-parallax="0.08">
-                        <svg
-                            class="w-20 h-20 sm:w-28 sm:h-28"
-                            viewBox="0 0 512 512"
-                            fill="none"
-                        >
-                            <defs>
-                                <linearGradient
-                                    id="hg"
-                                    x1="0%"
-                                    y1="100%"
-                                    x2="100%"
-                                    y2="0%"
-                                >
-                                    <stop offset="0%" stop-color="#10B981" />
-                                    <stop offset="50%" stop-color="#06B6D4" />
-                                    <stop offset="100%" stop-color="#0EA5E9" />
-                                </linearGradient>
-                            </defs>
-                            <path
-                                d="M256 190 L256 260"
-                                stroke="url(#hg)"
-                                stroke-width="6"
-                                fill="none"
-                                stroke-linecap="round"
-                                opacity=".45"
-                            />
-                            <path
-                                d="M242 210 L256 185 L270 210"
-                                stroke="url(#hg)"
-                                stroke-width="5"
-                                fill="none"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                opacity=".4"
-                            />
-                            <circle
-                                cx="256"
-                                cy="256"
-                                r="8"
-                                fill="url(#hg)"
-                                opacity=".6"
-                            />
-                        </svg>
-                    </div>
+            class="hero min-h-screen flex flex-col items-start justify-center px-6 sm:px-12 lg:px-24 pt-16 relative overflow-hidden"
+        >
+            <div class="hero-bg" aria-hidden="true">
+                <div class="hero-bg__img"></div>
+                <div class="hero-bg__scrim"></div>
+                <div class="hero-bg__vignette"></div>
+            </div>
 
-                    <h1
-                        class="text-5xl sm:text-6xl lg:text-8xl font-black tracking-tighter leading-[1.02] mb-5 split-target hero-split"
-                    >
-                        <span class="text-gradient">UPDRAFT</span><br /><span
+            <div class="max-w-2xl relative z-10">
+                <span class="hero-eyebrow reveal">Network Online</span>
+
+                <h1
+                    class="text-5xl sm:text-6xl lg:text-8xl font-black tracking-tighter leading-[1.02] mb-5 split-target hero-split"
+                >
+                    <span class="text-gradient">UPDRAFT</span><br /><span
                             class="text-gradient-r"
                             >NETWORK</span
-                        >
-                    </h1>
-
-                        <p class="reveal rd2 text-lg sm:text-xl text-muted mb-10">
-                            Crossplatform (yes even eaglercraft) with custom survival!
-                        </p>
-
-                    <div
-                        class="reveal rd5 flex flex-col sm:flex-row items-start gap-4"
                     >
-                        <a
-                            href="https://discord.gg/B4u9ap3VRb"
-                            target="_blank"
-                            rel="noopener"
-                            class="group cta-dot flex items-center gap-3 px-8 py-4 bg-[#5865F2] rounded-xl text-white font-bold text-sm tracking-wider uppercase hover:opacity-85 transition-all duration-300"
+                </h1>
+
+                <p class="reveal rd2 text-lg sm:text-xl text-muted mb-10 max-w-xl">
+                    Crossplatform (yes even eaglercraft) with custom survival!
+                </p>
+
+                <div class="reveal rd5 flex flex-col sm:flex-row items-start gap-4">
+                    <a
+                        href="https://discord.gg/B4u9ap3VRb"
+                        target="_blank"
+                        rel="noopener"
+                        class="group hero-btn"
+                    >
+                        <svg
+                            class="w-5 h-5"
+                            viewBox="0 0 64 64"
+                            fill="white"
                         >
-                            <svg
-                                class="w-5 h-5"
-                                viewBox="0 0 64 64"
-                                fill="white"
-                            >
-                                <path
-                                    d="M48 18c-3-1.4-6.3-2.4-9.7-3-0.4 1.5-0.9 3.5-1.2 5.1-3.6-0.5-7.2-0.5-10.8 0-0.3-1.6-0.8-3.6-1.2-5.1-3.4 0.6-6.7 1.6-9.7 3-6.1 9.1-7.8 18-6.9 26.8 4 3 8 4.8 11.8 6 0.9-1.2 1.7-2.5 2.4-3.9-1.8-0.7-3.6-1.5-5.2-2.5 0.4-0.3 0.8-0.6 1.2-1 8.4 3.9 17.5 3.9 25.9 0 0.4 0.3 0.8 0.7 1.2 1-1.6 1-3.4 1.8-5.2 2.5 0.7 1.4 1.5 2.7 2.4 3.9 3.8-1.2 7.8-3 11.8-6 1-10.2-1.7-19.1-7-26.8zM23 39c-2.3 0-4.2-2.1-4.2-4.7s1.8-4.7 4.2-4.7 4.3 2.1 4.2 4.7c0 2.6-1.8 4.7-4.2 4.7zm14 0c-2.3 0-4.2-2.1-4.2-4.7s1.8-4.7 4.2-4.7 4.3 2.1 4.2 4.7c0 2.6-1.8 4.7-4.2 4.7z"
-                                />
-                            </svg>
-                            Join Discord
-                            <svg
-                                class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                                <polyline points="12 5 19 12 12 19" />
-                            </svg>
-                        </a>
-                    </div>
+                            <path
+                                d="M48 18c-3-1.4-6.3-2.4-9.7-3-0.4 1.5-0.9 3.5-1.2 5.1-3.6-0.5-7.2-0.5-10.8 0-0.3-1.6-0.8-3.6-1.2-5.1-3.4 0.6-6.7 1.6-9.7 3-6.1 9.1-7.8 18-6.9 26.8 4 3 8 4.8 11.8 6 0.9-1.2 1.7-2.5 2.4-3.9-1.8-0.7-3.6-1.5-5.2-2.5 0.4-0.3 0.8-0.6 1.2-1 8.4 3.9 17.5 3.9 25.9 0 0.4 0.3 0.8 0.7 1.2 1-1.6 1-3.4 1.8-5.2 2.5 0.7 1.4 1.5 2.7 2.4 3.9 3.8-1.2 7.8-3 11.8-6 1-10.2-1.7-19.1-7-26.8zM23 39c-2.3 0-4.2-2.1-4.2-4.7s1.8-4.7 4.2-4.7 4.3 2.1 4.2 4.7c0 2.6-1.8 4.7-4.2 4.7zm14 0c-2.3 0-4.2-2.1-4.2-4.7s1.8-4.7 4.2-4.7 4.3 2.1 4.2 4.7c0 2.6-1.8 4.7-4.2 4.7z"
+                            />
+                        </svg>
+                        Join Discord
+                        <svg
+                            class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                            <polyline points="12 5 19 12 12 19" />
+                        </svg>
+                    </a>
+                    <button
+                        type="button"
+                        class="hero-btn hero-btn--ghost group"
+                        onclick="navigate('survival')"
+                    >
+                        Browse Survival
+                        <svg
+                            class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                            <polyline points="12 5 19 12 12 19" />
+                        </svg>
+                    </button>
                 </div>
-            </section>
+            </div>
+
+            <div
+                class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-muted"
+            >
+                <span class="text-[10px] font-bold tracking-[0.3em] uppercase opacity-70">Scroll</span>
+                <span class="flex h-9 w-[22px] items-start justify-center rounded-full border border-border p-1.5">
+                    <span class="h-2 w-1 rounded-full bg-secondary animate-bounce"></span>
+                </span>
+            </div>
+        </section>
 
 <!-- Stats -->
             <section class="py-12 px-6 flex justify-center">
@@ -3619,6 +3713,16 @@
                (no HTML edits required)
                ══════════════════════════════════════ */
 
+            /* ── Hero background image ──
+               Warms up the decode ahead of first paint so the 3MB scene is
+               painted ready instead of popping in. Purely an optimisation:
+               the CSS renders the image regardless, so failing is harmless. */
+            function initHeroBackground() {
+                const img = new Image();
+                img.src = 'background.png';
+                if (img.decode) img.decode().catch(() => {});
+            }
+
             /* ── Preloader ── */
             function injectPreloader() {
                 const el = document.createElement('div');
@@ -3698,6 +3802,7 @@
                ══════════════════════════════════════ */
             document.addEventListener('DOMContentLoaded', () => {
                 injectPreloader();
+                initHeroBackground();
                 injectMarquee();
                 injectCursorGlow();
 
