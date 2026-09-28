@@ -177,26 +177,21 @@
                 from { transform: scale(1.08) translate3d(0, 0, 0); }
                 to   { transform: scale(1.14) translate3d(0, -2.2%, 0); }
             }
-            /* Scrim keeps the headline readable over the scene */
+            /* Flat scrim: one solid wash, no gradient ramps */
             .hero-bg__scrim {
                 position: absolute;
                 inset: 0;
-                background:
-                    radial-gradient(72% 60% at 22% 52%, rgba(5,5,7,0.90), rgba(5,5,7,0.45) 55%, transparent 78%),
-                    linear-gradient(180deg, rgba(5,5,7,0.78) 0%, rgba(5,5,7,0.30) 34%, rgba(5,5,7,0.62) 78%, var(--bg-body) 100%);
+                background: rgba(5, 5, 7, 0.68);
             }
-            [data-theme="light"] .hero-bg__scrim {
-                background:
-                    radial-gradient(72% 60% at 22% 52%, rgba(251,251,253,0.94), rgba(251,251,253,0.55) 55%, transparent 80%),
-                    linear-gradient(180deg, rgba(251,251,253,0.85) 0%, rgba(251,251,253,0.35) 34%, rgba(251,251,253,0.68) 78%, var(--bg-body) 100%);
-            }
-            /* Subtle vignette to focus the eye */
-            .hero-bg__vignette {
+            [data-theme="light"] .hero-bg__scrim { background: rgba(251, 251, 253, 0.80); }
+            /* Soft edge so the scene doesn't meet the page on a hard line */
+            .hero-bg__fade {
                 position: absolute;
-                inset: 0;
-                box-shadow: inset 0 0 220px 60px rgba(0,0,0,0.55);
+                inset: auto 0 0 0;
+                height: 22%;
+                background: var(--bg-body);
+                opacity: 0.92;
             }
-            [data-theme="light"] .hero-bg__vignette { box-shadow: inset 0 0 220px 60px rgba(0,0,0,0.18); }
             @media (prefers-reduced-motion: reduce) {
                 .hero-bg__img { animation: none; }
             }
@@ -208,7 +203,9 @@
                 margin-bottom: 1.5rem;
                 border: 1px solid var(--border-color);
                 border-radius: 999px;
-                background: rgba(var(--accent-rgb), 0.08);
+                background: rgba(var(--bg-body-rgb), 0.55);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
                 font-size: 11px;
                 font-weight: 700;
                 letter-spacing: 0.2em;
@@ -220,13 +217,13 @@
                 width: 7px; height: 7px;
                 border-radius: 50%;
                 background: var(--green);
-                box-shadow: 0 0 0 3px rgba(48, 209, 88, 0.18);
                 animation: pulseDot 2.2s ease-in-out infinite;
             }
             @keyframes pulseDot {
-                0%, 100% { box-shadow: 0 0 0 3px rgba(48, 209, 88, 0.18); }
-                50%      { box-shadow: 0 0 0 7px rgba(48, 209, 88, 0.05); }
+                0%, 100% { opacity: 1; }
+                50%      { opacity: 0.35; }
             }
+            /* Flat, solid CTA — no gradient, no coloured glow */
             .hero-btn {
                 position: relative;
                 overflow: hidden;
@@ -234,27 +231,43 @@
                 display: inline-flex;
                 align-items: center;
                 gap: 0.75rem;
-                padding: 1rem 2rem;
-                border-radius: 0.75rem;
+                padding: 0.95rem 1.9rem;
+                border: 1px solid transparent;
+                border-radius: 0.6rem;
                 font-size: 0.875rem;
                 font-weight: 700;
-                letter-spacing: 0.1em;
+                letter-spacing: 0.08em;
                 text-transform: uppercase;
                 color: #fff;
-                background: linear-gradient(135deg, #10B981, #0EA5E9);
-                box-shadow: 0 14px 38px -14px rgba(14, 165, 233, 0.75);
-                transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), filter 0.35s var(--ease);
+                background: var(--accent);
+                box-shadow: none;
+                transition: transform 0.25s var(--ease), background-color 0.25s var(--ease);
             }
-            .hero-btn:hover { transform: translateY(-2px); filter: brightness(1.07); box-shadow: 0 20px 48px -14px rgba(14, 165, 233, 0.9); }
+            .hero-btn:hover {
+                transform: translateY(-2px);
+                filter: none;
+                background: var(--accent-hover);
+            }
             .hero-btn--ghost {
                 color: var(--text-primary);
-                background: rgba(var(--bg-body-rgb), 0.42);
-                border: 1px solid var(--border-color);
+                background: rgba(var(--bg-body-rgb), 0.55);
+                border-color: var(--border-color);
                 backdrop-filter: blur(10px);
                 -webkit-backdrop-filter: blur(10px);
-                box-shadow: none;
             }
-            .hero-btn--ghost:hover { background: rgba(var(--accent-rgb), 0.14); border-color: var(--accent); filter: none; box-shadow: none; }
+            .hero-btn--ghost:hover {
+                background: rgba(var(--bg-body-rgb), 0.85);
+                border-color: var(--text-muted);
+                filter: none;
+            }
+            /* Headline: solid ink, no gradient fill */
+            .hero-title {
+                color: var(--text-primary);
+                text-shadow: 0 2px 24px rgba(0, 0, 0, 0.55);
+            }
+            [data-theme="light"] .hero-title { text-shadow: 0 2px 20px rgba(0, 0, 0, 0.18); }
+            /* Brand words get a single flat accent colour */
+            .hero-title-accent { color: var(--accent); }
 
             /* ══ ANIMATION ENGINE ══ */
             [data-anim] { opacity: 0; will-change: transform, opacity; }
@@ -1356,17 +1369,17 @@
             <div class="hero-bg" aria-hidden="true">
                 <div class="hero-bg__img"></div>
                 <div class="hero-bg__scrim"></div>
-                <div class="hero-bg__vignette"></div>
+                <div class="hero-bg__fade"></div>
             </div>
 
             <div class="max-w-2xl relative z-10">
                 <span class="hero-eyebrow reveal">Network Online</span>
 
                 <h1
-                    class="text-5xl sm:text-6xl lg:text-8xl font-black tracking-tighter leading-[1.02] mb-5 split-target hero-split"
+                    class="hero-title text-5xl sm:text-6xl lg:text-8xl font-black tracking-tighter leading-[1.02] mb-5 split-target hero-split"
                 >
-                    <span class="text-gradient">UPDRAFT</span><br /><span
-                            class="text-gradient-r"
+                    <span class="hero-title-accent">UPDRAFT</span><br /><span
+                            class="hero-title-accent"
                             >NETWORK</span
                     >
                 </h1>
@@ -3969,11 +3982,10 @@
                 };
             }
 
-            /* ── BRAND GLOW ── */
-            function brandGlow() {
-                const logo = document.querySelector('.hero-split svg, .hero-split [class*="text-gradient"]');
-                if (logo && !logo.classList.contains('brand-glow')) logo.classList.add('brand-glow');
-            }
+            /* ── BRAND GLOW ──
+               Retained as a no-op: the hero headline is now a flat solid
+               colour, so there is no gradient fill left to pulse. */
+            function brandGlow() { }
 
             /* ── GLOW LINES BETWEEN SECTIONS ── */
             function insertGlowLines() {
