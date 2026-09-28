@@ -106,7 +106,6 @@
                 line-height: 1.55;
             }
 
-            /* Ambient aurora + gradient wash */
             body::before {
                 content: "";
                 position: fixed;
@@ -126,7 +125,6 @@
                     radial-gradient(70% 50% at 50% 115%, rgba(191,90,242,0.04), transparent 65%);
             }
 
-            /* Film grain */
             body::after {
                 content: "";
                 position: fixed;
@@ -146,12 +144,10 @@
             ::-webkit-scrollbar-thumb:hover { background: linear-gradient(var(--accent), rgba(var(--accent-rgb),0.5)); }
             :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 
-            /* -- Pages -- */
             .page { display: none; }
             .page.active { display: block; animation: pageIn 0.5s var(--ease); }
             @keyframes pageIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
-            /* ══ Hero background ══ */
             .hero {
                 position: relative;
                 isolation: isolate;
@@ -177,14 +173,14 @@
                 from { transform: scale(1.08) translate3d(0, 0, 0); }
                 to   { transform: scale(1.14) translate3d(0, -2.2%, 0); }
             }
-            /* Flat scrim: one solid wash, no gradient ramps */
+
             .hero-bg__scrim {
                 position: absolute;
                 inset: 0;
                 background: rgba(5, 5, 7, 0.68);
             }
             [data-theme="light"] .hero-bg__scrim { background: rgba(251, 251, 253, 0.80); }
-            /* Soft edge so the scene doesn't meet the page on a hard line */
+
             .hero-bg__fade {
                 position: absolute;
                 inset: auto 0 0 0;
@@ -223,7 +219,7 @@
                 0%, 100% { opacity: 1; }
                 50%      { opacity: 0.35; }
             }
-            /* Flat, solid CTA — no gradient, no coloured glow */
+
             .hero-btn {
                 position: relative;
                 overflow: hidden;
@@ -260,16 +256,15 @@
                 border-color: var(--text-muted);
                 filter: none;
             }
-            /* Headline: solid ink, no gradient fill */
+
             .hero-title {
                 color: var(--text-primary);
                 text-shadow: 0 2px 24px rgba(0, 0, 0, 0.55);
             }
             [data-theme="light"] .hero-title { text-shadow: 0 2px 20px rgba(0, 0, 0, 0.18); }
-            /* Brand words get a single flat accent colour */
+
             .hero-title-accent { color: var(--accent); }
 
-            /* ══ ANIMATION ENGINE ══ */
             [data-anim] { opacity: 0; will-change: transform, opacity; }
             [data-anim="up"]    { transform: translateY(56px); }
             [data-anim="down"]  { transform: translateY(-56px); }
@@ -290,7 +285,6 @@
             [data-anim].d6 { transition-delay: 0.36s; } [data-anim].d7 { transition-delay: 0.42s; }
             [data-anim].d8 { transition-delay: 0.48s; } [data-anim].d9 { transition-delay: 0.54s; }
 
-            /* ══ Reveal on scroll ══ */
             .reveal { opacity: 0; transform: translateY(26px) scale(0.985); transition: opacity 0.85s var(--ease), transform 0.85s var(--ease); }
             .reveal.visible { opacity: 1; transform: none; }
             .rd1 { transition-delay: 0.06s; } .rd2 { transition-delay: 0.12s; }
@@ -298,7 +292,6 @@
             .rd5 { transition-delay: 0.30s; } .rd6 { transition-delay: 0.36s; }
             .rd7 { transition-delay: 0.42s; } .rd8 { transition-delay: 0.48s; }
 
-            /* ══ Split text ══ */
             .split-text { display: inline; }
             .split-text .word { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.06em; }
             .split-text .word .word-inner {
@@ -310,7 +303,6 @@
             }
             .split-text.revealed .word .word-inner { transform: translate3d(0,0,0) rotate(0deg); opacity: 1; }
 
-            /* ══ Scroll progress ══ */
             .progress {
                 position: fixed; top: 0; right: 0;
                 width: 3px; height: 0%; z-index: 100;
@@ -320,7 +312,6 @@
                 transition: height 0.12s linear;
             }
 
-            /* ══ CTA hover light ══ */
             .cta-dot { position: relative; overflow: hidden; z-index: 1; box-shadow: 0 10px 34px -12px rgba(88,101,242,0.55); }
             .cta-dot::before {
                 content: ""; position: absolute; top: 50%; left: 50%;
@@ -344,7 +335,6 @@
             @keyframes floatY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
             .float { animation: floatY 4.5s ease-in-out infinite; }
 
-            @keyframes pulseDot { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
             .pulse-dot { animation: pulseDot 2s ease-in-out infinite; }
 
             @keyframes glowPulse {
@@ -353,7 +343,6 @@
             }
             .glow-pulse { animation: glowPulse 3.4s ease-in-out infinite; }
 
-            /* ══ Card hover: lift + gradient ring ══ */
             .hover-lift { position: relative; transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease); }
             .hover-lift::before {
                 content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
@@ -368,7 +357,6 @@
 
             .count-up { font-variant-numeric: tabular-nums; }
 
-            /* ══ Pixel/chunky cards ══ */
             .pixel { border-radius: 10px !important; }
             .reveal.visible.pixel {
                 box-shadow: 5px 5px 0 rgba(0,0,0,0.35);
@@ -379,7 +367,6 @@
             [data-theme="light"] .reveal.visible.pixel { box-shadow: 5px 5px 0 rgba(0,0,0,0.10); }
             [data-theme="light"] .reveal.visible.pixel:hover { box-shadow: 7px 7px 0 rgba(0,0,0,0.10); }
 
-            /* ══ Text gradients (animated) ══ */
             .text-gradient {
                 background: linear-gradient(100deg, var(--grad1), var(--grad2), var(--accent), var(--grad3));
                 background-size: 220% 100%;
@@ -400,7 +387,6 @@
             [data-theme="light"] .text-gradient { background: linear-gradient(100deg, #0071e3, #0EA5E9, #10B981); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; }
             [data-theme="light"] .text-gradient-r { background: linear-gradient(100deg, #0EA5E9, #30d158, #0EA5E9); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; }
 
-            /* ══ Nav ══ */
             #navbar { border-bottom: 1px solid transparent; }
             #navbar.scrolled {
                 background: var(--nav-bg);
@@ -421,7 +407,6 @@
             .nav-link:hover::after, .nav-link.active::after { width: 100%; left: 0; }
             .nav-link.active { color: var(--text-primary); }
 
-            /* ══ Toast ══ */
             .toast {
                 position: fixed; bottom: 26px; left: 50%;
                 transform: translateX(-50%) translateY(90px);
@@ -451,7 +436,6 @@
 
             .timeline-line { background: linear-gradient(to bottom, var(--accent), var(--border-color)); }
 
-            /* ══ Win-desktop simulation ══ */
             .win-desktop {
                 background:
                     radial-gradient(120% 90% at 80% -10%, rgba(var(--accent-rgb), 0.14), transparent 60%),
@@ -538,7 +522,6 @@
             #updates-feed { min-height: 200px; }
             .loading-updates { min-height: 200px; display: flex; align-items: center; justify-content: center; }
 
-            /* ══ Discord ucard ══ */
             .ucard {
                 background: var(--bg-card);
                 border: 1px solid var(--border-color);
@@ -570,11 +553,9 @@
             .platform-badge { transition: transform 0.25s var(--ease); }
             .platform-badge:hover { transform: translateY(-2px); }
 
-            /* ══ Leaderboard ══ */
             .lb-tab { transition: all 0.25s var(--ease); }
             .lb-tab.active { box-shadow: 0 8px 24px -10px rgba(100,210,255,0.55); }
 
-            /* ══ Apple-style utility (back-compat) ══ */
             .apple-section { padding: 100px 24px; max-width: 980px; margin: 0 auto; }
             .apple-section-wide { padding: 100px 24px; max-width: 1200px; margin: 0 auto; }
             .apple-headline { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; }
@@ -586,7 +567,6 @@
             .apple-btn-secondary { background: transparent; color: var(--accent); }
             .apple-btn-secondary:hover { text-decoration: underline; }
 
-            /* ══ Theme toggle ══ */
             .theme-toggle {
                 display: flex; align-items: center; justify-content: center;
                 width: 36px; height: 36px; border-radius: 10px;
@@ -602,7 +582,6 @@
             [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
             [data-theme="light"] .theme-toggle .icon-moon { display: block; }
 
-            /* ══ Marquee ══ */
             .marquee {
                 overflow: hidden; position: relative;
                 border-top: 1px solid var(--border-color);
@@ -626,7 +605,6 @@
             .mq-item.soon b { color: var(--orange); }
             .mq-item.dev b { color: var(--purple); }
 
-            /* ══ Cursor glow ══ */
             .cursor-glow {
                 position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none;
                 width: 560px; height: 560px; border-radius: 50%;
@@ -639,7 +617,6 @@
             body.glowing .cursor-glow { opacity: 1; }
             [data-theme="light"] .cursor-glow { mix-blend-mode: multiply; background: radial-gradient(circle, rgba(0,113,227,0.08), transparent 60%); }
 
-            /* ══ Preloader ══ */
             #preloader {
                 position: fixed; inset: 0; z-index: 9999;
                 display: grid; place-items: center;
@@ -674,13 +651,11 @@
             .pre-text span:nth-child(7) { animation-delay: 0.35s; }
             @keyframes preLetters { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
-            /* ══ Hero extras ══ */
             .hero-shine {
                 position: absolute; inset: 0; pointer-events: none; z-index: 0;
                 background: radial-gradient(60% 55% at 50% 30%, rgba(var(--accent-rgb),0.08), transparent 70%);
             }
 
-            /* ══ Light theme helpers ══ */
             [data-theme="light"] #navbar.scrolled { background: var(--nav-bg); }
             [data-theme="light"] .win-desktop {
                 background:
@@ -719,14 +694,6 @@
             [data-theme="light"] .split-text .word .word-inner { color: #1d1d1f; }
             [data-theme="light"] .cta-dot { box-shadow: 0 14px 40px -14px rgba(88,101,242,0.5); }
 
-
-
-            /* ═══════════════════════════════════════════════════
-               M O T I O N   O V E R D R I V E
-               Everything animated. Everything alive.
-               ═══════════════════════════════════════════════════ */
-
-            /* ── 3D TILT ── */
             [data-tilt] {
                 transform-style: preserve-3d;
                 transition: transform .5s cubic-bezier(.16,1,.3,1), box-shadow .5s var(--ease);
@@ -747,7 +714,6 @@
             }
             [data-theme="light"] [data-tilt]:hover { box-shadow: 0 28px 64px -28px rgba(0,0,0,0.26); }
 
-            /* ── SPOTLIGHT CURSOR TRACKING ── */
             [data-spot]::after {
                 content: ""; position: absolute; inset: 0; border-radius: inherit;
                 pointer-events: none; z-index: 1;
@@ -757,7 +723,6 @@
             }
             [data-spot]:hover::after { opacity: 1; }
 
-            /* ── SHINE SWEEP ON BUTTONS ── */
             .shine { position: relative; overflow: hidden; }
             .shine::before {
                 content: ""; position: absolute; top: -4px; bottom: -4px;
@@ -769,7 +734,6 @@
             }
             .shine:hover::before { left: 180%; }
 
-            /* ── ICON TILE BOB ── */
             @keyframes iconBob {
                 0%, 100% { transform: translateY(0) rotate(0deg); }
                 35%      { transform: translateY(-5px) rotate(-3deg); }
@@ -781,13 +745,11 @@
             }
             .icon-tile:nth-child(odd) { animation-delay: -0.6s; }
 
-            /* ── WIN ICON BOUNCE ── */
             .win-icon-img { animation: iconBob 3s ease-in-out infinite; }
             .win-icon:nth-child(2) .win-icon-img { animation-delay: -0.4s; }
             .win-icon:nth-child(3) .win-icon-img { animation-delay: -0.8s; }
             .win-icon:nth-child(4) .win-icon-img { animation-delay: -1.2s; }
 
-            /* ── LEADERBOARD ROW ENTRANCE ── */
 .lb-row {
                 animation: lbSlide .55s var(--ease) backwards;
                 animation-delay: calc(var(--i,0) * 50ms);
@@ -797,7 +759,6 @@
                 to   { opacity: 1; transform: none; }
             }
 
-            /* ── UPDATE CARD ENTRANCE ── */
 .ucard {
                 animation: ucardRise .7s var(--ease) backwards;
                 animation-delay: calc(var(--i,0) * 65ms);
@@ -807,7 +768,6 @@
                 to   { opacity: 1; transform: none; }
             }
 
-            /* ── STORE CARD ENTRANCE ── */
 .store-appear {
                 animation: storePop .6s var(--ease) backwards;
                 animation-delay: calc(var(--i,0) * 90ms);
@@ -817,7 +777,6 @@
                 to   { opacity: 1; transform: none; }
             }
 
-            /* ── HEADLINE SHIMMER ── */
             .shimmer-heading {
                 background: linear-gradient(90deg, var(--text-primary), var(--accent), var(--teal), var(--text-primary));
                 background-size: 300% 100%;
@@ -831,7 +790,6 @@
                 100% { background-position: 300% 50%; }
             }
 
-            /* ── PROGRESS BAR GLOW PULSE ── */
             .progress {
                 animation: progressGlow 3s ease-in-out infinite;
             }
@@ -840,7 +798,6 @@
                 50%      { box-shadow: 0 0 28px rgba(var(--accent-rgb), 0.85); }
             }
 
-            /* ── NAV ACTIVE LINK GLOW ── */
             .nav-link.active::before {
                 content: ""; position: absolute; bottom: -1px; left: 0; right: 0;
                 height: 1px; border-radius: 1px;
@@ -852,14 +809,12 @@
                 50%      { opacity: 1;   filter: blur(1px); }
             }
 
-            /* ── CTA PULSE RING ── */
             .cta-dot { animation: ctaPulseRing 3.2s ease-in-out infinite; }
             @keyframes ctaPulseRing {
                 0%, 100% { box-shadow: 0 10px 34px -12px rgba(88,101,242,0.55); }
                 50%      { box-shadow: 0 10px 44px -8px rgba(88,101,242,0.8), 0 0 60px -16px rgba(88,101,242,0.4); }
             }
 
-            /* ── FLOATING PARTICLES ORB (injected by JS) ── */
 .fx-field {
                 position: fixed; inset: 0; overflow: hidden;
                 pointer-events: none; z-index: -1;
@@ -882,7 +837,6 @@
             }
             [data-theme="light"] .orb { opacity: 0.12; filter: blur(90px); }
 
-            /* ── SHOOTING STAR (injected by JS) ── */
             .shoot {
                 position: absolute; height: 2px; border-radius: 2px;
                 background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb),0.85), #fff);
@@ -904,7 +858,6 @@
             }
             [data-theme="light"] .shoot { opacity: 0; }
 
-            /* ── SPARKLE TRAIL (cursor sparks, injected by JS) ── */
             .spark {
                 position: fixed; pointer-events: none; z-index: 9996;
                 width: 5px; height: 5px; border-radius: 50%;
@@ -920,7 +873,6 @@
                 ) scale(0.15); }
             }
 
-            /* ── PAGE TRANSITION ENHANCE ── */
             .page.active {
                 animation: pageIn .55s var(--ease) both;
             }
@@ -929,7 +881,6 @@
                 to   { opacity: 1; transform: none; filter: none; }
             }
 
-            /* ── SECTION DIVIDER LINE GLOW ── */
             .section-glow {
                 height: 1px; border: none;
                 background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb),0.4), var(--teal), rgba(var(--accent-rgb),0.4), transparent);
@@ -940,7 +891,6 @@
                 50%      { opacity: 0.9; }
             }
 
-            /* ── FEATURE ICON BADGE PULSE ── */
             .pulse-badge {
                 position: relative;
             }
@@ -954,7 +904,6 @@
                 50%      { transform: scale(1.08); opacity: 0.15; }
             }
 
-            /* ── TOAST ENHANCED ── */
             .toast {
                 transition: all .45s cubic-bezier(.16,1,.3,1);
             }
@@ -967,7 +916,6 @@
                 100% { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
             }
 
-            /* ── PLATFORM BADGE ENHANCED ── */
 .platform-badge {
                 animation: badgePop .4s var(--ease) backwards;
                 animation-delay: calc(var(--i,0) * 100ms);
@@ -977,12 +925,10 @@
                 to   { opacity: 1; transform: none; }
             }
 
-            /* ── MARQUEE ENHANCED ── */
             .marquee-track {
                 animation: marqueeMove 28s linear infinite;
             }
 
-            /* ── WIN-STEP TRANSITION ── */
             .win-step.active {
                 animation: winStepIn .4s var(--ease) both;
             }
@@ -991,7 +937,6 @@
                 to   { opacity: 1; transform: translateX(-50%) scale(1) translateY(0); }
             }
 
-            /* ── COPIED BUTTON FLASH ── */
             .copy-ip-btn.flash {
                 animation: copyFlash .6s var(--ease);
             }
@@ -1000,12 +945,10 @@
                 100% { background: rgba(255,255,255,0.08); transform: scale(1); }
             }
 
-            /* ── HOVER GRADIENT SHIFT ON CARDS ── */
             .hover-lift[data-tilt]::before {
                 transition: opacity .4s var(--ease);
             }
 
-            /* ── LOGO/BRAND GLOW ── */
             .brand-glow {
                 animation: brandPulse 4s ease-in-out infinite;
             }
@@ -1014,7 +957,6 @@
                 50%      { filter: drop-shadow(0 0 20px rgba(var(--accent-rgb),0.6)); }
             }
 
-            /* ── MC DOT ANIMATED PULSE ── */
             .mc-dot {
                 animation: mcPulse 1.8s ease-in-out infinite;
             }
@@ -1023,7 +965,6 @@
                 50%      { box-shadow: 0 0 16px rgba(48,209,88,1); transform: scale(1.2); }
             }
 
-            /* ── MC SERVER ROW ENTRANCE ── */
 .mc-server {
                 animation: mcRowIn .5s var(--ease) backwards;
             }
@@ -1032,7 +973,6 @@
                 to   { opacity: 1; transform: none; }
             }
 
-            /* ── COPY BTN TINY BOUNCE ── */
             .copy-ip-btn:active {
                 animation: copyBounce .3s var(--ease);
             }
@@ -1042,7 +982,6 @@
                 100% { transform: scale(1); }
             }
 
-            /* ── LAUNCHER CARD GLOW ── */
             .launcher-card.selected {
                 animation: launcherGlow 2.5s ease-in-out infinite;
             }
@@ -1051,7 +990,6 @@
                 50%      { box-shadow: inset 0 0 0 1px rgba(41,151,255,0.5), 0 0 20px -6px rgba(41,151,255,0.3); }
             }
 
-            /* ── JOINING SPINNER ENHANCED ── */
             .joining-spinner {
                 animation: winSpin .7s linear infinite, joinPulse 2s ease-in-out infinite;
             }
@@ -1060,7 +998,6 @@
                 50%      { box-shadow: 0 0 40px -2px rgba(41,151,255,0.9); }
             }
 
-            /* ── TIMELINE DOT ENHANCED ── */
             .pulse-dot {
                 animation: pulseDot 2s ease-in-out infinite, timelinePulse 2.5s ease-in-out infinite;
             }
@@ -1069,7 +1006,6 @@
                 50%      { box-shadow: 0 0 0 6px rgba(var(--accent-rgb),0); }
             }
 
-            /* ── GRID GLOW LINE (decorative) ── */
             .glow-line {
                 height: 1px; border: none; margin: 0 auto;
                 background: linear-gradient(90deg, transparent, var(--accent), transparent);
@@ -1081,7 +1017,6 @@
                 50%      { width: 70%; opacity: 0.5; }
             }
 
-            /* ── PRELOADER ENHANCED ── */
             #preloader {
                 background: radial-gradient(ellipse at 50% 40%, rgba(var(--accent-rgb),0.06), var(--bg-body) 70%);
             }
@@ -1089,7 +1024,6 @@
                 animation: winSpin .85s linear infinite;
             }
 
-            /* ── STAT CARD BADGE ── */
 .stat-card {
                 animation: statCardIn .6s var(--ease) backwards;
             }
@@ -1098,7 +1032,6 @@
                 to   { opacity: 1; transform: none; }
             }
 
-            /* ── REDUCED MOTION SAFETY ── */
             @media (prefers-reduced-motion: reduce) {
                 [data-tilt] { transform: none !important; }
                 .fx-field, .spark, .shoot { display: none !important; }
@@ -1109,7 +1042,7 @@
                 .lb-row, .ucard, .store-appear, .mc-server,
                 .platform-badge, .stat-card { animation: none !important; opacity: 1 !important; transform: none !important; }
             }
-            /* ══ Motion safety ══ */
+
             @media (prefers-reduced-motion: reduce) {
                 *, *::before, *::after {
                     animation-duration: 0.01ms !important;
@@ -1119,12 +1052,271 @@
                 html { scroll-behavior: auto !important; }
             }
         </style>
-    </head>
+    
+<style>
+/* Simple Updraft layout */
+:root {
+    --bg-body: #0b0f14 !important;
+    --bg-card: #111820 !important;
+    --border-color: #26313d !important;
+    --text-primary: #f1f5f9 !important;
+    --text-muted: #94a3b8 !important;
+    --accent: #3b82f6 !important;
+    --accent-hover: #60a5fa !important;
+    --green: #22c55e !important;
+    --red: #ef4444 !important;
+    --purple: #8b5cf6 !important;
+    --teal: #06b6d4 !important;
+}
+
+html, body { background: var(--bg-body) !important; }
+body {
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+    letter-spacing: normal !important;
+}
+body::before, body::after, .cursor-glow { display: none !important; }
+
+/* Keep the hero focused on the content instead of effects. */
+.hero { background: #0b0f14 !important; min-height: 680px !important; }
+.hero-bg, .hero-shine { display: none !important; }
+.hero-title { text-shadow: none !important; }
+.hero-title-accent { color: #3b82f6 !important; }
+.hero-eyebrow {
+    background: #111820 !important;
+    border: 1px solid #26313d !important;
+    backdrop-filter: none !important;
+}
+
+/* Flat buttons and cards. */
+.hero-btn, .apple-btn-primary {
+    background: #2563eb !important;
+    box-shadow: none !important;
+    border-radius: 7px !important;
+}
+.hero-btn:hover { background: #3b82f6 !important; transform: translateY(-1px) !important; }
+.hero-btn--ghost {
+    background: #111820 !important;
+    border: 1px solid #26313d !important;
+}
+.hero-btn--ghost:hover { background: #17212c !important; border-color: #334155 !important; }
+
+.hover-lift, .ucard, .apple-card {
+    background: #111820 !important;
+    border: 1px solid #26313d !important;
+    box-shadow: none !important;
+}
+.hover-lift::before, [data-spot]::after { display: none !important; }
+.hover-lift:hover, .ucard:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: none !important;
+    border-color: #334155 !important;
+}
+
+/* Remove the moving announcement strip. */
+.marquee { display: none !important; }
+
+/* No animated gradients. */
+.text-gradient, .text-gradient-r, .shimmer-heading {
+    background: none !important;
+    color: var(--text-primary) !important;
+    -webkit-text-fill-color: currentColor !important;
+    animation: none !important;
+}
+.progress {
+    background: #3b82f6 !important;
+    box-shadow: none !important;
+    animation: none !important;
+}
+.timeline-line { background: #26313d !important; }
+.nav-link::after, .nav-link.active::before { background: #3b82f6 !important; animation: none !important; }
+
+/* Make sections read like a normal website instead of a demo page. */
+.apple-section, .apple-section-wide { padding-top: 72px !important; padding-bottom: 72px !important; }
+section { scroll-margin-top: 80px; }
+
+.feature-row:hover { background: #111820 !important; transform: none !important; }
+.feature-row::before { background: #3b82f6 !important; }
+
+.icon-tile, .win-icon-img, .float, .glow-pulse, .cta-dot { animation: none !important; }
+[data-tilt] { transform: none !important; transition: transform .2s ease, border-color .2s ease !important; }
+[data-tilt]:hover { --ty: 0 !important; transform: translateY(-2px) !important; }
+
+#preloader { background: #0b0f14 !important; }
+.toast { background: #111820 !important; border-color: #26313d !important; box-shadow: none !important; backdrop-filter: none !important; }
+
+[data-theme="light"] {
+    --bg-body: #f8fafc !important;
+    --bg-card: #ffffff !important;
+    --border-color: #dbe2ea !important;
+    --text-primary: #111827 !important;
+    --text-muted: #64748b !important;
+    --accent: #2563eb !important;
+}
+[data-theme="light"] .hero { background: #f8fafc !important; }
+[data-theme="light"] .hero-eyebrow,
+[data-theme="light"] .hover-lift,
+[data-theme="light"] .ucard,
+[data-theme="light"] .toast { background: #ffffff !important; }
+</style>
+
+
+<style id="mountain-redesign">
+.hero {
+    background: #9ed9f5 !important;
+    min-height: 720px !important;
+    color: #0f172a !important;
+}
+
+.hero-bg {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    overflow: hidden !important;
+    z-index: 0 !important;
+    background: #9ed9f5 !important;
+}
+
+.hero-bg::before {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    right: 13%;
+    top: 19%;
+    background: #fff5c7;
+    box-shadow: 0 0 0 18px rgba(255,245,199,.18), 0 0 70px rgba(255,245,199,.32);
+}
+
+.hero-bg::after {
+    content: "";
+    position: absolute;
+    left: -5%;
+    right: -5%;
+    bottom: 0;
+    height: 31%;
+    background: #f8fafc;
+    clip-path: polygon(0 43%, 6% 34%, 11% 49%, 17% 25%, 22% 43%, 29% 18%, 35% 40%, 42% 23%, 48% 42%, 55% 20%, 61% 43%, 69% 27%, 75% 45%, 82% 19%, 88% 42%, 94% 28%, 100% 43%, 100% 100%, 0 100%);
+    opacity: .92;
+}
+
+.hero-bg__img,
+.hero-bg__scrim,
+.hero-bg__fade {
+    display: block !important;
+    position: absolute !important;
+    left: -6% !important;
+    width: 112% !important;
+    pointer-events: none !important;
+}
+
+.hero-bg__img {
+    bottom: 0 !important;
+    height: 58% !important;
+    background: #70b7e8 !important;
+    clip-path: polygon(0 68%, 7% 55%, 13% 61%, 19% 35%, 25% 53%, 32% 18%, 39% 50%, 47% 31%, 54% 54%, 61% 20%, 68% 49%, 75% 29%, 82% 52%, 89% 25%, 95% 49%, 100% 38%, 100% 100%, 0 100%);
+}
+
+.hero-bg__img::before,
+.hero-bg__img::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
+
+.hero-bg__img::before {
+    background: #d9effc;
+    clip-path: polygon(0 68%, 7% 55%, 13% 61%, 19% 35%, 25% 53%, 32% 18%, 39% 50%, 47% 31%, 54% 54%, 61% 20%, 68% 49%, 75% 29%, 82% 52%, 89% 25%, 95% 49%, 100% 38%, 100% 46%, 95% 55%, 89% 39%, 82% 60%, 75% 42%, 68% 61%, 61% 34%, 54% 64%, 47% 46%, 39% 62%, 32% 32%, 25% 65%, 19% 49%, 13% 69%, 7% 62%, 0 76%);
+}
+
+.hero-bg__scrim {
+    bottom: 0 !important;
+    height: 47% !important;
+    background: #3f83b8 !important;
+    clip-path: polygon(0 70%, 8% 47%, 15% 61%, 23% 30%, 31% 56%, 39% 20%, 47% 53%, 56% 32%, 64% 58%, 73% 24%, 81% 51%, 89% 34%, 100% 59%, 100% 100%, 0 100%);
+}
+
+.hero-bg__scrim::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #8fc8e8;
+    clip-path: polygon(0 70%, 8% 47%, 15% 61%, 23% 30%, 31% 56%, 39% 20%, 47% 53%, 56% 32%, 64% 58%, 73% 24%, 81% 51%, 89% 34%, 100% 59%, 100% 67%, 89% 43%, 81% 61%, 73% 35%, 64% 67%, 56% 43%, 47% 62%, 39% 31%, 31% 66%, 23% 42%, 15% 70%, 8% 56%, 0 78%);
+}
+
+.hero-bg__fade {
+    bottom: -1px !important;
+    height: 28% !important;
+    background: #245c91 !important;
+    clip-path: polygon(0 62%, 10% 45%, 20% 64%, 31% 27%, 42% 61%, 53% 39%, 64% 67%, 75% 32%, 86% 59%, 100% 35%, 100% 100%, 0 100%);
+}
+
+.hero-bg__fade::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #4b8bb9;
+    clip-path: polygon(0 62%, 10% 45%, 20% 64%, 31% 27%, 42% 61%, 53% 39%, 64% 67%, 75% 32%, 86% 59%, 100% 35%, 100% 51%, 86% 72%, 75% 45%, 64% 80%, 53% 52%, 42% 75%, 31% 43%, 20% 79%, 10% 58%, 0 76%);
+}
+
+.hero > .max-w-2xl {
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+.hero-title,
+.hero-title-accent {
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+    text-shadow: 0 2px 0 rgba(255,255,255,.25) !important;
+}
+
+.hero-eyebrow {
+    color: #0f172a !important;
+    background: rgba(255,255,255,.7) !important;
+    border-color: rgba(15,23,42,.12) !important;
+}
+
+.hero p {
+    color: #334155 !important;
+}
+
+.hero-btn {
+    background: #2563eb !important;
+    color: #fff !important;
+    border: 1px solid #1d4ed8 !important;
+    box-shadow: 0 8px 20px rgba(37,99,235,.2) !important;
+}
+
+.hero-btn--ghost {
+    background: rgba(255,255,255,.75) !important;
+    color: #0f172a !important;
+    border-color: rgba(15,23,42,.12) !important;
+}
+
+@media (max-width: 640px) {
+    .hero-bg::before {
+        width: 110px;
+        height: 110px;
+        right: 8%;
+        top: 17%;
+    }
+
+    .hero-bg__img { height: 49% !important; }
+    .hero-bg__scrim { height: 38% !important; }
+    .hero-bg__fade { height: 23% !important; }
+}
+
+[data-theme="light"] .hero {
+    background: #9ed9f5 !important;
+}
+</style>
+
+</head>
     <body>
-        <!-- Scroll progress -->
+
         <div class="progress"></div>
 
-        <!-- Navigation -->
         <nav
             id="navbar"
             class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
@@ -1256,7 +1448,6 @@
             </div>
         </nav>
 
-        <!-- Mobile Menu -->
         <button
             id="mobile-menu-btn"
             class="sm:hidden fixed top-4 right-4 z-[60] w-10 h-10 flex items-center justify-center rounded-lg bg-bgcard border border-border"
@@ -1360,9 +1551,8 @@
             >
         </div>
 
-        <!-- ==================== HOME ==================== -->
         <div id="page-home" class="page active">
-            <!-- Hero -->
+
             <section
             class="hero min-h-screen flex flex-col items-start justify-center px-6 sm:px-12 lg:px-24 pt-16 relative overflow-hidden"
         >
@@ -1373,7 +1563,6 @@
             </div>
 
             <div class="max-w-2xl relative z-10">
-                <span class="hero-eyebrow reveal">Network Online</span>
 
                 <h1
                     class="hero-title text-5xl sm:text-6xl lg:text-8xl font-black tracking-tighter leading-[1.02] mb-5 split-target hero-split"
@@ -1385,7 +1574,7 @@
                 </h1>
 
                 <p class="reveal rd2 text-lg sm:text-xl text-muted mb-10 max-w-xl">
-                    Crossplatform (yes even eaglercraft) with custom survival!
+                    The most amazing minecraft network with active communities and staff
                 </p>
 
                 <div class="reveal rd5 flex flex-col sm:flex-row items-start gap-4">
@@ -1450,7 +1639,6 @@
             </div>
         </section>
 
-<!-- Stats -->
             <section class="py-12 px-6 flex justify-center">
                 <div data-anim="scale" class="relative bg-bgcard border border-border rounded-sm hover-lift glow-pulse px-8 py-5 shadow-lg shadow-black/30 -rotate-1 hover:rotate-0 transition-transform duration-300" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 23px, rgba(255,255,255,0.02) 23px, rgba(255,255,255,0.02) 24px);">
                     <div class="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-3 bg-primary/20 rounded-sm"></div>
@@ -1463,7 +1651,6 @@
                 </div>
             </section>
 
-            <!-- Why Updraft -->
             <section class="py-24 px-6 relative overflow-hidden">
                 <div class="max-w-5xl mx-auto">
                     <div class="text-center mb-16">
@@ -1515,7 +1702,6 @@
                 </div>
             </section>
 
-<!-- Cross-Platform -->
             <section class="py-24 px-6">
                 <div class="max-w-5xl mx-auto">
                     <div class="text-center mb-16">
@@ -1565,7 +1751,6 @@
                 </div>
             </section>
 
-<!-- Game Modes -->
             <section class="py-24 px-6 relative overflow-hidden">
                 <svg class="absolute top-[8%] left-[6%] w-7 h-7 text-survival/[0.06] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
                 <svg class="absolute bottom-[12%] right-[5%] w-8 h-8 text-lifesteal/[0.05] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -1773,7 +1958,6 @@
                 </div>
             </section>
 
-            <!-- How to Play -->
             <section class="py-24 px-6">
                 <div class="max-w-5xl mx-auto">
                     <div class="text-center mb-16">
@@ -1784,9 +1968,9 @@
                         <p data-anim="up" class="text-muted text-sm mt-3 max-w-lg mx-auto">Literally takes a minute. Here's how.</p>
                     </div>
                     <div data-anim="scale" class="relative hover-lift">
-                        <!-- Windows Desktop Simulation -->
+
                         <div class="win-desktop">
-                            <!-- Desktop Icons -->
+
                             <div class="win-icons">
                                 <div class="win-icon" data-step="1">
                                     <div class="win-icon-img">
@@ -1808,7 +1992,6 @@
                                 </div>
                             </div>
 
-                            <!-- Windows that appear per step -->
                             <div class="win-step active" data-step="1">
                                 <div class="win-titlebar"><span>Prism Launcher</span><div class="win-controls"><span>-</span><span>?</span><span>?</span></div></div>
                                 <div class="win-body win-launcher">
@@ -1888,7 +2071,6 @@
                                 </div>
                             </div>
 
-                            <!-- Taskbar -->
                             <div class="win-taskbar">
                                 <div class="win-start" onclick="resetWinTutorial()">
                                     <span class="win-start-icon"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h7.95v7.95H3V3zm10.05 0H21v7.95h-7.95V3zM3 13.05h7.95V21H3v-7.95zm10.05 0H21V21h-7.95v-7.95z"/></svg></span>
@@ -1904,7 +2086,6 @@
                 </div>
             </section>
 
-        <!-- Leaderboards -->
             <section id="leaderboards" class="py-24 px-6">
                 <div class="max-w-3xl mx-auto">
                     <div class="text-center mb-12">
@@ -1924,8 +2105,6 @@
                 </div>
             </section>
 
-
-            <!-- Roadmap -->
             <section class="py-24 px-6">
                 <div class="max-w-3xl mx-auto">
                     <div class="text-center mb-16">
@@ -2034,7 +2213,6 @@
                 </div>
             </section>
 
-<!-- Connect / IPs -->
             <section id="connect" class="py-20 px-6 bg-bgcard">
                 <div class="max-w-5xl mx-auto text-center">
                     <span class="reveal inline-block text-[11px] font-bold tracking-[.2em] uppercase text-primary mb-4">Connect</span>
@@ -2066,7 +2244,6 @@
                 </div>
             </section>
 
-<!-- Discord CTA -->
             <section class="py-24 px-6">
                 <div class="max-w-4xl mx-auto text-center">
                     <span
@@ -2120,7 +2297,6 @@
                 </div>
             </section>
 
-<!-- Server Live Banner -->
             <section class="py-24 px-6">
                 <div class="max-w-3xl mx-auto">
                     <div
@@ -2171,7 +2347,6 @@
             </section>
         </div>
 
-        <!-- ==================== SURVIVAL PAGE ==================== -->
         <div id="page-survival" class="page">
             <section class="min-h-screen pt-32 pb-24 px-6">
                 <div class="max-w-3xl mx-auto">
@@ -2383,7 +2558,6 @@
                         </div>
                     </div>
 
-                    <!-- Farming stuff -->
                     <div class="reveal rd4 mb-12">
                         <div class="bg-bgcard border border-border rounded-2xl overflow-hidden">
                             <div class="px-6 py-4 border-b border-border">
@@ -2421,7 +2595,6 @@
             </section>
         </div>
 
-        <!-- ==================== ONEBLOCK PAGE ==================== -->
         <div id="page-lifesteal" class="page">
             <section class="min-h-screen pt-32 pb-24 px-6">
                 <div class="max-w-3xl mx-auto">
@@ -2652,7 +2825,6 @@
             </section>
         </div>
 
-        <!-- ==================== PRACTICE PAGE ==================== -->
         <div id="page-practice" class="page">
             <section class="min-h-screen pt-32 pb-24 px-6">
                 <div class="max-w-3xl mx-auto">
@@ -2877,7 +3049,6 @@
             </section>
         </div>
 
-        <!-- ==================== UPDATES ==================== -->
         <div id="page-updates" class="page">
             <section class="min-h-screen flex flex-col items-center px-6 pt-32 relative overflow-hidden">
                 <div class="max-w-3xl mx-auto w-full relative z-10 py-12">
@@ -2893,7 +3064,6 @@
             </section>
         </div>
 
-        <!-- ==================== STORE ==================== -->
         <div id="page-store" class="page">
             <section class="min-h-screen pt-32 pb-24 px-6">
                 <div class="max-w-5xl mx-auto">
@@ -3130,7 +3300,6 @@
             </section>
         </div>
 
-        <!-- ==================== FOOTER ==================== -->
         <footer
             class="relative border-t border-border bg-bgdark"
         >
@@ -3292,7 +3461,6 @@
             </div>
         </footer>
 
-        <!-- Toast -->
         <div id="toast" class="toast">
             <div class="flex items-center gap-3">
                 <svg
@@ -3310,12 +3478,6 @@
         </div>
 
         <script>
-            /* ════════════════════════════════════════════
-               U P D R A F T  N E T W O R K
-               Premium Design System — v2
-               ════════════════════════════════════════════ */
-
-            /* ── Helpers ── */
             const $ = s => document.querySelector(s);
             const $$ = s => [...document.querySelectorAll(s)];
 
@@ -3337,7 +3499,6 @@
                        d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
             }
 
-            /* ── Toast ── */
             function showToast(msg) {
                 let t = $('#updraft-toast');
                 if (!t) {
@@ -3353,7 +3514,6 @@
                 t._timer = setTimeout(() => t.classList.remove('show'), 3000);
             }
 
-            /* ── Theme ── */
             (function initTheme() {
                 var saved = localStorage.getItem('theme');
                 if (saved) document.documentElement.setAttribute('data-theme', saved);
@@ -3369,7 +3529,6 @@
                 localStorage.setItem('theme', next);
             }
 
-            /* ── Navigation ── */
             const PAGES = ['home', 'survival', 'lifesteal', 'practice', 'updates', 'store'];
             const PAGE_TITLES = {
                 home: 'Home', survival: 'Survival', lifesteal: 'Lifesteal',
@@ -3394,7 +3553,6 @@
             }
             window.addEventListener('hashchange', handleHash);
 
-            /* ── Mobile Menu ── */
             let mo = false;
             function toggleMobileMenu() {
                 mo = !mo;
@@ -3415,7 +3573,6 @@
                 if (e.key === 'Escape' && mo) toggleMobileMenu();
             });
 
-            /* ── Animation Engine ── */
             function initAnimations() {
                 const els = $$('.page.active [data-anim]:not(.in)');
                 const obs = new IntersectionObserver(entries => {
@@ -3520,7 +3677,6 @@
                 initCountUp();
             }
 
-            /* ── Scroll Progress (targets .progress) ── */
             function updateScrollProgress() {
                 const bar = $('.progress');
                 if (!bar) return;
@@ -3529,14 +3685,12 @@
                 bar.style.height = Math.min(pct, 100) + '%';
             }
 
-            /* ── Nav Scroll State ── */
             function updateNav() {
                 const nav = $('#navbar');
                 if (!nav) return;
                 nav.classList.toggle('scrolled', window.scrollY > 40);
             }
 
-            /* ── Reveal on Scroll ── */
             function observeReveals() {
                 const els = $$('.page.active .reveal:not(.visible)');
                 const obs = new IntersectionObserver(entries => {
@@ -3550,7 +3704,6 @@
                 els.forEach(el => obs.observe(el));
             }
 
-            /* ── Win Desktop Tutorial ── */
             let winStep = 1;
             function nextWinStep(s) {
                 winStep = s + 1;
@@ -3571,13 +3724,11 @@
                 btn._t = setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('flash'); }, 1500);
             }
 
-            /* ── Win Clock ── */
             setInterval(() => {
                 const c = document.getElementById('win-clock');
                 if (c) c.textContent = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
             }, 1000);
 
-            /* ── Markdown Renderer ── */
             function renderMarkdown(raw) {
                 if (!raw) return '';
                 let text = raw;
@@ -3635,7 +3786,6 @@
                 return html;
             }
 
-            /* ── Updates Feed (wired to Discord via backend) ── */
             async function loadUpdates() {
                 const feed = document.getElementById('updates-feed');
                 if (!feed) return;
@@ -3666,7 +3816,6 @@
                 }
             }
 
-            /* ── Leaderboards ── */
             let lbData = {};
             let currentLb = 'statistic_player_kills';
 
@@ -3708,7 +3857,6 @@
                 } catch {}
             }
 
-            /* ── Server Status ── */
             async function loadStatus() {
                 try {
                     const res = await fetch('/api/status');
@@ -3721,22 +3869,12 @@
                 } catch {}
             }
 
-            /* ══════════════════════════════════════
-               INJECTED MICRO-INTERACTIONS
-               (no HTML edits required)
-               ══════════════════════════════════════ */
-
-            /* ── Hero background image ──
-               Warms up the decode ahead of first paint so the 3MB scene is
-               painted ready instead of popping in. Purely an optimisation:
-               the CSS renders the image regardless, so failing is harmless. */
             function initHeroBackground() {
                 const img = new Image();
                 img.src = 'background.png';
                 if (img.decode) img.decode().catch(() => {});
             }
 
-            /* ── Preloader ── */
             function injectPreloader() {
                 const el = document.createElement('div');
                 el.id = 'preloader';
@@ -3756,7 +3894,6 @@
                 if (el) el.classList.add('done');
             }
 
-            /* ── Cursor Glow ── */
             function injectCursorGlow() {
                 if (window.matchMedia('(pointer: coarse)').matches) return;
                 const el = document.createElement('div');
@@ -3780,7 +3917,6 @@
                 })();
             }
 
-            /* ── Marquee Strip ── */
             function injectMarquee() {
                 const nav = $('#navbar');
                 if (!nav) return;
@@ -3800,7 +3936,6 @@
                 nav.after(el);
             }
 
-            /* ── MC Server Click Interaction ── */
             function initMcServers() {
                 $$('.mc-server').forEach(s => {
                     s.addEventListener('click', () => {
@@ -3810,13 +3945,9 @@
                 });
             }
 
-            /* ══════════════════════════════════════
-               BOOT
-               ══════════════════════════════════════ */
             document.addEventListener('DOMContentLoaded', () => {
                 injectPreloader();
                 initHeroBackground();
-                injectMarquee();
                 injectCursorGlow();
 
                 handleHash();
@@ -3841,11 +3972,6 @@
             setInterval(fetchLeaderboard, 30000);
             setInterval(loadStatus, 30000);
 
-            /* ═══════════════════════════════════════════════════
-               M O T I O N   O V E R D R I V E   J S
-               ═══════════════════════════════════════════════════ */
-
-            /* ── 3D TILT ── */
             function initTilt() {
                 if (window.matchMedia('(pointer: coarse)').matches) return;
                 const targets = $$('.hover-lift, .ucard, .win-desktop, .pixel');
@@ -3869,7 +3995,6 @@
                 });
             }
 
-            /* ── SPOTLIGHT ── */
             function initSpotlight() {
                 if (window.matchMedia('(pointer: coarse)').matches) return;
                 $$('.hover-lift, .ucard, .win-desktop, .pixel').forEach(el => {
@@ -3879,7 +4004,6 @@
                 });
             }
 
-            /* ── BACKGROUND FX: ORBS + SHOOTING STARS ── */
             function injectFXField() {
                 if (document.getElementById('fx-field')) return;
                 const field = document.createElement('div');
@@ -3916,7 +4040,6 @@
                 document.body.appendChild(field);
             }
 
-            /* ── CURSOR SPARKLE TRAIL ── */
             function initSparkles() {
                 if (window.matchMedia('(pointer: coarse)').matches) return;
                 let last = 0;
@@ -3938,7 +4061,6 @@
                 }, { passive: true });
             }
 
-            /* ── DECORATE ICON TILES ── */
             function decorateIcons() {
                 $$('.page.active .flex.items-start.gap-4, .page.active .flex.items-center.gap-5, .page.active .flex.gap-6').forEach(row => {
                     const ic = row.querySelector(':scope > div:first-child');
@@ -3946,14 +4068,12 @@
                 });
             }
 
-            /* ── TAG SHINE ON BUTTONS ── */
             function tagShine() {
                 $$('.mc-btn.primary, .launch-btn, .apple-btn-primary, .copy-ip-btn, .win-btn, .lb-tab.active').forEach(b => {
                     if (!b.classList.contains('shine')) b.classList.add('shine');
                 });
             }
 
-            /* ── MAGNETIC PULL ── */
             function initMagnetic() {
                 if (window.matchMedia('(pointer: coarse)').matches) return;
                 $$('.cta-dot, .apple-btn-primary').forEach(btn => {
@@ -3970,7 +4090,6 @@
                 });
             }
 
-            /* ── ENHANCED NAVIGATE (re-decorate on page change) ── */
             var _origNavigate = typeof navigate === 'function' ? navigate : null;
             if (_origNavigate) {
                 navigate = function (page) {
@@ -3982,12 +4101,8 @@
                 };
             }
 
-            /* ── BRAND GLOW ──
-               Retained as a no-op: the hero headline is now a flat solid
-               colour, so there is no gradient fill left to pulse. */
             function brandGlow() { }
 
-            /* ── GLOW LINES BETWEEN SECTIONS ── */
             function insertGlowLines() {
                 $$('.page > section + section').forEach(sec => {
                     if (sec.previousElementSibling && !sec.previousElementSibling.classList.contains('glow-line')) {
@@ -3998,7 +4113,6 @@
                 });
             }
 
-            /* ── STORE CARDS ENTRANCE ── */
             function decorateStoreCards() {
                 $$('#page-store .grid > div').forEach((card, i) => {
                     card.classList.add('store-appear');
@@ -4006,7 +4120,6 @@
                 });
             }
 
-            /* ══ BOOT MOTION OVERDRIVE ══ */
             document.addEventListener('DOMContentLoaded', function () {
                 injectFXField(); initTilt(); initSpotlight(); initSparkles();
                 decorateIcons(); tagShine(); initMagnetic(); brandGlow();
@@ -4024,4 +4137,4 @@
     </body>
 </html>
 
-<!-- Made by french(gooner)fr - updraft network -->
+Fix my code
